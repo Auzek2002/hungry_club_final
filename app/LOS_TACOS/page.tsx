@@ -740,7 +740,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         {item.image && (
                           <div className="relative w-32 h-32 bg-orange-50 rounded-lg overflow-hidden">
@@ -890,7 +890,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -961,7 +961,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1031,7 +1031,7 @@ function LosTacosContent() {
                           )}
                         </div>
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors ml-4">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                       </div>
                     ) : (
@@ -1073,7 +1073,7 @@ function LosTacosContent() {
                         {/* Right Side - Image and Button */}
                         <div className="flex flex-col items-end gap-2">
                           <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                            <span className="text-lg text-orange-500">+</span>
+                            <span className="text-lg text-[#CC0000]">+</span>
                           </button>
                           <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                             <Image
@@ -1146,7 +1146,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1215,7 +1215,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1287,7 +1287,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1356,7 +1356,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1427,7 +1427,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1501,7 +1501,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1575,7 +1575,7 @@ function LosTacosContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image

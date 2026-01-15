@@ -736,7 +736,7 @@ function PizzaTimeContent() {
     : []
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: 'url("/PIZZA TIME/pizza_bg.png")', backgroundRepeat: 'repeat', backgroundSize: '200px' }}>
+    <div className="min-h-screen" style={{ backgroundImage: 'url("/HIRO BURGER/Hiro_bg.png")', backgroundRepeat: 'repeat', backgroundSize: '200px' }}>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -865,7 +865,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         {item.image && (
                           <div className="relative w-32 h-32 bg-orange-50 rounded-lg overflow-hidden">
@@ -1014,7 +1014,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1080,7 +1080,7 @@ function PizzaTimeContent() {
                           )}
                         </div>
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors ml-4">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                       </div>
                     ) : (
@@ -1118,7 +1118,7 @@ function PizzaTimeContent() {
                         {/* Right Side - Image and Button */}
                         <div className="flex flex-col items-end gap-2">
                           <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                            <span className="text-lg text-orange-500">+</span>
+                            <span className="text-lg text-[#CC0000]">+</span>
                           </button>
                           <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                             <Image
@@ -1189,7 +1189,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1259,7 +1259,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1332,7 +1332,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
@@ -1405,7 +1405,7 @@ function PizzaTimeContent() {
                       {/* Right Side - Image and Button */}
                       <div className="flex flex-col items-end gap-2">
                         <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-orange-500">+</span>
+                          <span className="text-lg text-[#CC0000]">+</span>
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image

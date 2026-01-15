@@ -23,7 +23,7 @@ export default function CartPage() {
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-[#CC0000] hover:text-[#FF2900] transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-[#CC0000] hover:text-[#990000] transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
               </svg>
@@ -47,7 +47,7 @@ export default function CartPage() {
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
             <p className="text-gray-600 mb-6">Add some delicious items from our restaurants!</p>
-            <Link href="/" className="inline-block px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#FF2900] transition-all duration-300 shadow-md hover:shadow-lg">
+            <Link href="/" className="inline-block px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg">
               Browse Restaurants
             </Link>
           </div>
@@ -147,7 +147,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <button className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#FF2900] transition-all duration-300 shadow-md hover:shadow-lg mb-3">
+                <button className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg mb-3">
                   Proceed to Checkout
                 </button>
 

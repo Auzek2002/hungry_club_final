@@ -182,7 +182,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
             {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-[#CC0000] hover:bg-[#C73614] text-white font-bold py-3 px-6 rounded-full transition-colors text-lg shadow-lg"
+              className="flex-1 bg-[#CC0000] hover:bg-[#990000] text-white font-bold py-3 px-6 rounded-full transition-colors text-lg shadow-lg"
             >
               Hinzufügen {calculateTotalPrice()}
             </button>
