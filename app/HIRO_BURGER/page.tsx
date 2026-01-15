@@ -830,16 +830,16 @@ function HiroBurgerContent() {
                         <div className="mb-2">
                           <div className="font-bold text-gray-900 text-base">{item.price}</div>
                           {'originalPrice' in item && item.originalPrice ? (
-                            <div className="text-xs text-gray-500 line-through">{item.originalPrice}</div>
+                            <div className="text-xs text-gray-500 line-through">{String(item.originalPrice)}</div>
                           ) : null}
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mt-1">{item.additionalInfo}</p>
-                        )}
+                        {'additionalInfo' in item && item.additionalInfo ? (
+                          <p className="text-xs text-gray-500 mt-1">{String(item.additionalInfo)}</p>
+                        ) : null}
 
                         {/* Tags */}
-                        {item.tags && item.tags.length > 0 && (
+                        {'tags' in item && item.tags && item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap mt-2">
                             {item.tags.map((tag: string) => (
                               <span
@@ -1208,13 +1208,13 @@ function HiroBurgerContent() {
                         <div className="mb-2">
                           <div className="font-bold text-gray-900 text-base">{item.price}</div>
                           {'originalPrice' in item && item.originalPrice ? (
-                            <div className="text-xs text-gray-500 line-through">{item.originalPrice}</div>
+                            <div className="text-xs text-gray-500 line-through">{String(item.originalPrice)}</div>
                           ) : null}
                         </div>
                         <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
 
                         {/* Tags */}
-                        {item.tags && item.tags.length > 0 && (
+                        {'tags' in item && item.tags && item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
                             {item.tags.map((tag) => (
                               <span
@@ -1488,9 +1488,9 @@ function HiroBurgerContent() {
                         {item.description && (
                           <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
                         )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mt-1">{item.additionalInfo}</p>
-                        )}
+                        {'additionalInfo' in item && item.additionalInfo ? (
+                          <p className="text-xs text-gray-500 mt-1">{String(item.additionalInfo)}</p>
+                        ) : null}
                       </div>
 
                       {/* Right Side - Image and Button */}
