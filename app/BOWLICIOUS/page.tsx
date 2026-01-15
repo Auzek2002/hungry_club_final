@@ -959,7 +959,7 @@ function BowliciousContent() {
                         <p className="text-sm text-gray-600 mb-2">{item.description}</p>
 
                         {/* Tags */}
-                        {item.tags && item.tags.length > 0 && (
+                        {'tags' in item && item.tags && item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap mt-2">
                             {item.tags.map((tag: string) => (
                               <span
