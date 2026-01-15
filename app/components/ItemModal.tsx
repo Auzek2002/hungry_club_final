@@ -11,6 +11,7 @@ interface ItemModalProps {
     name: string
     price: string
     description?: string
+    bulletPoints?: string[]
     image?: string
     tags?: string[]
     additionalInfo?: string
@@ -71,7 +72,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50"
@@ -108,8 +109,17 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
           {/* Price */}
           <div className="text-xl font-bold text-gray-900 mb-4">{item.price}</div>
 
-          {/* Description */}
-          {item.description && (
+          {/* Description or Bullet Points */}
+          {item.bulletPoints ? (
+            <ul className="text-sm text-gray-600 mb-4 space-y-2">
+              {item.bulletPoints.map((point, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          ) : item.description && (
             <p className="text-sm text-gray-600 mb-4">{item.description}</p>
           )}
 

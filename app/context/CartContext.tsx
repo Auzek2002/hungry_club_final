@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react'
 
 interface CartItem {
   name: string
@@ -18,6 +18,7 @@ interface CartContextType {
   clearCart: () => void
   getTotalItems: () => number
   getTotalPrice: () => string
+  cartVersion: number // Add a version counter to force re-renders
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -27,6 +28,7 @@ const CART_STORAGE_KEY = 'hungry-club-cart'
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [isInitialized, setIsInitialized] = useState(false)
+  const [cartVersion, setCartVersion] = useState(0) // Version counter to force re-renders
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -57,7 +59,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [cartItems, isInitialized])
 
-  const addToCart = (item: Omit<CartItem, 'quantity'>, quantity: number) => {
+  const addToCart = useCallback((item: Omit<CartItem, 'quantity'>, quantity: number) => {
     console.log('Adding to cart:', item, 'quantity:', quantity)
     setCartItems((prevItems) => {
       console.log('Previous cart items:', prevItems)
@@ -81,15 +83,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       console.log('New cart items:', newItems)
       return newItems
     })
-  }
+    // Increment version to force re-renders in consuming components
+    setCartVersion((v) => v + 1)
+  }, [])
 
-  const removeFromCart = (itemName: string) => {
+  const removeFromCart = useCallback((itemName: string) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.name !== itemName))
-  }
+    setCartVersion((v) => v + 1)
+  }, [])
 
-  const updateQuantity = (itemName: string, quantity: number) => {
+  const updateQuantity = useCallback((itemName: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(itemName)
+      setCartItems((prevItems) => prevItems.filter((item) => item.name !== itemName))
     } else {
       setCartItems((prevItems) =>
         prevItems.map((item) =>
@@ -97,17 +102,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
         )
       )
     }
-  }
+    setCartVersion((v) => v + 1)
+  }, [])
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([])
-  }
+    setCartVersion((v) => v + 1)
+  }, [])
 
-  const getTotalItems = () => {
+  const getTotalItems = useCallback(() => {
     return cartItems.reduce((total, item) => total + item.quantity, 0)
-  }
+  }, [cartItems])
 
-  const getTotalPrice = () => {
+  const getTotalPrice = useCallback(() => {
     const total = cartItems.reduce((sum, item) => {
       const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
       if (priceMatch) {
@@ -118,20 +125,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, 0)
 
     return total.toFixed(2).replace('.', ',')
-  }
+  }, [cartItems])
+
+  const contextValue = useMemo(() => ({
+    cartItems,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    getTotalItems,
+    getTotalPrice,
+    cartVersion,
+  }), [cartItems, addToCart, removeFromCart, updateQuantity, clearCart, getTotalItems, getTotalPrice, cartVersion])
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        getTotalItems,
-        getTotalPrice,
-      }}
-    >
+    <CartContext.Provider value={contextValue}>
       {children}
     </CartContext.Provider>
   )
