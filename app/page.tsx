@@ -365,7 +365,7 @@ export default function Home() {
               <div id="toshi-sushi" className="scroll-mt-20">
                 <a href="/TOSHI_SUSHI" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
                   <Image
-                    src="/TOSHI SUSHI & ASIA KÜCHE.jpeg"
+                    src="/TOSHI.jpeg"
                     alt="Toshi Sushi & Asia Küche"
                     fill
                     className="object-cover group-hover:scale-110 transition-all duration-700"
