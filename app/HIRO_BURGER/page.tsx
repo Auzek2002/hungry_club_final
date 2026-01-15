@@ -829,9 +829,9 @@ function HiroBurgerContent() {
                         </button>
                         <div className="mb-2">
                           <div className="font-bold text-gray-900 text-base">{item.price}</div>
-                          {('originalPrice' in item && item.originalPrice) && (
+                          {'originalPrice' in item && item.originalPrice ? (
                             <div className="text-xs text-gray-500 line-through">{item.originalPrice}</div>
-                          )}
+                          ) : null}
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{item.description}</p>
                         {item.additionalInfo && (
@@ -1207,9 +1207,9 @@ function HiroBurgerContent() {
                         </button>
                         <div className="mb-2">
                           <div className="font-bold text-gray-900 text-base">{item.price}</div>
-                          {('originalPrice' in item && item.originalPrice) && (
+                          {'originalPrice' in item && item.originalPrice ? (
                             <div className="text-xs text-gray-500 line-through">{item.originalPrice}</div>
-                          )}
+                          ) : null}
                         </div>
                         <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
 
