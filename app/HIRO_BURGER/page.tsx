@@ -874,7 +874,7 @@ function HiroBurgerContent() {
                         {item.image && (
                           <div className="relative w-32 h-32 bg-orange-50 rounded-lg overflow-hidden">
                             <Image
-                              src={item.image}
+                              src={encodeURI(item.image)}
                               alt={item.name}
                               fill
                               className="object-cover"
@@ -925,7 +925,7 @@ function HiroBurgerContent() {
                           {/* Image */}
                           <div className="relative w-24 h-24 flex-shrink-0 bg-orange-50 rounded-lg overflow-hidden">
                             <Image
-                              src={item.image}
+                              src={encodeURI(item.image)}
                               alt={item.name}
                               fill
                               className="object-cover"
@@ -1049,7 +1049,7 @@ function HiroBurgerContent() {
                           </button>
                           <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                             <Image
-                              src={item.image}
+                              src={encodeURI(item.image)}
                               alt={item.name}
                               fill
                               className="object-cover"
@@ -1118,7 +1118,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1167,7 +1167,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1245,7 +1245,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1313,7 +1313,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1381,7 +1381,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1449,7 +1449,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1500,7 +1500,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"
@@ -1549,7 +1549,7 @@ function HiroBurgerContent() {
                         </button>
                         <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
                           <Image
-                            src={item.image}
+                            src={encodeURI(item.image)}
                             alt={item.name}
                             fill
                             className="object-cover"

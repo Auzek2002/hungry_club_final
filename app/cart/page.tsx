@@ -2,10 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import CheckoutModal from '../components/CheckoutModal'
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, getTotalItems, clearCart } = useCart()
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
 
   const handleQuantityChange = (itemName: string, newQuantity: number) => {
     if (newQuantity >= 1) {
@@ -147,7 +150,10 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <button className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg mb-3">
+                <button
+                  onClick={() => setIsCheckoutOpen(true)}
+                  className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg mb-3"
+                >
                   Proceed to Checkout
                 </button>
 
@@ -169,6 +175,15 @@ export default function CartPage() {
           </div>
         )}
       </main>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        totalPrice={(parseFloat(getTotalPrice().replace(',', '.')) + 2).toFixed(2).replace('.', ',')}
+        cartItems={cartItems}
+        clearCart={clearCart}
+      />
     </div>
   )
 }
