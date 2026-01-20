@@ -139,17 +139,30 @@ OrderSchema.pre('save', async function(next) {
     try {
       // Use the model from this schema's model
       const OrderModel = this.constructor as Model<IOrder>
-      const count = await OrderModel.countDocuments()
       const date = new Date()
       const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '')
-      this.orderNumber = `HC-${dateStr}-${String(count + 1).padStart(4, '0')}`
+
+      // Find the highest order number for today to avoid race conditions
+      const lastOrder = await OrderModel.findOne({
+        orderNumber: { $regex: `^HC-${dateStr}-` }
+      }).sort({ orderNumber: -1 }).limit(1)
+
+      let nextNumber = 1
+      if (lastOrder && lastOrder.orderNumber) {
+        // Extract the number from the last order (e.g., "HC-20260120-0003" -> 3)
+        const lastNumber = parseInt(lastOrder.orderNumber.split('-')[2])
+        nextNumber = lastNumber + 1
+      }
+
+      this.orderNumber = `HC-${dateStr}-${String(nextNumber).padStart(4, '0')}`
     } catch (error) {
       console.error('Error generating order number:', error)
-      // Fallback order number
+      // Fallback to timestamp-based unique number to avoid duplicates
       const date = new Date()
       const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '')
-      const random = Math.floor(Math.random() * 10000)
-      this.orderNumber = `HC-${dateStr}-${String(random).padStart(4, '0')}`
+      const timestamp = Date.now().toString().slice(-4)
+      const random = Math.floor(Math.random() * 100).toString().padStart(2, '0')
+      this.orderNumber = `HC-${dateStr}-${timestamp}${random}`
     }
   }
   next()

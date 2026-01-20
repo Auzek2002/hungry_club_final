@@ -25,32 +25,51 @@ export async function POST(request: NextRequest) {
       quantity: item.quantity,
     }))
 
-    // Create order in database
-    const order = await Order.create({
-      fullName: orderData.fullName,
-      email: orderData.email,
-      phone: orderData.phone,
-      deliveryType: orderData.deliveryType,
-      streetAddress: orderData.streetAddress,
-      city: orderData.city,
-      postalCode: orderData.postalCode,
-      timeOption: orderData.timeOption,
-      scheduledTime: orderData.scheduledTime,
-      remarks: orderData.remarks,
-      paymentMethod: orderData.paymentMethod,
-      paymentStatus: paymentStatus,
-      stripeSessionId: stripeSessionId,
-      totalAmount: totalAmount,
-      currency: 'EUR',
-      items: cleanedItems,
-      status: paymentStatus === 'paid' ? 'confirmed' : 'pending',
-    })
+    // Retry logic to handle potential duplicate key errors from race conditions
+    const maxRetries = 3
+    let lastError: any = null
 
-    return NextResponse.json({
-      success: true,
-      orderId: order._id,
-      orderNumber: order.orderNumber,
-    })
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        // Create order in database
+        const order = await Order.create({
+          fullName: orderData.fullName,
+          email: orderData.email,
+          phone: orderData.phone,
+          deliveryType: orderData.deliveryType,
+          streetAddress: orderData.streetAddress,
+          city: orderData.city,
+          postalCode: orderData.postalCode,
+          timeOption: orderData.timeOption,
+          scheduledTime: orderData.scheduledTime,
+          remarks: orderData.remarks,
+          paymentMethod: orderData.paymentMethod,
+          paymentStatus: paymentStatus,
+          stripeSessionId: stripeSessionId,
+          totalAmount: totalAmount,
+          currency: 'EUR',
+          items: cleanedItems,
+          status: paymentStatus === 'paid' ? 'confirmed' : 'pending',
+        })
+
+        return NextResponse.json({
+          success: true,
+          orderId: order._id,
+          orderNumber: order.orderNumber,
+        })
+      } catch (error: any) {
+        lastError = error
+        // If it's a duplicate key error, retry with a small delay
+        if (error.code === 11000 && attempt < maxRetries - 1) {
+          await new Promise(resolve => setTimeout(resolve, 100 * (attempt + 1)))
+          continue
+        }
+        // If it's not a duplicate key error or we've exhausted retries, throw
+        throw error
+      }
+    }
+
+    throw lastError
   } catch (error: any) {
     console.error('Order creation error:', error)
     return NextResponse.json(
