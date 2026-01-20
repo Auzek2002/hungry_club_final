@@ -141,7 +141,7 @@ export default function AdminDashboard() {
         }
 
         // Sort orders: Express orders first, then by creation time (newest first)
-        const sortedOrders = activeOrders.sort((a, b) => {
+        const sortedOrders = activeOrders.sort((a: Order, b: Order) => {
           // Express orders always come first
           if (a.timeOption === 'express' && b.timeOption !== 'express') return -1
           if (a.timeOption !== 'express' && b.timeOption === 'express') return 1
