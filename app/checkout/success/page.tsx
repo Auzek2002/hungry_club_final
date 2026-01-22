@@ -196,13 +196,10 @@ function CheckoutSuccessContent() {
           </a>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
-          <Link href="/" className="flex-1 px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 text-center shadow-md hover:shadow-lg">
+        {/* Action Button */}
+        <div>
+          <Link href="/" className="block w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 text-center shadow-md hover:shadow-lg">
             Back to Home
-          </Link>
-          <Link href="/orders" className="flex-1 px-6 py-3 bg-white text-[#CC0000] font-bold rounded-lg border-2 border-[#CC0000] hover:bg-gray-50 transition-all duration-300 text-center">
-            View Orders
           </Link>
         </div>
       </div>

@@ -18,11 +18,12 @@ export async function POST(request: NextRequest) {
     // Parse total price (convert from "25,50" to 25.50)
     const totalAmount = parseFloat(totalPrice.replace(',', '.'))
 
-    // Clean cart items - only store essential data (name, price, quantity)
+    // Clean cart items - store essential data (name, price, quantity, description for customizations)
     const cleanedItems = (cartItems || []).map((item: any) => ({
       name: item.name,
       price: item.price,
       quantity: item.quantity,
+      description: item.description || '',
     }))
 
     // Retry logic to handle potential duplicate key errors from race conditions

@@ -4,6 +4,18 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 
+interface CustomizationOption {
+  label: string
+  price: number
+}
+
+interface CustomizationOptions {
+  title: string
+  required: boolean
+  multiple?: boolean  // Allow multiple selections (checkboxes)
+  options: CustomizationOption[]
+}
+
 interface ItemModalProps {
   isOpen: boolean
   onClose: () => void
@@ -15,12 +27,29 @@ interface ItemModalProps {
     image?: string
     tags?: string[]
     additionalInfo?: string
+    customizationOptions?: CustomizationOptions | CustomizationOptions[]
   }
 }
 
 export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
   const [quantity, setQuantity] = useState(1)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null)
+  const [selectedExtras, setSelectedExtras] = useState<number[]>([])  // For multiple checkbox selections
+  // For multiple customization groups
+  const [selectedOptions, setSelectedOptions] = useState<Map<number, number | null>>(new Map())
+  const [selectedExtrasGroups, setSelectedExtrasGroups] = useState<Map<number, number[]>>(new Map())
   const { addToCart } = useCart()
+
+  // Reset selected option when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedOption(null)
+      setSelectedExtras([])
+      setSelectedOptions(new Map())
+      setSelectedExtrasGroups(new Map())
+      setQuantity(1)
+    }
+  }, [isOpen])
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -48,12 +77,46 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
     setQuantity(quantity + 1)
   }
 
-  // Calculate total price based on quantity
+  // Calculate total price based on quantity and selected option/extras
   const calculateTotalPrice = () => {
     // Extract numeric value from price string (e.g., "5,90 €" -> 5.90)
     const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
     if (priceMatch) {
-      const basePrice = parseFloat(priceMatch[1].replace(',', '.'))
+      let basePrice = parseFloat(priceMatch[1].replace(',', '.'))
+
+      // Handle multiple customization groups
+      if (Array.isArray(item.customizationOptions)) {
+        item.customizationOptions.forEach((group, groupIndex) => {
+          if (!group.multiple) {
+            // Radio button selection
+            const selectedIndex = selectedOptions.get(groupIndex)
+            if (selectedIndex !== null && selectedIndex !== undefined) {
+              basePrice += group.options[selectedIndex].price
+            }
+          } else {
+            // Checkbox selections
+            const selectedExtrasForGroup = selectedExtrasGroups.get(groupIndex) || []
+            selectedExtrasForGroup.forEach(index => {
+              basePrice += group.options[index].price
+            })
+          }
+        })
+      } else if (item.customizationOptions) {
+        // Single customization group (backward compatibility)
+        // Add selected option price if applicable (radio button)
+        if (!item.customizationOptions.multiple && selectedOption !== null) {
+          const optionPrice = item.customizationOptions.options[selectedOption].price
+          basePrice += optionPrice
+        }
+
+        // Add selected extras prices (checkboxes)
+        if (item.customizationOptions.multiple && selectedExtras.length > 0) {
+          selectedExtras.forEach(index => {
+            basePrice += item.customizationOptions!.options[index].price
+          })
+        }
+      }
+
       const totalPrice = (basePrice * quantity).toFixed(2).replace('.', ',')
       return `${totalPrice} €`
     }
@@ -61,14 +124,115 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
   }
 
   const handleAddToCart = () => {
-    addToCart({
-      name: item.name,
-      price: item.price,
-      description: item.description,
-      image: item.image
-    }, quantity)
+    // Handle multiple customization groups
+    if (Array.isArray(item.customizationOptions)) {
+      // Check if all required fields are selected
+      for (let groupIndex = 0; groupIndex < item.customizationOptions.length; groupIndex++) {
+        const group = item.customizationOptions[groupIndex]
+        if (group.required && !group.multiple) {
+          const selectedIndex = selectedOptions.get(groupIndex)
+          if (selectedIndex === null || selectedIndex === undefined) {
+            alert('Bitte wählen Sie alle erforderlichen Optionen aus.')
+            return
+          }
+        }
+      }
+
+      // Prepare cart item with customization details
+      const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
+      let basePrice = priceMatch ? parseFloat(priceMatch[1].replace(',', '.')) : 0
+      const customizationTexts: string[] = []
+
+      item.customizationOptions.forEach((group, groupIndex) => {
+        if (!group.multiple) {
+          // Radio button selection
+          const selectedIndex = selectedOptions.get(groupIndex)
+          if (selectedIndex !== null && selectedIndex !== undefined) {
+            const option = group.options[selectedIndex]
+            customizationTexts.push(option.label)
+            basePrice += option.price
+          }
+        } else {
+          // Checkbox selections
+          const selectedExtrasForGroup = selectedExtrasGroups.get(groupIndex) || []
+          if (selectedExtrasForGroup.length > 0) {
+            const labels = selectedExtrasForGroup.map(index => group.options[index].label)
+            customizationTexts.push(labels.join(', '))
+            selectedExtrasForGroup.forEach(index => {
+              basePrice += group.options[index].price
+            })
+          }
+        }
+      })
+
+      const finalPrice = `${basePrice.toFixed(2).replace('.', ',')} €`
+      const customizationText = customizationTexts.join(', ')
+
+      addToCart({
+        name: item.name,
+        price: finalPrice,
+        description: customizationText || item.description,
+        image: item.image
+      }, quantity)
+    } else {
+      // Single customization group (backward compatibility)
+      // Check if customization is required and no option is selected (radio button)
+      if (item.customizationOptions?.required && !item.customizationOptions.multiple && selectedOption === null) {
+        alert('Bitte wählen Sie eine Option aus.')
+        return
+      }
+
+      // Prepare cart item with customization details
+      let finalPrice = item.price
+      let customizationText = ''
+
+      // Handle radio button selection
+      if (item.customizationOptions && !item.customizationOptions.multiple && selectedOption !== null) {
+        const option = item.customizationOptions.options[selectedOption]
+        customizationText = option.label
+
+        // Calculate the final price including option price
+        const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
+        if (priceMatch) {
+          const basePrice = parseFloat(priceMatch[1].replace(',', '.'))
+          const totalPrice = (basePrice + option.price).toFixed(2).replace('.', ',')
+          finalPrice = `${totalPrice} €`
+        }
+      }
+
+      // Handle checkbox selections (multiple extras)
+      if (item.customizationOptions && item.customizationOptions.multiple && selectedExtras.length > 0) {
+        const selectedExtrasLabels = selectedExtras.map(index =>
+          item.customizationOptions!.options[index].label
+        )
+        customizationText = selectedExtrasLabels.join(', ')
+
+        // Calculate the final price including extras
+        const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
+        if (priceMatch) {
+          let basePrice = parseFloat(priceMatch[1].replace(',', '.'))
+          selectedExtras.forEach(index => {
+            basePrice += item.customizationOptions!.options[index].price
+          })
+          const totalPrice = basePrice.toFixed(2).replace('.', ',')
+          finalPrice = `${totalPrice} €`
+        }
+      }
+
+      addToCart({
+        name: item.name,
+        price: finalPrice,
+        description: customizationText || item.description,
+        image: item.image
+      }, quantity)
+    }
+
     onClose()
     setQuantity(1)
+    setSelectedOption(null)
+    setSelectedExtras([])
+    setSelectedOptions(new Map())
+    setSelectedExtrasGroups(new Map())
   }
 
   return (
@@ -157,6 +321,141 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
           <button className="text-sm text-gray-700 hover:text-gray-900 underline mb-6">
             Produktinfo
           </button>
+
+          {/* Customization Options */}
+          {item.customizationOptions && (
+            <>
+              {Array.isArray(item.customizationOptions) ? (
+                // Multiple customization groups
+                item.customizationOptions.map((group, groupIndex) => (
+                  <div key={groupIndex} className="mb-6 border-t border-b border-gray-200 py-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        {group.title}
+                      </h3>
+                      {group.required ? (
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          1 Pflichtfeld
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          Optional
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      {group.options.map((option, index) => (
+                        <div key={index}>
+                          <label className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div className="flex items-center gap-3">
+                              {group.multiple ? (
+                                // Checkbox for multiple selection
+                                <input
+                                  type="checkbox"
+                                  checked={(selectedExtrasGroups.get(groupIndex) || []).includes(index)}
+                                  onChange={() => {
+                                    const currentExtras = selectedExtrasGroups.get(groupIndex) || []
+                                    if (currentExtras.includes(index)) {
+                                      const newExtras = currentExtras.filter(i => i !== index)
+                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(groupIndex, newExtras)))
+                                    } else {
+                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(groupIndex, [...currentExtras, index])))
+                                    }
+                                  }}
+                                  className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000] rounded"
+                                />
+                              ) : (
+                                // Radio button for single selection
+                                <input
+                                  type="radio"
+                                  name={`customization-${groupIndex}`}
+                                  checked={selectedOptions.get(groupIndex) === index}
+                                  onChange={() => setSelectedOptions(new Map(selectedOptions.set(groupIndex, index)))}
+                                  className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000]"
+                                />
+                              )}
+                              <span className="text-sm text-gray-900">{option.label}</span>
+                            </div>
+                            {option.price > 0 && (
+                              <span className="text-sm font-semibold text-gray-700">
+                                +{option.price.toFixed(2).replace('.', ',')} €
+                              </span>
+                            )}
+                          </label>
+                          <button className="text-xs text-gray-500 hover:text-gray-700 underline ml-11 mt-1">
+                            Produktinfo
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                // Single customization group (backward compatibility)
+                <div className="mb-6 border-t border-b border-gray-200 py-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-bold text-gray-900">
+                      {item.customizationOptions.title}
+                    </h3>
+                    {item.customizationOptions.required ? (
+                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        1 Pflichtfeld
+                      </span>
+                    ) : (
+                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        Optional
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    {item.customizationOptions.options.map((option, index) => (
+                      <div key={index}>
+                        <label className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                          <div className="flex items-center gap-3">
+                            {item.customizationOptions!.multiple ? (
+                              // Checkbox for multiple selection
+                              <input
+                                type="checkbox"
+                                checked={selectedExtras.includes(index)}
+                                onChange={() => {
+                                  if (selectedExtras.includes(index)) {
+                                    setSelectedExtras(selectedExtras.filter(i => i !== index))
+                                  } else {
+                                    setSelectedExtras([...selectedExtras, index])
+                                  }
+                                }}
+                                className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000] rounded"
+                              />
+                            ) : (
+                              // Radio button for single selection
+                              <input
+                                type="radio"
+                                name="customization"
+                                checked={selectedOption === index}
+                                onChange={() => setSelectedOption(index)}
+                                className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000]"
+                              />
+                            )}
+                            <span className="text-sm text-gray-900">{option.label}</span>
+                          </div>
+                          {option.price > 0 && (
+                            <span className="text-sm font-semibold text-gray-700">
+                              +{option.price.toFixed(2).replace('.', ',')} €
+                            </span>
+                          )}
+                        </label>
+                        <button className="text-xs text-gray-500 hover:text-gray-700 underline ml-11 mt-1">
+                          Produktinfo
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
 
           {/* Quantity Controls and Add Button */}
           <div className="flex items-center gap-4">

@@ -29,6 +29,16 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
   const [postalCode, setPostalCode] = useState('')
   const [postalCodeError, setPostalCodeError] = useState('')
 
+  // Calculate total price with express delivery fee
+  const EXPRESS_DELIVERY_FEE = 5.00
+  const calculateTotalPrice = () => {
+    const basePrice = parseFloat(totalPrice.replace(',', '.'))
+    if (timeOption === 'express' && deliveryType === 'delivery') {
+      return (basePrice + EXPRESS_DELIVERY_FEE).toFixed(2).replace('.', ',')
+    }
+    return totalPrice
+  }
+
   // Contact details
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
@@ -72,18 +82,6 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
     if (currentStep === 1 && !deliveryType) {
       alert('Please select a delivery type')
       return
-    }
-
-    if (currentStep === 3 && deliveryType === 'delivery') {
-      if (!postalCode) {
-        setPostalCodeError('Please enter a postal code')
-        return
-      }
-      if (!approvedPostalCodes.includes(postalCode)) {
-        setPostalCodeError('Sorry, we do not deliver to this postal code')
-        return
-      }
-      setPostalCodeError('')
     }
 
     if (currentStep === 4) {
@@ -152,6 +150,8 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
       return
     }
 
+    const finalTotalPrice = calculateTotalPrice()
+
     const orderData = {
       deliveryType,
       timeOption,
@@ -176,7 +176,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           },
           body: JSON.stringify({
             orderData,
-            totalPrice,
+            totalPrice: finalTotalPrice,
             cartItems,
             paymentStatus: 'pending',
           }),
@@ -210,7 +210,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           },
           body: JSON.stringify({
             orderData,
-            totalPrice,
+            totalPrice: finalTotalPrice,
             cartItems,
           }),
         })
@@ -429,6 +429,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     <div className="text-4xl mb-3">⚡</div>
                     <div className="font-bold text-lg text-gray-900">Express</div>
                     <div className="text-sm text-gray-600 mt-1">30 minutes</div>
+                    <div className="text-xs text-[#CC0000] font-semibold mt-2">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} € fee</div>
                   </button>
                 </div>
               ) : (
@@ -451,48 +452,22 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           {currentStep === 3 && (
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
-                {deliveryType === 'delivery' ? 'Enter Delivery Address' : 'Pickup Location'}
+                {deliveryType === 'delivery' ? 'Delivery Information' : 'Pickup Location'}
               </h3>
 
               {deliveryType === 'delivery' ? (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Postal Code
-                  </label>
-                  <input
-                    type="text"
-                    value={postalCode}
-                    onChange={(e) => {
-                      setPostalCode(e.target.value)
-                      setPostalCodeError('')
-                    }}
-                    placeholder="Enter your postal code"
-                    className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${
-                      postalCodeError
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-300 focus:border-[#CC0000]'
-                    }`}
-                  />
-                  {postalCodeError && (
-                    <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                      </svg>
-                      {postalCodeError}
-                    </p>
-                  )}
-                  {!postalCodeError && postalCode && approvedPostalCodes.includes(postalCode) && (
-                    <p className="mt-2 text-sm text-green-600 flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Delivery available in your area!
-                    </p>
-                  )}
-                  <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-blue-900">
-                      <strong>Delivery Radius:</strong> We deliver to selected postal codes in your area.
-                    </p>
+                <div className="p-6 bg-gray-50 rounded-xl">
+                  <div className="flex items-start gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-[#CC0000]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                    </svg>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Delivery Service</h4>
+                      <p className="text-gray-700 mb-2">We deliver to your location!</p>
+                      <p className="text-sm text-gray-600">
+                        You'll provide your complete delivery address in the next step.
+                      </p>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -504,8 +479,8 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     </svg>
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Pickup Address</h4>
-                      <p className="text-gray-700">Musterstraße 123</p>
-                      <p className="text-gray-700">12345 Berlin, Germany</p>
+                      <p className="text-gray-700">Dresdner Straße 220</p>
+                      <p className="text-gray-700">Freital 01705</p>
                       <p className="text-sm text-gray-600 mt-2">
                         Your order will be ready for pickup in approximately 30 minutes
                       </p>
@@ -709,14 +684,26 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                       <div className="flex justify-between">
                         <span className="text-gray-600">Address:</span>
                         <span className="font-semibold text-gray-900 text-right">
-                          {streetAddress}, {postalCode} {city}
+                          {streetAddress}, {city}
                         </span>
                       </div>
                     </>
                   )}
-                  <div className="border-t pt-2 mt-2 flex justify-between">
-                    <span className="text-gray-900 font-bold">Total:</span>
-                    <span className="font-bold text-[#CC0000] text-lg">{totalPrice} €</span>
+                  <div className="border-t pt-2 mt-2">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-gray-600">Subtotal:</span>
+                      <span className="font-semibold text-gray-900">{totalPrice} €</span>
+                    </div>
+                    {timeOption === 'express' && deliveryType === 'delivery' && (
+                      <div className="flex justify-between mb-1">
+                        <span className="text-gray-600">Express Delivery Fee:</span>
+                        <span className="font-semibold text-gray-900">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} €</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between pt-2 border-t">
+                      <span className="text-gray-900 font-bold">Total:</span>
+                      <span className="font-bold text-[#CC0000] text-lg">{calculateTotalPrice()} €</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -811,9 +798,21 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
 
               {/* Order Total */}
               <div className="p-4 bg-gray-50 rounded-xl">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-gray-900">Order Total:</span>
-                  <span className="text-2xl font-bold text-[#CC0000]">{totalPrice} €</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Subtotal:</span>
+                    <span className="font-semibold text-gray-900">{totalPrice} €</span>
+                  </div>
+                  {timeOption === 'express' && deliveryType === 'delivery' && (
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">Express Delivery Fee:</span>
+                      <span className="font-semibold text-gray-900">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} €</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center pt-2 border-t">
+                    <span className="text-lg font-bold text-gray-900">Order Total:</span>
+                    <span className="text-2xl font-bold text-[#CC0000]">{calculateTotalPrice()} €</span>
+                  </div>
                 </div>
               </div>
             </div>

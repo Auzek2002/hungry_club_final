@@ -37,10 +37,7 @@ function BowliciousContent() {
         'mix-your-own-bowl',
         'frischetheke-s-favourite-bowls',
         'sashimi',
-        'saucen',
-        'desserts',
-        'alkoholfreie-getranke',
-        'alkoholische-getranke'
+        'saucen'
       ]
 
       const categoryNames = [
@@ -51,10 +48,7 @@ function BowliciousContent() {
         'Mix Your Own Bowl',
         "Frischetheke's Favourite Bowls",
         'Sashimi',
-        'Saucen',
-        'Desserts',
-        'Alkoholfreie Getränke',
-        'Alkoholische Getränke'
+        'Saucen'
       ]
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -358,21 +352,45 @@ function BowliciousContent() {
       price: '7,90 €',
       description: 'mit Salat-Mix, Gurken, Kirschtomaten, Zwiebeln, Mais, Rucola, Möhren und hausgemachtem Dressing',
       image: '/BOWLICIOUS/Gemischter Salat.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: {
+        title: "Dein Sonderwunsch:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "ohne Dressing", price: 0 }
+        ]
+      }
     },
     {
       name: 'Griechischer Bauernsalat',
       price: '8,90 €',
       description: 'mit Gurken, Tomaten, roten Zwiebeln, Oliven, würzigem Feta, Oregano und hausgemachtem Dressing',
       image: '/BOWLICIOUS/Griechischer Bauernsalat.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: {
+        title: "Dein Sonderwunsch:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "ohne Dressing", price: 0 }
+        ]
+      }
     },
     {
       name: 'Caesar Salad',
       price: '9,90 €',
       description: 'mit Römersalat, Croutons, Hähnchenbrustfilet, Parmesan, Olivenöl, Oregano und hausgemachtem Caesar-Dressing',
       image: '/BOWLICIOUS/Caesar Salad.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Dein Sonderwunsch:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "ohne Dressing", price: 0 }
+        ]
+      }
     }
   ]
 
@@ -382,56 +400,915 @@ function BowliciousContent() {
       price: '12,90 €',
       description: 'mit Lachs, Gurken, Edamame, Avocado, Tomaten-Salsa, Mais, Tobiko, Lauchzwiebeln, Sesam, Sushi-Ingwer und wasabi-Nüsse',
       image: '/BOWLICIOUS/Lachs Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Tuna Bowl',
       price: '13,90 €',
       description: 'mit Thunfisch, Wakame Salat, Gurken, Edamame, Tomaten-Salsa, Avocado, Tobiko, Lauchzwiebeln, Sesam, Sushi-Ingwer',
       image: '/BOWLICIOUS/Tuna Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Yakitori Chicken Bowl',
       price: '12,90 €',
       description: 'mit Yakitori Hähnchen, Gurken, Mais, Paprika, Avocado, Tomaten-Salsa, Röstzwiebeln, Erdnüssen, Lauchzwiebeln, Sesam',
       image: '/BOWLICIOUS/Yakitori Chicken Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Veggie Tofu Bowl',
       price: '12,90 €',
       description: 'mit Tofu, Blattspinat, Broccoli, Mais, gebratenen Champignons, Gurken, Tomaten-Salsa, Guacamole, Sesam, Erdnüssen',
       image: '/BOWLICIOUS/Veggie Tofu Bowl.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Baked Shrimp Bowl',
       price: '14,90 €',
       description: 'mit Ebi Tempura Garnelen, Gurken, Avocado, Edamame, Tomaten-Salsa, Rote Beete, Omelette, Lauchzwiebeln, Sesam, Erdnüssen, Koriander',
       image: '/BOWLICIOUS/Baked Shrimp Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Falafel Bowl',
       price: '12,90 €',
       description: 'mit Falafel, Tomaten-Salsa, Gurken, Avocado, Paprika, Edamame, Rote Beete, Cashewnüsse, Sesam, Koriander',
       image: '/BOWLICIOUS/Falafel Bowl.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Duck Bowl',
       price: '16,90 €',
       description: 'mit knuspriger Ente, Gurken, Mais, Avocado, gebratenen Champignons, Paprika, Broccoli, Tomaten-Salsa, Sesam, Cashewnüsse, Lauchzwiebeln, Roten Zwiebeln',
       image: '/BOWLICIOUS/Duck Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        },
+        {
+          title: "Deine Extras - Toppings:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Mozzarella", price: 0.50 },
+            { label: "mit Erdnüssen", price: 0.40 },
+            { label: "mit Röstzwiebeln", price: 0.40 },
+            { label: "mit Sesam", price: 0.40 },
+            { label: "mit Kokos-Chips", price: 0.50 },
+            { label: "mit Radieschen", price: 0.40 },
+            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
+            { label: "mit Sushi-Ingwer", price: 0.40 },
+            { label: "mit Peperoni", price: 0.40 },
+            { label: "mit Lauchzwiebeln", price: 0.40 },
+            { label: "mit Cashewnüssen", price: 0.50 },
+            { label: "mit Parmesan", price: 0.90 },
+            { label: "mit Koriander", price: 0.40 },
+            { label: "mit Wasabinüssen", price: 0.50 },
+            { label: "mit Seealgen-Streifen", price: 0.40 },
+            { label: "mit Mandeln", price: 0.40 }
+          ]
+        },
+        {
+          title: "Deine 1. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "ohne Sauce", price: 0 }
+          ]
+        },
+        {
+          title: "Deine 2. Sauce:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "ohne weitere Sauce", price: 0 },
+            { label: "Koreansauce", price: 0 },
+            { label: "Chili-Honey-Mayonnaise", price: 0 },
+            { label: "Sesamsauce", price: 0 },
+            { label: "Teriyakisauce", price: 0 },
+            { label: "Erdnusssauce", price: 0 },
+            { label: "Trüffel-Mayonnaise", price: 0 },
+            { label: "Hausgemachte Bowlsauce", price: 0 }
+          ]
+        }
+      ]
     },
     {
       name: 'Chef Bowl',
       price: '16,90 €',
       description: 'mit Lachs, Ebi Tempura Garnelen, Tomaten-Salsa, Gurken, Guacamole, Mais, Kim Chi, Rote Beete, Salat-Mix, vietnamesischem Nom Salat, Mango, Sesam, Lauchzwiebeln, Cashewnüsse',
       image: '/BOWLICIOUS/Chef Bowl.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Deine Base:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Couscous", price: 0 },
+            { label: "mit Jasminreis", price: 0 },
+            { label: "mit Salat-Mix", price: 0 },
+            { label: "mit Sushireis", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Lachs", price: 2.90 },
+            { label: "mit Tofu", price: 1.90 },
+            { label: "mit Räucherlachs", price: 2.90 },
+            { label: "mit Thunfisch", price: 3.90 },
+            { label: "mit Crispy Chicken", price: 2.90 },
+            { label: "mit Ei, gekocht", price: 1.90 },
+            { label: "mit Teriyaki Hähnchen", price: 2.90 },
+            { label: "mit Black Tiger Shrimps", price: 2.90 },
+            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
+            { label: "mit Falafel", price: 2.90 },
+            { label: "mit Ente, knusprig", price: 5.90 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Edamame", price: 0.80 },
+            { label: "mit Zwiebeln, rot", price: 0.80 },
+            { label: "mit Tomaten-Salsa", price: 1.50 },
+            { label: "mit Tamago Omelette", price: 0.80 },
+            { label: "mit Paprika", price: 0.80 },
+            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
+            { label: "mit Mozzarella-Kugel", price: 0.80 },
+            { label: "mit Salat-Mix", price: 0.80 },
+            { label: "mit Broccoli", price: 0.80 },
+            { label: "mit Zucchini", price: 0.80 },
+            { label: "mit Surimi", price: 1.50 },
+            { label: "mit Kirschtomaten", price: 0.80 },
+            { label: "mit Rotkohl", price: 0.80 },
+            { label: "mit Rote Beete", price: 0.80 },
+            { label: "mit Mais", price: 0.80 },
+            { label: "mit Avocado", price: 1.50 },
+            { label: "mit Champignons, gebraten", price: 0.80 },
+            { label: "mit Spargel, mit", price: 0.80 },
+            { label: "mit Wakame Salat", price: 1.50 },
+            { label: "mit Sojasprossen", price: 0.80 },
+            { label: "mit Mango", price: 0.80 },
+            { label: "mit Gurken", price: 0.80 },
+            { label: "mit Guacamole", price: 1.50 }
+          ]
+        }
+      ]
     }
   ]
 
@@ -447,7 +1324,16 @@ function BowliciousContent() {
         '2 Saucen nach Wahl'
       ],
       image: '/BOWLICIOUS/Mix Your Own Bowl - Sushireis.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Mix Your Own Bowl - Sushireis:",
+        required: true,
+        multiple: false,
+        options: [
+          { label: "Medium", price: 0 },
+          { label: "Premium-Größe Basis", price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Mix Your Own Bowl - Jasmisreis',
@@ -460,7 +1346,16 @@ function BowliciousContent() {
         '2 Saucen nach Wahl'
       ],
       image: '/BOWLICIOUS/Mix Your Own Bowl - Jasmisreis.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Mix Your Own Bowl - Jasmisreis:",
+        required: true,
+        multiple: false,
+        options: [
+          { label: "Medium", price: 0 },
+          { label: "Premium-Größe Basis", price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Mix Your Own Bowl - Couscous',
@@ -473,7 +1368,16 @@ function BowliciousContent() {
         '2 Saucen nach Wahl'
       ],
       image: '/BOWLICIOUS/Mix Your Own Bowl - Couscous.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Mix Your Own Bowl - Couscous:",
+        required: true,
+        multiple: false,
+        options: [
+          { label: "Medium", price: 0 },
+          { label: "Premium-Größe Basis", price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Mix Your Own Bowl - Salat-Mix',
@@ -486,7 +1390,16 @@ function BowliciousContent() {
         '2 Saucen nach Wahl'
       ],
       image: '/BOWLICIOUS/Mix Your Own Bowl - Salat-Mix.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Mix Your Own Bowl - Salat-Mix:",
+        required: true,
+        multiple: false,
+        options: [
+          { label: "Medium", price: 0 },
+          { label: "Premium-Größe Basis", price: 3.00 }
+        ]
+      }
     }
   ]
 
@@ -552,249 +1465,6 @@ function BowliciousContent() {
     }
   ]
 
-  const dessertsItems = [
-    {
-      name: 'Gebackene Banane (4 Stück)',
-      price: '5,90 €',
-      description: 'Banane in Pankomehl umhüllt verfeinert mit Honig, Kokosraspeln und Mandeln',
-      image: '/BOWLICIOUS/Gebackene Banane (4 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Kokos Mochi (3 Stück)',
-      price: '5,90 €',
-      description: 'kleine japanische Reisküchlein mit Kokos-Eis innen drin',
-      image: '/BOWLICIOUS/Kokos Mochi (3 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Creme Brulee',
-      price: '5,90 €',
-      description: 'Creme Brulee ist eine Süßspeise aus Eigelb, Sahne und Zucker, die als Dessert in der französischen Küche serviert wird.',
-      image: '/BOWLICIOUS/Creme Brulee.webp',
-      tags: []
-    },
-    {
-      name: 'Banana Pudding',
-      price: '5,90 €',
-      description: 'hausgemachter Banana Pudding - frische Bananenscheiben, luftige Vanillecreme und Eierkeksschichten, liebevoll geschichtet',
-      image: '/BOWLICIOUS/Banana Pudding.webp',
-      tags: []
-    },
-    {
-      name: 'Mango Cheesecake',
-      price: '5,90 €',
-      description: 'hausgemachtes Mango-Cheesecake mit Butterkeksboden',
-      image: '/BOWLICIOUS/Mango Cheesecake.webp',
-      tags: []
-    },
-    {
-      name: 'Glückskekse (1 Stück)',
-      price: '0,70 €',
-      description: '',
-      image: '/BOWLICIOUS/Glückskekse (1 Stück).webp',
-      tags: []
-    }
-  ]
-
-  const alkoholfreieGetraenkeItems = [
-    {
-      name: 'Lycheenektar 0,25l (EINWEG)',
-      price: '2,95 €',
-      description: '',
-      image: '/PIZZA TIME/Lycheenektar 0,25l (EINWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand',
-      tags: []
-    },
-    {
-      name: 'Mango Lassi 0,4l (EINWEG)',
-      price: '4,65 €',
-      description: '',
-      image: '/PIZZA TIME/Mango Lassi 0,4l (EINWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola Zero Sugar 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola Zero Sugar 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-kola® 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'koffeinhaltig, 25 mg/100 ml',
-      image: '/PIZZA TIME/fritz-kola® 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Zitrone 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Pfirsich 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Pfirsich 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Zitrone 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Kirsche 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Kirsche 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Granatapfel 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Granatapfel 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Becks Blue alkoholfrei 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'Alkoholfreies Bier',
-      image: '/PIZZA TIME/Becks Blue alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, <0,5% vol',
-      tags: []
-    },
-    {
-      name: 'Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 6,84 €/l, 0,4% vol',
-      tags: []
-    }
-  ]
-
-  const alkoholischeGetraenkeItems = [
-    {
-      name: 'Corona Extra 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/HIRO BURGER/Corona Extra 0,33lAltersbeschränkung.webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Saigon Premium 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Saigon Premium 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,8% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Asahi 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Asahi 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5,2% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Tsingtao 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Tsingtao 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,7% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Kirin Ichiban 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Kirin Ichiban 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    }
-  ]
-
   const categories = [
     'Beliebt',
     'Vorspeisen',
@@ -803,10 +1473,7 @@ function BowliciousContent() {
     'Mix Your Own Bowl',
     "Frischetheke's Favourite Bowls",
     'Sashimi',
-    'Saucen',
-    'Desserts',
-    'Alkoholfreie Getränke',
-    'Alkoholische Getränke'
+    'Saucen'
   ]
 
   // Get all items for search
@@ -818,10 +1485,7 @@ function BowliciousContent() {
     ...mixYourOwnBowlItems.map(item => ({ ...item, section: 'Mix Your Own Bowl' })),
     ...frischethekeFavouriteBowlsItems.map(item => ({ ...item, section: "Frischetheke's Favourite Bowls" })),
     ...sashimiItems.map(item => ({ ...item, section: 'Sashimi' })),
-    ...saucenItems.map(item => ({ ...item, section: 'Saucen' })),
-    ...dessertsItems.map(item => ({ ...item, section: 'Desserts' })),
-    ...alkoholfreieGetraenkeItems.map(item => ({ ...item, section: 'Alkoholfreie Getränke' })),
-    ...alkoholischeGetraenkeItems.map(item => ({ ...item, section: 'Alkoholische Getränke' }))
+    ...saucenItems.map(item => ({ ...item, section: 'Saucen' }))
   ]
 
   // Filter items based on search query
@@ -833,7 +1497,7 @@ function BowliciousContent() {
     : []
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: 'url("/HIRO BURGER/Hiro_bg.png")', backgroundRepeat: 'repeat', backgroundSize: '200px' }}>
+    <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -841,7 +1505,7 @@ function BowliciousContent() {
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-[#CC0000] h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-[#FF2900] hover:scale-105 cursor-pointer p-1">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -943,7 +1607,7 @@ function BowliciousContent() {
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1011,7 +1675,7 @@ function BowliciousContent() {
           <>
             {/* Beliebt Section */}
             <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">Beliebt</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
 
               {/* Scrollable Carousel */}
               <div className="relative">
@@ -1033,7 +1697,7 @@ function BowliciousContent() {
                     <div
                       key={item.name}
                       onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000]"
+                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
                     >
                       <div className="p-4">
                         <div className="flex gap-3">
@@ -1082,7 +1746,7 @@ function BowliciousContent() {
 
             {/* Vorspeisen Section */}
             <section id="vorspeisen" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Vorspeisen</h2>
                 <span className="text-gray-600 font-semibold">18 Artikel</span>
               </div>
@@ -1093,7 +1757,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1152,7 +1816,7 @@ function BowliciousContent() {
 
             {/* Mac & Cheese Bowls Section */}
             <section id="mac-and-cheese-bowls" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Mac & Cheese Bowls</h2>
                 <span className="text-gray-600 font-semibold">3 Artikel</span>
               </div>
@@ -1163,7 +1827,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1222,7 +1886,7 @@ function BowliciousContent() {
 
             {/* Salate Section */}
             <section id="salate" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Salate</h2>
                 <span className="text-gray-600 font-semibold">3 Artikel</span>
               </div>
@@ -1233,7 +1897,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1292,7 +1956,7 @@ function BowliciousContent() {
 
             {/* Mix Your Own Bowl Section */}
             <section id="mix-your-own-bowl" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Mix Your Own Bowl</h2>
                 <span className="text-gray-600 font-semibold">4 Artikel</span>
               </div>
@@ -1303,7 +1967,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1371,7 +2035,7 @@ function BowliciousContent() {
 
             {/* Frischetheke's Favourite Bowls Section */}
             <section id="frischetheke-s-favourite-bowls" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Frischetheke's Favourite Bowls</h2>
                 <span className="text-gray-600 font-semibold">8 Artikel</span>
               </div>
@@ -1382,7 +2046,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1441,7 +2105,7 @@ function BowliciousContent() {
 
             {/* Sashimi Section */}
             <section id="sashimi" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sashimi</h2>
                 <span className="text-gray-600 font-semibold">2 Artikel</span>
               </div>
@@ -1452,7 +2116,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1511,7 +2175,7 @@ function BowliciousContent() {
 
             {/* Saucen Section */}
             <section id="saucen" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Saucen</h2>
                 <span className="text-gray-600 font-semibold">6 Artikel</span>
               </div>
@@ -1522,7 +2186,7 @@ function BowliciousContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1534,222 +2198,6 @@ function BowliciousContent() {
                         <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
                         {item.description && (
                           <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
-                                  ? 'bg-green-100 text-green-800'
-                                  : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                  }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Desserts Section */}
-            <section id="desserts" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Desserts</h2>
-                <span className="text-gray-600 font-semibold">6 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dessertsItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
-                                  ? 'bg-green-100 text-green-800'
-                                  : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                  }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholfreie Getränke Section */}
-            <section id="alkoholfreie-getranke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholfreie Getränke</h2>
-                <span className="text-gray-600 font-semibold">19 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholfreieGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
-                        )}
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
-                                  ? 'bg-green-100 text-green-800'
-                                  : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                  }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholische Getränke Section */}
-            <section id="alkoholische-getranke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholische Getränke</h2>
-                <span className="text-gray-600 font-semibold">5 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholischeGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
                         )}
 
                         {/* Tags */}

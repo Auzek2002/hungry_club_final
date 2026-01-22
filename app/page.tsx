@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import { useState, useEffect } from 'react';
+import ReservationModal from './components/ReservationModal';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if it's mobile on mount
@@ -28,6 +31,15 @@ export default function Home() {
     };
   }, []);
 
+  // Handle navigation click to activate card hover effect
+  const handleNavClick = (cardId: string) => {
+    setActiveCard(cardId);
+    // Remove the active state after 2 seconds
+    setTimeout(() => {
+      setActiveCard(null);
+    }, 2000);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -35,11 +47,11 @@ export default function Home() {
         <div className="relative">
           {/* Main navbar */}
           <div className="bg-white h-16 shadow-lg border-b-2 border-gray-100">
-            <div className="max-w-7xl mx-auto px-8 h-full">
-              <div className="flex items-center h-full">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8 h-full">
+              <div className="flex items-center h-full justify-between lg:justify-start">
                 {/* Logo on the left */}
-                <div className="flex items-center h-full py-0.5 w-40">
-                  <div className="group bg-white rounded-xl shadow-lg border-4 border-[#CC0000] h-full aspect-square overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-[#FF2900] hover:scale-105 cursor-pointer p-1">
+                <div className="flex items-center h-full py-0.5 w-32 lg:w-40">
+                  <div className="group bg-white rounded-xl shadow-lg border-4 border-white h-full aspect-square overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                     <div className="relative w-full h-full">
                       <Image
                         src="/logo_4k.png"
@@ -53,8 +65,9 @@ export default function Home() {
                 </div>
 
                 {/* Navigation links centered */}
-                <div className="flex items-center justify-center gap-1 flex-1">
-                  <a href="#toshi-sushi" className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
+                <div className="flex items-center justify-center gap-0.5 lg:gap-1 flex-1">
+                  {/* Desktop Links */}
+                  <a href="#toshi-sushi" onClick={() => handleNavClick('toshi-sushi')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
                     <span className="flex items-center gap-2">
                       <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
                         <Image
@@ -73,7 +86,7 @@ export default function Home() {
                     </span>
                   </a>
 
-                  <a href="#hiro-burger" className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
+                  <a href="#hiro-burger" onClick={() => handleNavClick('hiro-burger')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
                     <span className="flex items-center gap-2">
                       <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
                         <Image
@@ -92,7 +105,7 @@ export default function Home() {
                     </span>
                   </a>
 
-                  <a href="#pizza-time" className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
+                  <a href="#pizza-time" onClick={() => handleNavClick('pizza-time')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
                     <span className="flex items-center gap-2">
                       <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
                         <Image
@@ -111,7 +124,7 @@ export default function Home() {
                     </span>
                   </a>
 
-                  <a href="#los-tacos" className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
+                  <a href="#los-tacos" onClick={() => handleNavClick('los-tacos')} className={`group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block ${activeCard === 'los-tacos' ? 'text-[#FF2900] bg-red-50' : ''}`}>
                     <span className="flex items-center gap-2">
                       <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
                         <Image
@@ -130,7 +143,7 @@ export default function Home() {
                     </span>
                   </a>
 
-                  <a href="#bowlicious" className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
+                  <a href="#bowlicious" onClick={() => handleNavClick('bowlicious')} className={`group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block ${activeCard === 'bowlicious' ? 'text-[#FF2900] bg-red-50' : ''}`}>
                     <span className="flex items-center gap-2">
                       <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
                         <Image
@@ -148,14 +161,73 @@ export default function Home() {
                       <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
                     </span>
                   </a>
+
+                  {/* Mobile Links - Icon Only */}
+                  <a href="#toshi-sushi-mobile" onClick={() => handleNavClick('toshi-sushi')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
+                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
+                      <Image
+                        src="/sushi_nav.png"
+                        alt="Sushi"
+                        fill
+                        className="object-contain"
+                      />
+                    </span>
+                  </a>
+
+                  <a href="#hiro-burger-mobile" onClick={() => handleNavClick('hiro-burger')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
+                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
+                      <Image
+                        src="/burger_nav.png"
+                        alt="Burger"
+                        fill
+                        className="object-contain"
+                      />
+                    </span>
+                  </a>
+
+                  <a href="#pizza-time-mobile" onClick={() => handleNavClick('pizza-time')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
+                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
+                      <Image
+                        src="/pizza_nav.png"
+                        alt="Pizza"
+                        fill
+                        className="object-contain"
+                      />
+                    </span>
+                  </a>
+
+                  <a href="#los-tacos-mobile" onClick={() => handleNavClick('los-tacos')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
+                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
+                      <Image
+                        src="/taco_nav.png"
+                        alt="Taco"
+                        fill
+                        className="object-contain"
+                      />
+                    </span>
+                  </a>
+
+                  <a href="#bowlicious-mobile" onClick={() => handleNavClick('bowlicious')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
+                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
+                      <Image
+                        src="/bowl_nav.png"
+                        alt="Bowl"
+                        fill
+                        className="object-contain"
+                      />
+                    </span>
+                  </a>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="hidden lg:flex items-center justify-end gap-3 w-auto">
-                  <a href="#about" className="px-6 py-2.5 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-white hover:text-[#CC0000] transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#CC0000]">
-                    About Us
-                  </a>
-                  <a href="/cart" className="p-3 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#CC0000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#CC0000] flex items-center">
+                  <button
+                    onClick={() => setIsReservationModalOpen(true)}
+                    className="px-6 py-2.5 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-white hover:text-[#CC0000] transition-all duration-300 shadow-md hover:shadow-lg border-2 border-white"
+                  >
+                    Reservation
+                  </button>
+                  <a href="/cart" className="p-3 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#CC0000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-white flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
@@ -181,116 +253,24 @@ export default function Home() {
 
           {/* Mobile Menu Dropdown */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t-2 border-gray-100 z-40 max-h-[80vh] overflow-y-auto">
+            <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t-2 border-gray-100 z-40">
               <div className="max-w-7xl mx-auto px-4 py-4">
                 <div className="space-y-3">
-                  {/* Restaurant Links */}
-                  <a
-                    href="#toshi-sushi-mobile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors group"
-                  >
-                    <div className="relative w-10 h-10 bg-white rounded-lg border-2 border-[#CC0000] p-1 shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Image
-                        src="/sushi_nav.png"
-                        alt="Sushi"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-bold text-sm text-gray-700 group-hover:text-[#FF2900]">
-                      TOSHI SUSHI & ASIA KÜCHE
-                    </span>
-                  </a>
-
-                  <a
-                    href="#hiro-burger-mobile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors group"
-                  >
-                    <div className="relative w-10 h-10 bg-white rounded-lg border-2 border-[#CC0000] p-1 shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Image
-                        src="/burger_nav.png"
-                        alt="Burger"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-bold text-sm text-gray-700 group-hover:text-[#FF2900]">
-                      HIRO BURGER
-                    </span>
-                  </a>
-
-                  <a
-                    href="#pizza-time-mobile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors group"
-                  >
-                    <div className="relative w-10 h-10 bg-white rounded-lg border-2 border-[#CC0000] p-1 shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Image
-                        src="/pizza_nav.png"
-                        alt="Pizza"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-bold text-sm text-gray-700 group-hover:text-[#FF2900]">
-                      PIZZA TIME
-                    </span>
-                  </a>
-
-                  <a
-                    href="#los-tacos-mobile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors group"
-                  >
-                    <div className="relative w-10 h-10 bg-white rounded-lg border-2 border-[#CC0000] p-1 shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Image
-                        src="/taco_nav.png"
-                        alt="Taco"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-bold text-sm text-gray-700 group-hover:text-[#FF2900]">
-                      LOS TACOS
-                    </span>
-                  </a>
-
-                  <a
-                    href="#bowlicious-mobile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 transition-colors group"
-                  >
-                    <div className="relative w-10 h-10 bg-white rounded-lg border-2 border-[#CC0000] p-1 shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Image
-                        src="/bowl_nav.png"
-                        alt="Bowl"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-bold text-sm text-gray-700 group-hover:text-[#FF2900]">
-                      BOWLICIOUS
-                    </span>
-                  </a>
-
-                  {/* Divider */}
-                  <div className="border-t border-gray-200 my-2"></div>
-
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-2 pb-2">
-                    <a
-                      href="#about"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        setIsReservationModalOpen(true)
+                      }}
                       className="w-full py-2.5 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#FF2900] transition-colors text-center shadow-md text-sm"
                     >
-                      About Us
-                    </a>
+                      Reservation
+                    </button>
                     <a
                       href="/cart"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full py-2.5 bg-white text-[#CC0000] font-bold rounded-lg border-2 border-[#CC0000] hover:bg-[#CC0000] hover:text-white transition-colors text-center shadow-md flex items-center justify-center gap-2 text-sm"
+                      className="w-full py-2.5 bg-white text-[#CC0000] font-bold rounded-lg border-2 border-white hover:bg-[#CC0000] hover:text-white transition-colors text-center shadow-md flex items-center justify-center gap-2 text-sm"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -306,9 +286,9 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden pt-16">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
+      <section className="relative h-screen overflow-hidden pt-16">
+        {/* Background Image */}
+        <div className="absolute inset-0">
           {/* Mobile Image */}
           <div
             className="absolute inset-0 lg:hidden transition-transform duration-200"
@@ -317,45 +297,30 @@ export default function Home() {
             }}
           >
             <Image
-              src="/hero_mobile.jpeg"
+              src="/hero_m_2.png"
               alt="Delicious Food Background"
               fill
               className="object-cover"
               priority
+              quality={100}
+              unoptimized
             />
           </div>
           {/* Desktop Image */}
           <Image
-            src="/hero_web.jpeg"
+            src="/hero_4.png"
             alt="Delicious Food Background"
             fill
-            className="object-cover object-[50%_15%] hidden lg:block"
+            className="object-cover object-[50%_40%] hidden lg:block"
             priority
+            quality={100}
+            unoptimized
           />
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-6">
-          {/* Main Heading */}
-          <h1
-            className="font-[family-name:var(--font-archivo-black)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white leading-tight tracking-tight transition-all duration-300"
-            style={{
-              transform: isMobile ? `scale(${Math.max(0.5, 1 - scrollY / 800)}) translateY(${scrollY * 0.5}px)` : 'none',
-              opacity: isMobile ? Math.max(0, 1 - scrollY / 400) : 1
-            }}
-          >
-            Willkommen im{" "}
-            <span className="text-[#CC0000] drop-shadow-2xl">
-              Hungry Club
-            </span>
-          </h1>
         </div>
       </section>
 
       {/* Restaurant Cards Section */}
-      <section className="relative py-20" style={{ backgroundImage: 'url(/card_bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
+      <section className="relative py-20" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
         <div className="relative z-10 max-w-7xl mx-auto px-8">
           {/* Desktop Grid Layout (2-2-1) */}
           <div className="hidden lg:block">
@@ -363,57 +328,25 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Toshi Sushi Card */}
               <div id="toshi-sushi" className="scroll-mt-20">
-                <a href="/TOSHI_SUSHI" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <a href="/TOSHI_SUSHI" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
-                    src="/TOSHI.jpeg"
+                    src="/toshi_card.png"
                     alt="Toshi Sushi & Asia Küche"
                     fill
-                    className="object-cover group-hover:scale-110 transition-all duration-700"
+                    className={`object-cover object-[50%_38%] transition-all duration-700 ${activeCard === 'toshi-sushi' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-[#CC0000]/90 transition-all duration-700"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-2xl border-3 border-[#CC0000] p-2 group-hover:scale-110 transition-all duration-700 shadow-xl">
-                        <Image
-                          src="/sushi_card.png"
-                          alt="Toshi Sushi Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl xl:text-3xl text-white tracking-tight drop-shadow-2xl group-hover:text-[#FFE5E5] transition-all duration-700">
-                        TOSHI SUSHI &<br />ASIA KÜCHE
-                      </h2>
-                    </div>
-                  </div>
                 </a>
               </div>
 
               {/* Hiro Burger Card */}
               <div id="hiro-burger" className="scroll-mt-20">
-                <a href="/HIRO_BURGER" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <a href="/HIRO_BURGER" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
-                    src="/HIRO BURGER.png"
+                    src="/hiro_card.png"
                     alt="Hiro Burger"
                     fill
-                    className="object-cover object-[50%_60%] group-hover:scale-110 transition-all duration-700"
+                    className={`object-cover object-[50%_22%] transition-all duration-700 ${activeCard === 'hiro-burger' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-[#CC0000]/90 transition-all duration-700"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-2xl border-3 border-[#CC0000] p-2 group-hover:scale-110 transition-all duration-700 shadow-xl">
-                        <Image
-                          src="/burger_card.png"
-                          alt="Hiro Burger Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl xl:text-3xl text-white tracking-tight drop-shadow-2xl group-hover:text-[#FFE5E5] transition-all duration-700">
-                        HIRO BURGER
-                      </h2>
-                    </div>
-                  </div>
                 </a>
               </div>
             </div>
@@ -422,87 +355,66 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Pizza Time Card */}
               <div id="pizza-time" className="scroll-mt-20">
-                <a href="/PIZZA_TIME" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <a href="/PIZZA_TIME" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
-                    src="/PIZZA TIME.jpeg"
+                    src="/pizza_card_1.png"
                     alt="Pizza Time"
                     fill
-                    className="object-cover group-hover:scale-110 transition-all duration-700"
+                    className={`object-cover object-[50%_28%] transition-all duration-700 ${activeCard === 'pizza-time' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-[#CC0000]/90 transition-all duration-700"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-2xl border-3 border-[#CC0000] p-2 group-hover:scale-110 transition-all duration-700 shadow-xl">
-                        <Image
-                          src="/pizza_card.png"
-                          alt="Pizza Time Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl xl:text-3xl text-white tracking-tight drop-shadow-2xl group-hover:text-[#FFE5E5] transition-all duration-700">
-                        PIZZA TIME
-                      </h2>
-                    </div>
-                  </div>
                 </a>
               </div>
 
               {/* Los Tacos Card */}
               <div id="los-tacos" className="scroll-mt-20">
-                <a href="/LOS_TACOS" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <a href="/LOS_TACOS" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
-                    src="/LOS TACOS.jpeg"
+                    src="/los_card.png"
                     alt="Los Tacos"
                     fill
-                    className="object-cover group-hover:scale-110 transition-all duration-700"
+                    className={`object-cover object-[50%_30%] transition-all duration-700 ${activeCard === 'los-tacos' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-[#CC0000]/90 transition-all duration-700"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-2xl border-3 border-[#CC0000] p-2 group-hover:scale-110 transition-all duration-700 shadow-xl">
-                        <Image
-                          src="/taco_card.png"
-                          alt="Los Tacos Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl xl:text-3xl text-white tracking-tight drop-shadow-2xl group-hover:text-[#FFE5E5] transition-all duration-700">
-                        LOS TACOS
-                      </h2>
-                    </div>
-                  </div>
                 </a>
               </div>
             </div>
 
-            {/* Third Row - 1 Card Centered */}
-            <div className="flex justify-center">
-              <div id="bowlicious" className="scroll-mt-20 w-1/2">
-                <a href="/BOWLICIOUS" className="block relative h-72 rounded-2xl overflow-hidden shadow-2xl border-4 border-[#CC0000] group hover:shadow-[0_0_60px_rgba(204,0,0,0.8)] hover:border-[#FF2900] transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+            {/* Third Row - 2 Cards */}
+            <div className="grid grid-cols-2 gap-6 mb-6">
+              {/* Bowlicious Card */}
+              <div id="bowlicious" className="scroll-mt-20">
+                <a href="/BOWLICIOUS" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
-                    src="/BOWLICIOUS.jpeg"
+                    src="/bowl_card_1.png"
                     alt="Bowlicious"
                     fill
-                    className="object-cover group-hover:scale-110 transition-all duration-700"
+                    className={`object-cover object-[50%_44%] transition-all duration-700 ${activeCard === 'bowlicious' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-[#CC0000]/90 transition-all duration-700"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-2xl border-3 border-[#CC0000] p-2 group-hover:scale-110 transition-all duration-700 shadow-xl">
-                        <Image
-                          src="/bowl_card.png"
-                          alt="Bowlicious Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl xl:text-3xl text-white tracking-tight drop-shadow-2xl group-hover:text-[#FFE5E5] transition-all duration-700">
-                        BOWLICIOUS
-                      </h2>
-                    </div>
-                  </div>
+                </a>
+              </div>
+
+              {/* Drinks Card */}
+              <div id="drinks" className="scroll-mt-20">
+                <a href="/drinks" className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                  <Image
+                    src="/drinks.png"
+                    alt="Drinks"
+                    fill
+                    className="object-cover object-center group-hover:scale-110 transition-all duration-700"
+                  />
+                </a>
+              </div>
+            </div>
+
+            {/* Fourth Row - 1 Card Centered */}
+            <div className="flex justify-center">
+              <div id="desserts" className="scroll-mt-20 w-1/2">
+                <a href="/desserts" className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                  <Image
+                    src="/Desserts.png"
+                    alt="Desserts"
+                    fill
+                    className="object-cover object-center group-hover:scale-110 transition-all duration-700"
+                  />
                 </a>
               </div>
             </div>
@@ -512,131 +424,85 @@ export default function Home() {
           <div className="lg:hidden space-y-4">
             {/* Toshi Sushi Card */}
             <div id="toshi-sushi-mobile" className="scroll-mt-20">
-              <a href="/TOSHI_SUSHI" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-[#CC0000] group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <a href="/TOSHI_SUSHI" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
-                  src="/TOSHI SUSHI & ASIA KÜCHE.jpeg"
+                  src="/toshi_card_mob.png"
                   alt="Toshi Sushi & Asia Küche"
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-transform duration-300 ${activeCard === 'toshi-sushi' ? 'scale-110' : ''}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-                <div className="absolute inset-0 p-4 flex items-center">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white rounded-xl border-2 border-[#CC0000] p-1.5 shadow-lg mr-4">
-                    <Image
-                      src="/sushi_card.png"
-                      alt="Toshi Sushi Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <h2 className="font-[family-name:var(--font-archivo-black)] text-lg sm:text-xl text-white tracking-tight drop-shadow-lg">
-                    TOSHI SUSHI &<br />ASIA KÜCHE
-                  </h2>
-                </div>
               </a>
             </div>
 
             {/* Hiro Burger Card */}
             <div id="hiro-burger-mobile" className="scroll-mt-20">
-              <a href="/HIRO_BURGER" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-[#CC0000] group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <a href="/HIRO_BURGER" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
-                  src="/HIRO BURGER.png"
+                  src="/hiro_card_m_2.png"
                   alt="Hiro Burger"
                   fill
-                  className="object-cover object-[50%_60%]"
+                  className={`object-cover transition-transform duration-300 ${activeCard === 'hiro-burger' ? 'scale-110' : ''}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-                <div className="absolute inset-0 p-4 flex items-center">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white rounded-xl border-2 border-[#CC0000] p-1.5 shadow-lg mr-4">
-                    <Image
-                      src="/burger_card.png"
-                      alt="Hiro Burger Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <h2 className="font-[family-name:var(--font-archivo-black)] text-lg sm:text-xl text-white tracking-tight drop-shadow-lg">
-                    HIRO BURGER
-                  </h2>
-                </div>
               </a>
             </div>
 
             {/* Pizza Time Card */}
             <div id="pizza-time-mobile" className="scroll-mt-20">
-              <a href="/PIZZA_TIME" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-[#CC0000] group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <a href="/PIZZA_TIME" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
-                  src="/PIZZA TIME.jpeg"
+                  src="/pizza_card_mob.png"
                   alt="Pizza Time"
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-transform duration-300 ${activeCard === 'pizza-time' ? 'scale-110' : ''}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-                <div className="absolute inset-0 p-4 flex items-center">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white rounded-xl border-2 border-[#CC0000] p-1.5 shadow-lg mr-4">
-                    <Image
-                      src="/pizza_card.png"
-                      alt="Pizza Time Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <h2 className="font-[family-name:var(--font-archivo-black)] text-lg sm:text-xl text-white tracking-tight drop-shadow-lg">
-                    PIZZA TIME
-                  </h2>
-                </div>
               </a>
             </div>
 
             {/* Los Tacos Card */}
             <div id="los-tacos-mobile" className="scroll-mt-20">
-              <a href="/LOS_TACOS" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-[#CC0000] group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <a href="/LOS_TACOS" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
-                  src="/LOS TACOS.jpeg"
+                  src="/los_card_mob.png"
                   alt="Los Tacos"
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-transform duration-300 ${activeCard === 'los-tacos' ? 'scale-110' : ''}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-                <div className="absolute inset-0 p-4 flex items-center">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white rounded-xl border-2 border-[#CC0000] p-1.5 shadow-lg mr-4">
-                    <Image
-                      src="/taco_card.png"
-                      alt="Los Tacos Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <h2 className="font-[family-name:var(--font-archivo-black)] text-lg sm:text-xl text-white tracking-tight drop-shadow-lg">
-                    LOS TACOS
-                  </h2>
-                </div>
               </a>
             </div>
 
             {/* Bowlicious Card */}
             <div id="bowlicious-mobile" className="scroll-mt-20">
-              <a href="/BOWLICIOUS" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-[#CC0000] group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <a href="/BOWLICIOUS" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
-                  src="/BOWLICIOUS.jpeg"
+                  src="/bowl_card_mob.png"
                   alt="Bowlicious"
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-transform duration-300 ${activeCard === 'bowlicious' ? 'scale-110' : ''}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-                <div className="absolute inset-0 p-4 flex items-center">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white rounded-xl border-2 border-[#CC0000] p-1.5 shadow-lg mr-4">
-                    <Image
-                      src="/bowl_card.png"
-                      alt="Bowlicious Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <h2 className="font-[family-name:var(--font-archivo-black)] text-lg sm:text-xl text-white tracking-tight drop-shadow-lg">
-                    BOWLICIOUS
-                  </h2>
-                </div>
+              </a>
+            </div>
+
+            {/* Drinks Card */}
+            <div id="drinks-mobile" className="scroll-mt-20">
+              <a href="/drinks" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+                <Image
+                  src="/drinks.png"
+                  alt="Drinks"
+                  fill
+                  className="object-cover object-[50%_35%]"
+                />
+              </a>
+            </div>
+
+            {/* Desserts Card */}
+            <div id="desserts-mobile" className="scroll-mt-20">
+              <a href="/desserts" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+                <Image
+                  src="/Desserts.png"
+                  alt="Desserts"
+                  fill
+                  className="object-cover object-[50%_35%]"
+                />
               </a>
             </div>
           </div>
@@ -660,7 +526,7 @@ export default function Home() {
             {/* Brand Column */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-4 mb-6">
-                <div className="relative w-16 h-16 bg-white rounded-xl border-4 border-[#CC0000] p-1 shadow-lg">
+                <div className="relative w-16 h-16 bg-white rounded-xl border-4 border-white p-1 shadow-lg">
                   <Image
                     src="/logo_4k.png"
                     alt="Hungry Club Logo"
@@ -673,7 +539,7 @@ export default function Home() {
                 </h3>
               </div>
               <p className="text-gray-400 leading-relaxed mb-6">
-                Your ultimate destination for diverse culinary experiences. From sushi to burgers, pizza to tacos - we bring the world&apos;s flavors to your doorstep.
+                Ihr ultimatives Ziel für vielfältige kulinarische Erlebnisse. Von Sushi über Burger und Pizza bis hin zu Tacos – wir bringen die Aromen der Welt direkt zu Ihnen nach Hause.
               </p>
               {/* Social Icons */}
               <div className="flex gap-4">
@@ -738,8 +604,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="text-gray-400">
-                    Musterstraße 123<br />
-                    12345 Berlin, Germany
+                    Dresdner Straße 220, Freital 01705
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
@@ -769,16 +634,8 @@ export default function Home() {
               </h4>
               <ul className="space-y-3">
                 <li className="flex justify-between text-gray-400">
-                  <span>Monday - Thursday</span>
-                  <span className="text-white">11:00 - 22:00</span>
-                </li>
-                <li className="flex justify-between text-gray-400">
-                  <span>Friday - Saturday</span>
-                  <span className="text-white">11:00 - 23:00</span>
-                </li>
-                <li className="flex justify-between text-gray-400">
-                  <span>Sunday</span>
-                  <span className="text-white">12:00 - 21:00</span>
+                  <span>Montag - Sonntag</span>
+                  <span className="text-white">11:30 - 21:00</span>
                 </li>
               </ul>
               {/* Order Now Button */}
@@ -798,7 +655,7 @@ export default function Home() {
               {/* Brand Column - Compact */}
               <div className="flex flex-col">
                 <div className="flex flex-col items-start gap-3 mb-3">
-                  <div className="relative w-14 h-14 bg-white rounded-lg border-3 border-[#CC0000] p-1 shadow-lg flex-shrink-0">
+                  <div className="relative w-14 h-14 bg-white rounded-lg border-3 border-white p-1 shadow-lg flex-shrink-0">
                     <Image
                       src="/logo_4k.png"
                       alt="Hungry Club Logo"
@@ -866,16 +723,8 @@ export default function Home() {
                 </h4>
                 <ul className="space-y-1.5">
                   <li className="text-gray-400 text-[10px]">
-                    <span className="block leading-tight">Mon - Thu</span>
-                    <span className="text-white font-bold text-xs">11:00 - 22:00</span>
-                  </li>
-                  <li className="text-gray-400 text-[10px]">
-                    <span className="block leading-tight">Fri - Sat</span>
-                    <span className="text-white font-bold text-xs">11:00 - 23:00</span>
-                  </li>
-                  <li className="text-gray-400 text-[10px]">
-                    <span className="block leading-tight">Sunday</span>
-                    <span className="text-white font-bold text-xs">12:00 - 21:00</span>
+                    <span className="block leading-tight">Montag - Sonntag</span>
+                    <span className="text-white font-bold text-xs">11:30 - 21:00</span>
                   </li>
                 </ul>
               </div>
@@ -971,6 +820,12 @@ export default function Home() {
         {/* Decorative glow effect */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-[#CC0000]/20 blur-3xl"></div>
       </footer>
+
+      {/* Reservation Modal */}
+      <ReservationModal
+        isOpen={isReservationModalOpen}
+        onClose={() => setIsReservationModalOpen(false)}
+      />
     </div>
   );
 }

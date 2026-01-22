@@ -37,10 +37,7 @@ function LosTacosContent() {
         'french-tacos',
         'taco-burger',
         'burritos',
-        'loaded-nachos',
-        'desserts',
-        'alkoholfreie-getränke',
-        'alkoholische-getränke'
+        'loaded-nachos'
       ]
 
       const categoryNames = [
@@ -51,10 +48,7 @@ function LosTacosContent() {
         'French Tacos',
         'Taco-Burger',
         'Burritos',
-        'Loaded Nachos',
-        'Desserts',
-        'Alkoholfreie Getränke',
-        'Alkoholische Getränke'
+        'Loaded Nachos'
       ]
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -167,7 +161,32 @@ function LosTacosContent() {
       price: '8,90 €',
       description: 'mit Paprika, Mais, karamellisierten Zwiebeln, Hähnchenbrustfilet, Cheddar und hausgemachter Tacosauce',
       image: '/LOS TACOS/The Chicken Taco.webp',
-      category: 'French Tacos'
+      category: 'French Tacos',
+      customizationOptions: {
+        title: "Deine Extras - Mix Ins:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "mit Cheddar", price: 1.00 },
+          { label: "mit Guacamole", price: 2.00 },
+          { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+          { label: "mit Paprika", price: 1.00 },
+          { label: "mit Avocado", price: 2.00 },
+          { label: "mit Petersilie", price: 1.00 },
+          { label: "mit Koriander", price: 1.00 },
+          { label: "mit Lauchzwiebeln", price: 1.00 },
+          { label: "mit Zwiebeln, rot", price: 1.00 },
+          { label: "mit Feta", price: 2.00 },
+          { label: "mit Kidneybohnen", price: 1.00 },
+          { label: "mit Eisbergsalat", price: 1.00 },
+          { label: "mit Mozzarella", price: 1.00 },
+          { label: "mit Gurken Kimchi", price: 2.00 },
+          { label: "mit Mais", price: 1.00 },
+          { label: "mit Tomatenreis", price: 2.00 },
+          { label: "mit Tomatensalsa", price: 1.00 },
+          { label: "mit Pommes frites", price: 2.00 }
+        ]
+      }
     },
     {
       name: 'Original Birria Tacos (2 Stück)',
@@ -181,7 +200,61 @@ function LosTacosContent() {
       price: '11,90 €',
       description: 'mit mexikanischem Tomatenreis, Grillgemüse, Tomatenwürfeln, Eisbergsalat, Guacamole, Kidneybohnen, Cheddar und hausgemachter Sauce',
       image: '/LOS TACOS/Burritos.webp',
-      category: 'Burritos'
+      category: 'Burritos',
+      customizationOptions: [
+        {
+          title: "Dein Protein:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Chicken", price: 0 },
+            { label: "mit Halloumi", price: 0 },
+            { label: "mit Falafel", price: 0 },
+            { label: "mit Hiro Beef", price: 0 },
+            { label: "mit Honey BBQ Chicken", price: 0 },
+            { label: "mit Pulled Pork", price: 0 },
+            { label: "ohne Protein", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Falafel", price: 3.00 },
+            { label: "mit Chicken", price: 3.00 },
+            { label: "mit Halloumi", price: 3.00 },
+            { label: "mit Pulled Pork", price: 3.00 },
+            { label: "mit Honey BBQ Chicken", price: 3.00 },
+            { label: "mit Hiro Beef", price: 3.00 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Cheddar", price: 1.00 },
+            { label: "mit Guacamole", price: 2.00 },
+            { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+            { label: "mit Paprika", price: 1.00 },
+            { label: "mit Avocado", price: 2.00 },
+            { label: "mit Petersilie", price: 1.00 },
+            { label: "mit Koriander", price: 1.00 },
+            { label: "mit Lauchzwiebeln", price: 1.00 },
+            { label: "mit Zwiebeln, rot", price: 1.00 },
+            { label: "mit Feta", price: 2.00 },
+            { label: "mit Kidneybohnen", price: 1.00 },
+            { label: "mit Eisbergsalat", price: 1.00 },
+            { label: "mit Mozzarella", price: 1.00 },
+            { label: "mit Gurken Kimchi", price: 2.00 },
+            { label: "mit Mais", price: 1.00 },
+            { label: "mit Tomatenreis", price: 2.00 },
+            { label: "mit Tomatensalsa", price: 1.00 },
+            { label: "mit Pommes frites", price: 2.00 }
+          ]
+        }
+      ]
     },
     {
       name: 'O.G. Taco Burger',
@@ -284,28 +357,128 @@ function LosTacosContent() {
       price: '8,90 €',
       description: 'mit Paprika, Mais, karamellisierten Zwiebeln, Hähnchenbrustfilet, Cheddar und hausgemachter Tacosauce',
       image: '/LOS TACOS/The Chicken Taco.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Deine Extras - Mix Ins:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "mit Cheddar", price: 1.00 },
+          { label: "mit Guacamole", price: 2.00 },
+          { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+          { label: "mit Paprika", price: 1.00 },
+          { label: "mit Avocado", price: 2.00 },
+          { label: "mit Petersilie", price: 1.00 },
+          { label: "mit Koriander", price: 1.00 },
+          { label: "mit Lauchzwiebeln", price: 1.00 },
+          { label: "mit Zwiebeln, rot", price: 1.00 },
+          { label: "mit Feta", price: 2.00 },
+          { label: "mit Kidneybohnen", price: 1.00 },
+          { label: "mit Eisbergsalat", price: 1.00 },
+          { label: "mit Mozzarella", price: 1.00 },
+          { label: "mit Gurken Kimchi", price: 2.00 },
+          { label: "mit Mais", price: 1.00 },
+          { label: "mit Tomatenreis", price: 2.00 },
+          { label: "mit Tomatensalsa", price: 1.00 },
+          { label: "mit Pommes frites", price: 2.00 }
+        ]
+      }
     },
     {
       name: 'Beef Taco',
       price: '8,90 €',
       description: 'mit Paprika, Mais, karamellisierten Zwiebeln, 150g Rindfleisch Patty, Cheddar und hausgemachter Tacosauce',
       image: '/LOS TACOS/Beef Taco.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Deine Extras - Mix Ins:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "mit Cheddar", price: 1.00 },
+          { label: "mit Guacamole", price: 2.00 },
+          { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+          { label: "mit Paprika", price: 1.00 },
+          { label: "mit Avocado", price: 2.00 },
+          { label: "mit Petersilie", price: 1.00 },
+          { label: "mit Koriander", price: 1.00 },
+          { label: "mit Lauchzwiebeln", price: 1.00 },
+          { label: "mit Zwiebeln, rot", price: 1.00 },
+          { label: "mit Feta", price: 2.00 },
+          { label: "mit Kidneybohnen", price: 1.00 },
+          { label: "mit Eisbergsalat", price: 1.00 },
+          { label: "mit Mozzarella", price: 1.00 },
+          { label: "mit Gurken Kimchi", price: 2.00 },
+          { label: "mit Mais", price: 1.00 },
+          { label: "mit Tomatenreis", price: 2.00 },
+          { label: "mit Tomatensalsa", price: 1.00 },
+          { label: "mit Pommes frites", price: 2.00 }
+        ]
+      }
     },
     {
       name: 'Pulled Pork Taco',
       price: '8,90 €',
       description: 'mit Paprika, Mais, karamellisierten Zwiebeln, Pulled Pork, Barbecue-Limettensauce, Cheddar und hausgemachter Tacosauce',
       image: '/LOS TACOS/Pulled Pork Taco.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: "Deine Extras - Mix Ins:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "mit Cheddar", price: 1.00 },
+          { label: "mit Guacamole", price: 2.00 },
+          { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+          { label: "mit Paprika", price: 1.00 },
+          { label: "mit Avocado", price: 2.00 },
+          { label: "mit Petersilie", price: 1.00 },
+          { label: "mit Koriander", price: 1.00 },
+          { label: "mit Lauchzwiebeln", price: 1.00 },
+          { label: "mit Zwiebeln, rot", price: 1.00 },
+          { label: "mit Feta", price: 2.00 },
+          { label: "mit Kidneybohnen", price: 1.00 },
+          { label: "mit Eisbergsalat", price: 1.00 },
+          { label: "mit Mozzarella", price: 1.00 },
+          { label: "mit Gurken Kimchi", price: 2.00 },
+          { label: "mit Mais", price: 1.00 },
+          { label: "mit Tomatenreis", price: 2.00 },
+          { label: "mit Tomatensalsa", price: 1.00 },
+          { label: "mit Pommes frites", price: 2.00 }
+        ]
+      }
     },
     {
       name: 'Falafel Taco',
       price: '8,90 €',
       description: 'mit Paprika, Mais, karamellisierten Zwiebeln, Mozzarella, Falafel, veganem Käse und hausgemachter Tacosauce',
       image: '/LOS TACOS/Falafel Taco.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: {
+        title: "Deine Extras - Mix Ins:",
+        required: false,
+        multiple: true,
+        options: [
+          { label: "mit Cheddar", price: 1.00 },
+          { label: "mit Guacamole", price: 2.00 },
+          { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+          { label: "mit Paprika", price: 1.00 },
+          { label: "mit Avocado", price: 2.00 },
+          { label: "mit Petersilie", price: 1.00 },
+          { label: "mit Koriander", price: 1.00 },
+          { label: "mit Lauchzwiebeln", price: 1.00 },
+          { label: "mit Zwiebeln, rot", price: 1.00 },
+          { label: "mit Feta", price: 2.00 },
+          { label: "mit Kidneybohnen", price: 1.00 },
+          { label: "mit Eisbergsalat", price: 1.00 },
+          { label: "mit Mozzarella", price: 1.00 },
+          { label: "mit Gurken Kimchi", price: 2.00 },
+          { label: "mit Mais", price: 1.00 },
+          { label: "mit Tomatenreis", price: 2.00 },
+          { label: "mit Tomatensalsa", price: 1.00 },
+          { label: "mit Pommes frites", price: 2.00 }
+        ]
+      }
     }
   ]
 
@@ -346,7 +519,61 @@ function LosTacosContent() {
       price: '11,90 €',
       description: 'mit mexikanischem Tomatenreis, Grillgemüse, Tomatenwürfeln, Eisbergsalat, Guacamole, Kidneybohnen, Cheddar und hausgemachter Sauce',
       image: '/LOS TACOS/Burritos.webp',
-      tags: []
+      tags: [],
+      customizationOptions: [
+        {
+          title: "Dein Protein:",
+          required: true,
+          multiple: false,
+          options: [
+            { label: "mit Chicken", price: 0 },
+            { label: "mit Halloumi", price: 0 },
+            { label: "mit Falafel", price: 0 },
+            { label: "mit Hiro Beef", price: 0 },
+            { label: "mit Honey BBQ Chicken", price: 0 },
+            { label: "mit Pulled Pork", price: 0 },
+            { label: "ohne Protein", price: 0 }
+          ]
+        },
+        {
+          title: "Deine Extras - Proteine:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Falafel", price: 3.00 },
+            { label: "mit Chicken", price: 3.00 },
+            { label: "mit Halloumi", price: 3.00 },
+            { label: "mit Pulled Pork", price: 3.00 },
+            { label: "mit Honey BBQ Chicken", price: 3.00 },
+            { label: "mit Hiro Beef", price: 3.00 }
+          ]
+        },
+        {
+          title: "Deine Extras - Mix Ins:",
+          required: false,
+          multiple: true,
+          options: [
+            { label: "mit Cheddar", price: 1.00 },
+            { label: "mit Guacamole", price: 2.00 },
+            { label: "mit Zwiebeln, karamellisiert", price: 1.00 },
+            { label: "mit Paprika", price: 1.00 },
+            { label: "mit Avocado", price: 2.00 },
+            { label: "mit Petersilie", price: 1.00 },
+            { label: "mit Koriander", price: 1.00 },
+            { label: "mit Lauchzwiebeln", price: 1.00 },
+            { label: "mit Zwiebeln, rot", price: 1.00 },
+            { label: "mit Feta", price: 2.00 },
+            { label: "mit Kidneybohnen", price: 1.00 },
+            { label: "mit Eisbergsalat", price: 1.00 },
+            { label: "mit Mozzarella", price: 1.00 },
+            { label: "mit Gurken Kimchi", price: 2.00 },
+            { label: "mit Mais", price: 1.00 },
+            { label: "mit Tomatenreis", price: 2.00 },
+            { label: "mit Tomatensalsa", price: 1.00 },
+            { label: "mit Pommes frites", price: 2.00 }
+          ]
+        }
+      ]
     }
   ]
 
@@ -360,219 +587,6 @@ function LosTacosContent() {
     }
   ]
 
-  const dessertsItems = [
-    {
-      name: 'Hausgemachter Banana Pudding',
-      price: '5,90 €',
-      description: 'mit frischen Bananenscheiben, luftiger Vanillecreme und Eierkeksschichten, liebevoll geschichtet',
-      image: '/LOS TACOS/Hausgemachter Banana Pudding.webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Hausgemachter Mango Cheesecake',
-      price: '5,90 €',
-      description: 'mit Butterkeksboden',
-      image: '/LOS TACOS/Hausgemachter Mango Cheesecake.webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Hausgemachte Creme Brulee',
-      price: '5,90 €',
-      description: '',
-      image: '/LOS TACOS/Hausgemachte Creme Brulee.webp',
-      tags: ['Vegetarisch']
-    }
-  ]
-
-  const alkoholfreieGetraenkeItems = [
-    {
-      name: 'Lycheenektar 0,25l (EINWEG)',
-      price: '2,95 €',
-      description: '',
-      image: '/PIZZA TIME/Lycheenektar 0,25l (EINWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola Zero Sugar 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola Zero Sugar 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-kola® 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'koffeinhaltig, 25 mg/100 ml',
-      image: '/PIZZA TIME/fritz-kola® 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Zitrone 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Pfirsich 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Pfirsich 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Zitrone 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Kirsche 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Kirsche 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Granatapfel 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Granatapfel 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Becks Blue alkoholfrei 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'Alkoholfreies Bier',
-      image: '/PIZZA TIME/Becks Blue alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, <0,5% vol',
-      tags: []
-    },
-    {
-      name: 'Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 6,84 €/l, 0,4% vol',
-      tags: []
-    }
-  ]
-
-  const alkoholischeGetraenkeItems = [
-    {
-      name: 'Corona Extra 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/HIRO BURGER/Corona Extra 0,33lAltersbeschränkung.webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Saigon Premium 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Saigon Premium 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,8% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Asahi 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Asahi 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5,2% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Tsingtao 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Tsingtao 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,7% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Kirin Ichiban 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Kirin Ichiban 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    }
-  ]
 
   const categories = [
     'Beliebt',
@@ -582,10 +596,7 @@ function LosTacosContent() {
     'French Tacos',
     'Taco-Burger',
     'Burritos',
-    'Loaded Nachos',
-    'Desserts',
-    'Alkoholfreie Getränke',
-    'Alkoholische Getränke'
+    'Loaded Nachos'
   ]
 
   // Get all items for search
@@ -597,10 +608,7 @@ function LosTacosContent() {
     ...frenchTacosItems.map(item => ({ ...item, section: 'French Tacos' })),
     ...tacoBurgerItems.map(item => ({ ...item, section: 'Taco-Burger' })),
     ...burritosItems.map(item => ({ ...item, section: 'Burritos' })),
-    ...loadedNachosItems.map(item => ({ ...item, section: 'Loaded Nachos' })),
-    ...dessertsItems.map(item => ({ ...item, section: 'Desserts' })),
-    ...alkoholfreieGetraenkeItems.map(item => ({ ...item, section: 'Alkoholfreie Getränke' })),
-    ...alkoholischeGetraenkeItems.map(item => ({ ...item, section: 'Alkoholische Getränke' }))
+    ...loadedNachosItems.map(item => ({ ...item, section: 'Loaded Nachos' }))
   ]
 
   // Filter items based on search query
@@ -612,7 +620,7 @@ function LosTacosContent() {
     : []
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: 'url("/HIRO BURGER/Hiro_bg.png")', backgroundRepeat: 'repeat', backgroundSize: '200px' }}>
+    <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -620,7 +628,7 @@ function LosTacosContent() {
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-[#CC0000] h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-[#FF2900] hover:scale-105 cursor-pointer p-1">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -721,7 +729,7 @@ function LosTacosContent() {
                 {searchResults.map((item, index) => (
                   <div
                     key={`${item.section}-${item.name}-${index}`}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -767,7 +775,7 @@ function LosTacosContent() {
           <>
             {/* Beliebt Section */}
             <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">Beliebt</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
 
               {/* Scrollable Carousel */}
               <div className="relative">
@@ -789,7 +797,7 @@ function LosTacosContent() {
                     <div
                       key={item.name}
                       onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000]"
+                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
                     >
                       <div className="p-4">
                         <div className="flex gap-3">
@@ -838,7 +846,7 @@ function LosTacosContent() {
 
             {/* Fingerfood Section */}
             <section id="fingerfood" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Fingerfood</h2>
                 <span className="text-gray-600 font-semibold">6 Artikel</span>
               </div>
@@ -849,7 +857,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -909,7 +917,7 @@ function LosTacosContent() {
 
             {/* Fresh Salads Section */}
             <section id="fresh-salads" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Fresh Salads</h2>
                 <span className="text-gray-600 font-semibold">2 Artikel</span>
               </div>
@@ -920,7 +928,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -980,7 +988,7 @@ function LosTacosContent() {
 
             {/* Birria Tacos Section */}
             <section id="birria-tacos" className="mb-12">
-              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">Birria Tacos</h2>
                   <span className="text-gray-600 font-semibold">2 Artikel</span>
@@ -994,7 +1002,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     {item.image === '' ? (
                       // Special layout for items without images
@@ -1093,7 +1101,7 @@ function LosTacosContent() {
 
             {/* French Tacos Section */}
             <section id="french-tacos" className="mb-12">
-              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">French Tacos</h2>
                   <span className="text-gray-600 font-semibold">4 Artikel</span>
@@ -1107,7 +1115,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1165,7 +1173,7 @@ function LosTacosContent() {
 
             {/* Taco-Burger Section */}
             <section id="taco-burger" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Taco-Burger</h2>
                 <span className="text-gray-600 font-semibold">4 Artikel</span>
               </div>
@@ -1176,7 +1184,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1234,7 +1242,7 @@ function LosTacosContent() {
 
             {/* Burritos Section */}
             <section id="burritos" className="mb-12">
-              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">Burritos</h2>
                   <span className="text-gray-600 font-semibold">1 Artikel</span>
@@ -1248,7 +1256,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1306,7 +1314,7 @@ function LosTacosContent() {
 
             {/* Loaded Nachos Section */}
             <section id="loaded-nachos" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Loaded Nachos</h2>
                 <span className="text-gray-600 font-semibold">1 Artikel</span>
               </div>
@@ -1317,7 +1325,7 @@ function LosTacosContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1328,225 +1336,6 @@ function LosTacosContent() {
                         </button>
                         <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
                         <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Desserts Section */}
-            <section id="desserts" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Desserts</h2>
-                <span className="text-gray-600 font-semibold">3 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dessertsItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholfreie Getränke Section */}
-            <section id="alkoholfreie-getränke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholfreie Getränke</h2>
-                <span className="text-gray-600 font-semibold">18 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholfreieGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
-                        )}
-
-                        {/* Tags */}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right Side - Image and Button */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholische Getränke Section */}
-            <section id="alkoholische-getränke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholische Getränke</h2>
-                <span className="text-gray-600 font-semibold">5 Artikel</span>
-              </div>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholischeGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      {/* Left Side - Content */}
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
-                        )}
 
                         {/* Tags */}
                         {item.tags.length > 0 && (

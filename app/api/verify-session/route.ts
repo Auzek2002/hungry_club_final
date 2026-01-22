@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
         name: item.n,
         price: item.p,
         quantity: item.q,
-        description: '',
+        description: item.d || '',
         image: '',
       }))
 

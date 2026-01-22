@@ -28,11 +28,12 @@ export async function POST(request: NextRequest) {
       totalPrice: totalPrice,
     }
 
-    // Compact cart items - just names and quantities
+    // Compact cart items - names, quantities, and descriptions (for customizations)
     const compactCartItems = cartItems.map((item: any) => ({
       n: item.name,
       p: item.price,
       q: item.quantity,
+      d: item.description || '',
     }))
 
     const metadataOrderData = JSON.stringify(compactOrderData)

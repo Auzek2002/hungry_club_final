@@ -35,6 +35,7 @@ export interface IOrder {
     name: string
     price: string
     quantity: number
+    description?: string
   }>
 
   // Timestamps
@@ -122,6 +123,7 @@ const OrderSchema = new Schema<IOrder>(
       name: { type: String, required: true },
       price: { type: String, required: true },
       quantity: { type: Number, required: true },
+      description: { type: String, required: false },
     }],
     completedAt: {
       type: Date,

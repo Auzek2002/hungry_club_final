@@ -44,10 +44,7 @@ function ToshiSushiContent() {
         'gebratene-spezialitäten',
         'asia-thai-curry',
         'asia-vietnamesische-spezialitäten',
-        'desserts',
-        'extras',
-        'alkoholfreie-getränke',
-        'alkoholische-getränke'
+        'extras'
       ]
 
       const categoryNames = [
@@ -65,10 +62,7 @@ function ToshiSushiContent() {
         'Gebratene Spezialitäten',
         'Asia-Thai-Curry',
         'Asia-vietnamesische Spezialitäten',
-        'Desserts',
-        'Extras',
-        'Alkoholfreie Getränke',
-        'Alkoholische Getränke'
+        'Extras'
       ]
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -181,21 +175,56 @@ function ToshiSushiContent() {
       price: '8,90 €',
       description: 'Goldbraun gebratene Nudeln, liebevoll kombiniert mit frischem Gemüse',
       image: '/TOSHI SUSHI/Gebratene Nudeln.webp',
-      category: 'Gebratene Spezialitäten'
+      category: 'Gebratene Spezialitäten',
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Best Red Curry in Town',
       price: '12,90 €',
       description: 'Unser berühmtes Red Curry: aromatisch, samtig und perfekt abgeschmeckt',
       image: '/TOSHI SUSHI/Best Red Curry in Town.webp',
-      category: 'Asia-Thai-Curry'
+      category: 'Asia-Thai-Curry',
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Ente, knusprig', price: 2.00 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 1.00 },
+          { label: 'mit Garnelen', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Tom Kha Gai',
       price: '6,90 €',
       description: 'mild-scharfe Hühnersuppe mit Kokosmilch, Hähnchen, Zucchini, grünen Bohnen, Bambus und Champignons',
       image: '/TOSHI SUSHI/Tom Kha Gai.webp',
-      category: 'Suppen'
+      category: 'Suppen',
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Gemüse', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'mit Garnelen', price: 2.00 },
+          { label: 'ohne Zutat', price: 0 }
+        ]
+      }
     },
     {
       name: 'Vegetarische Mini-Frühlingsrollen (8 Stück)',
@@ -643,21 +672,45 @@ function ToshiSushiContent() {
       price: '7,50 €',
       description: 'mit Lachs',
       image: '/TOSHI SUSHI/Tempura Salmon.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Tempura Salmon - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 7.50 }
+        ]
+      }
     },
     {
       name: 'Tempura Ebi',
       price: '8,50 €',
       description: 'mit Ebi-Tempura',
       image: '/TOSHI SUSHI/Tempura Ebi.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Tempura Ebi - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 8.50 }
+        ]
+      }
     },
     {
       name: 'Tempura Maguro',
       price: '8,50 €',
       description: 'mit Thunfisch',
       image: '/TOSHI SUSHI/Tempura Maguro.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Tempura Maguro - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 8.50 }
+        ]
+      }
     }
   ]
 
@@ -667,28 +720,60 @@ function ToshiSushiContent() {
       price: '6,90 €',
       description: 'mit Spargel, Mango, Rucola und Frischkäse',
       image: '/TOSHI SUSHI/Big Buddha.webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: {
+        title: 'Big Buddha - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 6.90 }
+        ]
+      }
     },
     {
       name: 'Big Ocean',
       price: '7,90 €',
       description: 'mit Avocado, Gurke, Lachs, Thunfisch, Frischkäse, Fischrogen und süßer Sojasauce',
       image: '/TOSHI SUSHI/Big Ocean.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Big Ocean - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 7.90 }
+        ]
+      }
     },
     {
       name: 'Big Gunkan',
       price: '8,50 €',
       description: 'mit Avocado, Gurke, gekochten Garnelen, Surimi, Mango, Frischkäse, umhüllt von Erdnüssen, Sesam und Mangosauce',
       image: '/TOSHI SUSHI/Big Gunkan.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Big Gunkan - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 8.50 }
+        ]
+      }
     },
     {
       name: 'Big Boss',
       price: '8,50 €',
       description: 'mit Mango, gebackenen Garnelen, Frischkäse und hausgemachter Sauce',
       image: '/TOSHI SUSHI/Big Boss.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Big Boss - 1 Pflichtfeld',
+        required: true,
+        options: [
+          { label: '5 Stück', price: 0 },
+          { label: '10 Stück', price: 8.50 }
+        ]
+      }
     }
   ]
 
@@ -727,51 +812,6 @@ function ToshiSushiContent() {
       description: 'kurz flambiertes Thunfisch-Sashimi mit Sesam und hauseigener Sauce',
       image: '/TOSHI SUSHI/Thunfisch Tataki (5 Scheiben).webp',
       tags: []
-    }
-  ]
-
-  const dessertsItems = [
-    {
-      name: 'Glückskekse (1 Stück)',
-      price: '0,70 €',
-      description: 'Knusprig gebackene Kekse mit süßer Überraschung im Inneren',
-      image: '/TOSHI SUSHI/Glückskekse (1 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Mango Cheesecake',
-      price: '5,90 €',
-      description: 'hausgemachtes Mango-Cheesecake mit Butterkeksboden',
-      image: '/TOSHI SUSHI/Mango Cheesecake.webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Banana Pudding',
-      price: '5,90 €',
-      description: 'hausgemachter Banana Pudding - frische Bananenscheiben, luftige Vanillecreme und Eierkeksschichten, liebevoll geschichtet',
-      image: '/TOSHI SUSHI/Banana Pudding.webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Mochi (3 Stück)',
-      price: '5,90 €',
-      description: 'kleine japanische Reisküchlein mit Kokos-Eis innen drin',
-      image: '/TOSHI SUSHI/Mochi (3 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Gebackene Banane (4 Stück)',
-      price: '5,90 €',
-      description: 'Banane in Pankomehl umhüllt verfeinert mit Honig, Kokosraspeln und Mandeln',
-      image: '/TOSHI SUSHI/Gebackene Banane (4 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Crème Brûlée',
-      price: '5,50 €',
-      description: 'hausgemachte Süßspeise',
-      image: '/TOSHI SUSHI/Crème Brûlée.webp',
-      tags: ['Vegetarisch']
     }
   ]
 
@@ -855,204 +895,6 @@ function ToshiSushiContent() {
     }
   ]
 
-  const alkoholfreieGetraenkeItems = [
-    {
-      name: 'Lycheenektar 0,25l (EINWEG)',
-      price: '2,95 €',
-      description: '',
-      image: '/PIZZA TIME/Lycheenektar 0,25l (EINWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand',
-      tags: []
-    },
-    {
-      name: 'Mango Lassi 0,4l (EINWEG)',
-      price: '4,65 €',
-      description: '',
-      image: '/PIZZA TIME/Mango Lassi 0,4l (EINWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola Zero Sugar 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'koffeinhaltig',
-      image: '/PIZZA TIME/Coca-Cola Zero Sugar 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,15 € Pfand, 10,15 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-kola® 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'koffeinhaltig, 25 mg/100 ml',
-      image: '/PIZZA TIME/fritz-kola® 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol, Enthält Koffein',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Zitrone 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-limo® Apfel-Kirsch-Holunder 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® bio-apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/fritz-spritz® Bio-Apfelschorle 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/MISCHMASCH® fritz-kola® mit orange 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Pfirsich 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Pfirsich 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Zitrone 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Zitrone 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Kirsche 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Kirsche 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Granatapfel 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: '',
-      image: '/PIZZA TIME/Rauch Eistee Granatapfel 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,25 € Pfand, 10,15 €/l, 10% vol',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Wasser Still 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      price: '2,85 €',
-      description: '',
-      image: '/PIZZA TIME/Aqua Morelli Mineralwasser Sprudel 0,25l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,15 €) 0,25l, 11,40 €/1l',
-      tags: []
-    },
-    {
-      name: 'Becks Blue alkoholfrei 0,33l (MEHRWEG)',
-      price: '3,42 €',
-      description: 'Alkoholfreies Bier',
-      image: '/PIZZA TIME/Becks Blue alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 10,36 €/l, <0,5% vol',
-      tags: []
-    },
-    {
-      name: 'Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      price: '3,42 €',
-      description: '',
-      image: '/PIZZA TIME/Franziskaner Weissbier alkoholfrei 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. 0,08 € Pfand, 6,84 €/l, 0,4% vol',
-      tags: []
-    }
-  ]
-
-  const alkoholischeGetraenkeItems = [
-    {
-      name: 'Corona Extra 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/HIRO BURGER/Corona Extra 0,33lAltersbeschränkung.webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Saigon Premium 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Saigon Premium 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,8% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Asahi 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Asahi 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5,2% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Tsingtao 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Tsingtao 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 4,7% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    },
-    {
-      name: 'Kirin Ichiban 0,33l (MEHRWEG)',
-      price: '3,72 €',
-      description: '',
-      image: '/PIZZA TIME/Kirin Ichiban 0,33l (MEHRWEG).webp',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 5% vol, 0,33l, 11,27 €/1l',
-      tags: []
-    }
-  ]
-
   const appetizerItems = [
     {
       name: 'Vegetarische Mini-Frühlingsrollen (8 Stück)',
@@ -1073,7 +915,17 @@ function ToshiSushiContent() {
       price: '5,90 €',
       description: 'mit Reisnudeln, frischem Salat, Nom, Gurke und frischen Kräutern, umwickelt von Reispapier, serviert mit hausgemachter Hoisin-Sauce',
       image: '/TOSHI SUSHI/Sommerrollen (2 Stück).webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihr Sonderwunsch:',
+        required: true,
+        options: [
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0.50 },
+          { label: 'mit gegrillten Garnelen', price: 1.00 },
+          { label: 'mit gebratenen Rindfleisch', price: 2.00 }
+        ]
+      }
     },
     {
       name: 'Gebackene Wantan (4 Stück)',
@@ -1139,14 +991,36 @@ function ToshiSushiContent() {
       price: '6,90 €',
       description: 'mild-scharfe Hühnersuppe mit Kokosmilch, Hähnchen, Zucchini, grünen Bohnen, Bambus und Champignons',
       image: '/TOSHI SUSHI/Tom Kha Gai.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Gemüse', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'mit Garnelen', price: 2.00 },
+          { label: 'ohne Zutat', price: 0 }
+        ]
+      }
     },
     {
       name: 'Tom Yam Gung',
       price: '6,90 €',
       description: 'sauer-scharf Suppe mit Garnelen, grünen Bohnen, Zucchini, Bambus, Zitronengras und Champignons',
       image: '/TOSHI SUSHI/Tom Yam Gung.webp',
-      tags: ['Scharf']
+      tags: ['Scharf'],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Gemüse', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'mit Garnelen', price: 2.00 },
+          { label: 'ohne Zutat', price: 0 }
+        ]
+      }
     },
     {
       name: 'Peking-Suppe',
@@ -1187,21 +1061,57 @@ function ToshiSushiContent() {
       price: '8,90 €',
       description: 'Goldbraun gebratene Nudeln, liebevoll kombiniert mit frischem Gemüse',
       image: '/TOSHI SUSHI/Gebratene Nudeln.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Gebratener Reis',
       price: '8,90 €',
       description: 'Locker gebratener Reis, verfeinert mit frischem Gemüse und Ei',
       image: '/TOSHI SUSHI/Gebratener Reis.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Gebratene Udon-Nudeln',
       price: '10,90 €',
       description: 'Dicke, weiche Udon-Nudeln, schonend gebraten und umhüllt von einer aromatischen Sauce, dazu knackiges Gemüse',
       image: '/TOSHI SUSHI/Gebratene Udon-Nudeln.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Handgemachte Biang Biang Noodles',
@@ -1215,7 +1125,19 @@ function ToshiSushiContent() {
       price: '13,90 €',
       description: 'Inspiriert von der japanischen und italienischen Küche, vereint in unserem Signature-Dish. Udon-Nudeln in einer cremigen Trüffel-Sahnesoße, verfeinert mit Parmesan, perfekt gekochtem Ei und goldbraun angebratenen Kräuterseitlingen und gehobeltem schwarzen Trüffel. Ein einzigartiges Fusion-Erlebnis voller Umami und Eleganz',
       image: '/TOSHI SUSHI/Toshi Trüffel Udon (vegetarisch).webp',
-      tags: ['Vegetarisch']
+      tags: ['Vegetarisch'],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     }
   ]
 
@@ -1225,35 +1147,95 @@ function ToshiSushiContent() {
       price: '12,90 €',
       description: 'Unser berühmtes Red Curry: aromatisch, samtig und perfekt abgeschmeckt',
       image: '/TOSHI SUSHI/Best Red Curry in Town.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Ente, knusprig', price: 2.00 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 1.00 },
+          { label: 'mit Garnelen', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Erdnuss-Kokos',
       price: '12,90 €',
       description: 'Ein harmonisches Zusammenspiel von cremiger Kokosmilch und nussiger Erdnuss',
       image: '/TOSHI SUSHI/Erdnuss-Kokos.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Ente, knusprig', price: 2.00 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 1.00 },
+          { label: 'mit Garnelen', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Mango-Kokos',
       price: '12,90 €',
       description: 'Mango-Kokos-Curry verwöhnt mit saftigen Mangostücken und zartem Gemüse',
       image: '/TOSHI SUSHI/Mango-Kokos.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Ente, knusprig', price: 2.00 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 1.00 },
+          { label: 'mit Garnelen', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Pikantes Curry (Chop Suey)',
       price: '12,90 €',
       description: 'Würzig, frisch und knackig: Unser Chop-Suey-Curry vereint frisches Gemüse mit aromatischer Sauce',
       image: '/TOSHI SUSHI/Pikantes Curry (Chop Suey).webp',
-      tags: ['Scharf']
+      tags: ['Scharf'],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Ente, knusprig', price: 2.00 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 1.00 },
+          { label: 'mit Garnelen', price: 3.00 }
+        ]
+      }
     },
     {
       name: 'Golden Curry (Kare Raisu) - Japanisches Curry',
       price: '12,90 €',
       description: 'mild-süßes japanisches Curry mit geschmorten Zwiebeln, Karotten und Kartoffeln und serviert mit fluffigem Reis- Ein echter Wohlfühlklassiker.',
       image: '/TOSHI SUSHI/Golden Curry (Kare Raisu) - Japanisches Curry.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'nur mit Gemüse', price: 0 },
+          { label: 'mit knusprig gebackener Hähnchenbrust', price: 2.00 },
+          { label: 'mit Garnelen', price: 4.00 },
+          { label: 'mit Ente, knusprig', price: 3.00 }
+        ]
+      }
     }
   ]
 
@@ -1263,7 +1245,17 @@ function ToshiSushiContent() {
       price: '12,90 €',
       description: 'Reisbandnudelsuppe nach einem traditionellen vietnamesischen Rezept, dazu frische Kräuter und Zutat nach Wahl',
       image: '/TOSHI SUSHI/Original Hanoi Pho Suppe.webp',
-      tags: []
+      tags: [],
+      customizationOptions: {
+        title: 'Ihre Zutat:',
+        required: true,
+        options: [
+          { label: 'mit Tofu', price: 0 },
+          { label: 'mit Hühnerfleisch', price: 0 },
+          { label: 'mit Rindfleisch', price: 2.00 },
+          { label: 'ohne Zutat', price: 0 }
+        ]
+      }
     },
     {
       name: 'Bun Bo Nam Bo',
@@ -1310,10 +1302,7 @@ function ToshiSushiContent() {
     'Gebratene Spezialitäten',
     'Asia-Thai-Curry',
     'Asia-vietnamesische Spezialitäten',
-    'Desserts',
-    'Extras',
-    'Alkoholfreie Getränke',
-    'Alkoholische Getränke'
+    'Extras'
   ]
 
   // Get all items for search
@@ -1332,10 +1321,7 @@ function ToshiSushiContent() {
     ...gebrateneSpezialitaetenItems.map(item => ({ ...item, section: 'Gebratene Spezialitäten' })),
     ...asiaThaiCurryItems.map(item => ({ ...item, section: 'Asia-Thai-Curry' })),
     ...asiaVietnamesischeSpezialitaetenItems.map(item => ({ ...item, section: 'Asia-vietnamesische Spezialitäten' })),
-    ...dessertsItems.map(item => ({ ...item, section: 'Desserts' })),
-    ...extrasItems.map(item => ({ ...item, section: 'Extras' })),
-    ...alkoholfreieGetraenkeItems.map(item => ({ ...item, section: 'Alkoholfreie Getränke' })),
-    ...alkoholischeGetraenkeItems.map(item => ({ ...item, section: 'Alkoholische Getränke' }))
+    ...extrasItems.map(item => ({ ...item, section: 'Extras' }))
   ]
 
   // Filter items based on search query
@@ -1347,7 +1333,7 @@ function ToshiSushiContent() {
     : []
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: 'url("/HIRO BURGER/Hiro_bg.png")', backgroundRepeat: 'repeat', backgroundSize: '200px' }}>
+    <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -1355,7 +1341,7 @@ function ToshiSushiContent() {
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-[#CC0000] h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-[#FF2900] hover:scale-105 cursor-pointer p-1">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -1457,7 +1443,7 @@ function ToshiSushiContent() {
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1503,7 +1489,7 @@ function ToshiSushiContent() {
           <>
             {/* Beliebt Section */}
             <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">Beliebt</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
 
               {/* Scrollable Carousel */}
               <div className="relative">
@@ -1525,7 +1511,7 @@ function ToshiSushiContent() {
                     <div
                       key={item.name}
                       onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000]"
+                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
                     >
                       <div className="p-4">
                         <div className="flex gap-3">
@@ -1574,7 +1560,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-Menüs Section */}
             <section id="sushi-menüs" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-Menüs</h2>
                 <span className="text-gray-600 font-semibold">13 Artikel</span>
               </div>
@@ -1585,7 +1571,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -1656,7 +1642,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-Maki Section */}
             <section id="sushi-maki" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-Maki</h2>
                 <span className="text-gray-600 font-semibold">11 Artikel</span>
               </div>
@@ -1666,7 +1652,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -1716,7 +1702,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-nigiri Section */}
             <section id="sushi-nigiri" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-nigiri</h2>
                 <span className="text-gray-600 font-semibold">11 Artikel</span>
               </div>
@@ -1726,7 +1712,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -1776,7 +1762,7 @@ function ToshiSushiContent() {
 
             {/* Sushi inside-Out Section */}
             <section id="sushi-inside-out" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi inside-Out</h2>
                 <span className="text-gray-600 font-semibold">19 Artikel</span>
               </div>
@@ -1786,7 +1772,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -1836,7 +1822,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-tempura Futo Maki Section */}
             <section id="sushi-tempura-futo-maki" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-tempura Futo Maki</h2>
                 <span className="text-gray-600 font-semibold">6 Artikel</span>
               </div>
@@ -1846,7 +1832,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -1896,7 +1882,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-futo Maki Section */}
             <section id="sushi-futo-maki" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-futo Maki</h2>
                 <span className="text-gray-600 font-semibold">4 Artikel</span>
               </div>
@@ -1906,7 +1892,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -1956,7 +1942,7 @@ function ToshiSushiContent() {
 
             {/* Sushi-sashimi Section */}
             <section id="sushi-sashimi" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Sushi-sashimi</h2>
                 <span className="text-gray-600 font-semibold">5 Artikel</span>
               </div>
@@ -1966,7 +1952,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -2016,7 +2002,7 @@ function ToshiSushiContent() {
 
             {/* Appetizer Section */}
             <section id="appetizer" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Appetizer</h2>
                 <span className="text-gray-600 font-semibold">11 Artikel</span>
               </div>
@@ -2027,7 +2013,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2087,7 +2073,7 @@ function ToshiSushiContent() {
 
             {/* Suppen Section */}
             <section id="suppen" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Suppen</h2>
                 <span className="text-gray-600 font-semibold">4 Artikel</span>
               </div>
@@ -2098,7 +2084,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2158,7 +2144,7 @@ function ToshiSushiContent() {
 
             {/* Salate Section */}
             <section id="salate" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Salate</h2>
                 <span className="text-gray-600 font-semibold">2 Artikel</span>
               </div>
@@ -2169,7 +2155,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2229,7 +2215,7 @@ function ToshiSushiContent() {
 
             {/* Gebratene Spezialitäten Section */}
             <section id="gebratene-spezialitäten" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Gebratene Spezialitäten</h2>
                 <span className="text-gray-600 font-semibold">5 Artikel</span>
               </div>
@@ -2240,7 +2226,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2300,7 +2286,7 @@ function ToshiSushiContent() {
 
             {/* Asia-Thai-Curry Section */}
             <section id="asia-thai-curry" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Asia-Thai-Curry</h2>
                 <span className="text-gray-600 font-semibold">5 Artikel</span>
               </div>
@@ -2311,7 +2297,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2371,7 +2357,7 @@ function ToshiSushiContent() {
 
             {/* Asia-vietnamesische Spezialitäten Section */}
             <section id="asia-vietnamesische-spezialitäten" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Asia-vietnamesische Spezialitäten</h2>
                 <span className="text-gray-600 font-semibold">5 Artikel</span>
               </div>
@@ -2382,7 +2368,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       {/* Left Side - Content */}
@@ -2440,69 +2426,10 @@ function ToshiSushiContent() {
               </div>
             </section>
 
-            {/* Desserts Section */}
-            <section id="desserts" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Desserts</h2>
-                <span className="text-gray-600 font-semibold">6 Artikel</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dessertsItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image src={item.image} alt={item.name} fill className="object-cover" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
 
             {/* Extras Section */}
             <section id="extras" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Extras</h2>
                 <span className="text-gray-600 font-semibold">11 Artikel</span>
               </div>
@@ -2512,7 +2439,7 @@ function ToshiSushiContent() {
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
+                    className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
                   >
                     <div className="flex gap-4 items-start">
                       <div className="flex-1">
@@ -2523,132 +2450,6 @@ function ToshiSushiContent() {
                         <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
                         {item.description && (
                           <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image src={item.image} alt={item.name} fill className="object-cover" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholfreie Getränke Section */}
-            <section id="alkoholfreie-getränke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholfreie Getränke</h2>
-                <span className="text-gray-600 font-semibold">19 Artikel</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholfreieGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
-                        )}
-                        {item.tags.length > 0 && (
-                          <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                  tag === 'Vegan' || tag === 'Vegetarisch'
-                                    ? 'bg-green-100 text-green-800'
-                                    : tag === 'Scharf'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {tag === 'Vegan' && '🌱 '}
-                                {tag === 'Vegetarisch' && '🥬 '}
-                                {tag === 'Scharf' && '🌶️ '}
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <button className="bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                          <span className="text-lg text-[#CC0000]">+</span>
-                        </button>
-                        <div className="relative w-28 h-28 bg-orange-50 rounded-lg overflow-hidden">
-                          <Image src={item.image} alt={item.name} fill className="object-cover" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Alkoholische Getränke Section */}
-            <section id="alkoholische-getränke" className="mb-12">
-              <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-[#CC0000] hover:shadow-md transition-all duration-300 cursor-pointer">
-                <h2 className="text-3xl font-bold text-gray-900">Alkoholische Getränke</h2>
-                <span className="text-gray-600 font-semibold">5 Artikel</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholischeGetraenkeItems.map((item) => (
-                  <div
-                    key={item.name}
-                    onClick={() => openModal(item)}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#CC0000] p-4"
-                  >
-                    <div className="flex gap-4 items-start">
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-base mb-1">{item.name}</h3>
-                        <button className="text-xs text-gray-700 hover:text-gray-900 underline mb-2">
-                          Produktinfo
-                        </button>
-                        <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.description && (
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                        )}
-                        {item.additionalInfo && (
-                          <p className="text-xs text-gray-500 mb-2">{item.additionalInfo}</p>
                         )}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
