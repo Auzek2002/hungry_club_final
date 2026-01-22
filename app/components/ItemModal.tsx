@@ -105,14 +105,14 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
         // Single customization group (backward compatibility)
         // Add selected option price if applicable (radio button)
         if (!item.customizationOptions.multiple && selectedOption !== null) {
-          const optionPrice = item.customizationOptions.options[selectedOption].price
+          const optionPrice = (item.customizationOptions as CustomizationOptions).options[selectedOption].price
           basePrice += optionPrice
         }
 
         // Add selected extras prices (checkboxes)
         if (item.customizationOptions.multiple && selectedExtras.length > 0) {
           selectedExtras.forEach(index => {
-            basePrice += item.customizationOptions!.options[index].price
+            basePrice += (item.customizationOptions as CustomizationOptions).options[index].price
           })
         }
       }
@@ -131,8 +131,9 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
         const group = item.customizationOptions[groupIndex]
         if (group.required && !group.multiple) {
           const selectedIndex = selectedOptions.get(groupIndex)
+          console.log(`Group ${groupIndex} (${group.title}): required=${group.required}, multiple=${group.multiple}, selectedIndex=`, selectedIndex)
           if (selectedIndex === null || selectedIndex === undefined) {
-            alert('Bitte wählen Sie alle erforderlichen Optionen aus.')
+            alert(`Bitte wählen Sie eine Option für "${group.title}" aus.`)
             return
           }
         }
@@ -188,7 +189,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
 
       // Handle radio button selection
       if (item.customizationOptions && !item.customizationOptions.multiple && selectedOption !== null) {
-        const option = item.customizationOptions.options[selectedOption]
+        const option = (item.customizationOptions as CustomizationOptions).options[selectedOption]
         customizationText = option.label
 
         // Calculate the final price including option price
@@ -203,7 +204,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
       // Handle checkbox selections (multiple extras)
       if (item.customizationOptions && item.customizationOptions.multiple && selectedExtras.length > 0) {
         const selectedExtrasLabels = selectedExtras.map(index =>
-          item.customizationOptions!.options[index].label
+          (item.customizationOptions as CustomizationOptions).options[index].label
         )
         customizationText = selectedExtrasLabels.join(', ')
 
@@ -212,7 +213,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
         if (priceMatch) {
           let basePrice = parseFloat(priceMatch[1].replace(',', '.'))
           selectedExtras.forEach(index => {
-            basePrice += item.customizationOptions!.options[index].price
+            basePrice += (item.customizationOptions as CustomizationOptions).options[index].price
           })
           const totalPrice = basePrice.toFixed(2).replace('.', ',')
           finalPrice = `${totalPrice} €`
@@ -414,7 +415,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
                       <div key={index}>
                         <label className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
                           <div className="flex items-center gap-3">
-                            {item.customizationOptions!.multiple ? (
+                            {(item.customizationOptions as CustomizationOptions).multiple ? (
                               // Checkbox for multiple selection
                               <input
                                 type="checkbox"
