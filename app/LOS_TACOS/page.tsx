@@ -641,10 +641,6 @@ function LosTacosContent() {
                 </a>
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">Los Tacos</h1>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-orange-500">★</span>
-                    <span className="text-sm font-semibold text-gray-700">4,1 (160+)</span>
-                  </div>
                 </div>
               </div>
             </div>

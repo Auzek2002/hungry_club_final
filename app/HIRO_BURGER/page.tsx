@@ -9,7 +9,7 @@ function HiroBurgerContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('Beliebt')
+  const [activeCategory, setActiveCategory] = useState('Fingerfood')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -30,7 +30,6 @@ function HiroBurgerContent() {
 
       // Determine which section is currently in view
       const sections = [
-        'beliebt',
         'fingerfood',
         'mac-and-cheese',
         'smashburger',
@@ -40,7 +39,6 @@ function HiroBurgerContent() {
       ]
 
       const categoryNames = [
-        'Beliebt',
         'Fingerfood',
         'Mac & Cheese',
         'Smashburger',
@@ -121,8 +119,8 @@ function HiroBurgerContent() {
   }
 
   const scrollToSection = (sectionId: string) => {
-    // If clicking "Beliebt", scroll to the very top
-    if (sectionId === 'beliebt') {
+    // If clicking "fingerfood", scroll to the very top
+    if (sectionId === 'fingerfood') {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -152,94 +150,6 @@ function HiroBurgerContent() {
   const getCategoryId = (category: string): string => {
     return category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')
   }
-
-  const beliebteItems = [
-    {
-      name: 'Double Smashburger',
-      price: '9,90 €',
-      description: 'mit 2 x 90g Rindfleisch-Patty, doppelt geschmolzenem Irish Cheddar, karamellisierten Zwiebeln, süßen Gewürzgurken, Ketchup und amerikanischem Senf',
-      image: '/HIRO BURGER/Double Smashburger.webp',
-      category: 'Smashburger',
-      customizationOptions: {
-        title: "Deine Extras:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Guacamole", price: 2.00 },
-          { label: "mit Röstzwiebel", price: 1.50 },
-          { label: "mit sauren Gurken", price: 1.50 },
-          { label: "mit Rindfleisch-Patty, extra", price: 3.00 },
-          { label: "mit Cheddarscheibe, Irish", price: 1.50 },
-          { label: "mit Jalapenos, gegrillt", price: 1.50 },
-          { label: "mit Tomatensalsa", price: 2.00 },
-          { label: "mit Bacon, gegrillt", price: 2.00 },
-          { label: "mit Chili-con-Carne", price: 2.00 },
-          { label: "mit Onion Rings", price: 2.00 },
-          { label: "mit Champignons, gegrillt", price: 2.00 },
-          { label: "mit Zwiebeln, rot", price: 1.50 },
-          { label: "mit Grana Padano (Parmesan)", price: 2.00 },
-          { label: "mit Mozzarella", price: 1.50 },
-          { label: "mit Crispy Chicken Patty", price: 4.00 },
-          { label: "mit karamellisierten Zwiebeln", price: 2.00 },
-          { label: "mit gebratenen Zwiebeln", price: 2.00 },
-          { label: "mit Tomaten", price: 1.50 }
-        ]
-      }
-    },
-    {
-      name: 'The Cheeseburger',
-      price: '7,43 €',
-      description: 'mit 150g Rindfeisch-Patty, doppelt geschmolzenem Irish Cheddar, gebratenen Zwiebeln, frischem Lollo Bionda, roten Zwiebeln, frischen Tomaten und hauseigener Burgersauce',
-      image: '/HIRO BURGER/The Cheeseburger.webp',
-      category: 'Burger'
-    },
-    {
-      name: 'Pommes Frites (1 Pfund)',
-      price: '5,90 €',
-      description: 'mit Meersalz verfeinert',
-      image: '/HIRO BURGER/Pommes Frites (1 Pfund).webp',
-      category: 'Fingerfood'
-    },
-    {
-      name: 'Single Smashburger',
-      price: '7,90 €',
-      description: 'mit 90g Rindfleisch-Patty, doppelt geschmolzenem Irish Cheddar, karamellisierten Zwiebeln, süßen Gewürzgurken, Ketchup und amerikanischem Senf',
-      image: '/HIRO BURGER/Single Smashburger.webp',
-      category: 'Smashburger',
-      customizationOptions: {
-        title: "Deine Extras:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Guacamole", price: 2.00 },
-          { label: "mit Röstzwiebel", price: 1.50 },
-          { label: "mit sauren Gurken", price: 1.50 },
-          { label: "mit Rindfleisch-Patty, extra", price: 3.00 },
-          { label: "mit Cheddarscheibe, Irish", price: 1.50 },
-          { label: "mit Jalapenos, gegrillt", price: 1.50 },
-          { label: "mit Tomatensalsa", price: 2.00 },
-          { label: "mit Bacon, gegrillt", price: 2.00 },
-          { label: "mit Chili-con-Carne", price: 2.00 },
-          { label: "mit Onion Rings", price: 2.00 },
-          { label: "mit Champignons, gegrillt", price: 2.00 },
-          { label: "mit Zwiebeln, rot", price: 1.50 },
-          { label: "mit Grana Padano (Parmesan)", price: 2.00 },
-          { label: "mit Mozzarella", price: 1.50 },
-          { label: "mit Crispy Chicken Patty", price: 4.00 },
-          { label: "mit karamellisierten Zwiebeln", price: 2.00 },
-          { label: "mit gebratenen Zwiebeln", price: 2.00 },
-          { label: "mit Tomaten", price: 1.50 }
-        ]
-      }
-    },
-    {
-      name: 'Crispy Chicken Burger',
-      price: '10,90 €',
-      description: 'mit in Buttermilch eingelegter Hähnchenbrust, einer Marinade aus 8 Gewürzen, roten Zwiebeln, frischen Tomaten, frischem Lollo Bionda, hauseigener Chipotlesauce und hauseigener Burgersauce',
-      image: '/HIRO BURGER/Crispy Chicken Burger.webp',
-      category: 'Burger'
-    }
-  ]
 
   const loadedFriesItems = [
     {
@@ -701,7 +611,6 @@ function HiroBurgerContent() {
   ]
 
   const categories = [
-    'Beliebt',
     'Fingerfood',
     'Mac & Cheese',
     'Smashburger',
@@ -712,7 +621,6 @@ function HiroBurgerContent() {
 
   // Get all items for search
   const allItems = [
-    ...beliebteItems.map(item => ({ ...item, section: 'Beliebt' })),
     ...burgerItems.map(item => ({ ...item, section: 'Burger' })),
     ...smashburgerItems.map(item => ({ ...item, section: 'Smashburger' })),
     ...macAndCheeseItems.map(item => ({ ...item, section: 'Mac & Cheese' })),
@@ -751,10 +659,6 @@ function HiroBurgerContent() {
                 </a>
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">HIRO BURGER | Bühlau</h1>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-orange-500">★</span>
-                    <span className="text-sm font-semibold text-gray-700">4,6 (1.400+)</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -916,77 +820,6 @@ function HiroBurgerContent() {
           </div>
         ) : (
           <>
-            {/* Beliebt Section */}
-            <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
-
-              {/* Scrollable Carousel */}
-              <div className="relative">
-                {/* Left Arrow */}
-                <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -ml-4"
-                >
-                  <span className="text-2xl text-gray-700">‹</span>
-                </button>
-
-                {/* Carousel Container */}
-                <div
-                  ref={scrollContainerRef}
-                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
-                  {beliebteItems.map((item) => (
-                    <div
-                      key={item.name}
-                      onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
-                    >
-                      <div className="p-4">
-                        <div className="flex gap-3">
-                          {/* Image */}
-                          <div className="relative w-24 h-24 flex-shrink-0 bg-orange-50 rounded-lg overflow-hidden">
-                            <Image
-                              src={encodeURI(item.image)}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 flex flex-col">
-                            <div className="text-xs text-red-600 font-semibold mb-0.5">{item.category}</div>
-                            <h3 className="font-bold text-gray-900 text-base leading-tight mb-1">{item.name}</h3>
-                            <button className="ml-auto mt-auto bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                              <span className="text-lg">+</span>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Price and Description */}
-                        <div className="mt-3">
-                          <div className="font-bold text-gray-900 text-base mb-1">{item.price}</div>
-                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">{item.description}</p>
-                          <button className="text-xs text-gray-700 hover:text-gray-900 mt-1 underline">
-                            Produktinfo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -mr-4"
-                >
-                  <span className="text-2xl text-gray-700">›</span>
-                </button>
-              </div>
-            </section>
-
             {/* Fingerfood Section */}
             <section id="fingerfood" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
