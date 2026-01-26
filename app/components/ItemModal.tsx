@@ -216,16 +216,18 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
       }
       // Legacy support for old single group format
       else if (item.customizationOptions && !Array.isArray(item.customizationOptions)) {
+        const customizationOptions = item.customizationOptions as CustomizationOptions
+
         // Add selected option price if applicable (radio button)
-        if (!item.customizationOptions.multiple && selectedOption !== null) {
-          const optionPrice = item.customizationOptions.options[selectedOption].price
+        if (!customizationOptions.multiple && selectedOption !== null) {
+          const optionPrice = customizationOptions.options[selectedOption].price
           basePrice += optionPrice
         }
 
         // Add selected extras prices (checkboxes)
-        if (item.customizationOptions.multiple && selectedExtras.length > 0) {
+        if (customizationOptions.multiple && selectedExtras.length > 0) {
           selectedExtras.forEach(index => {
-            basePrice += item.customizationOptions!.options[index].price
+            basePrice += customizationOptions.options[index].price
           })
         }
       }
