@@ -9,10 +9,12 @@ function PizzaTimeContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('Beliebt')
+  const [activeCategory, setActiveCategory] = useState('Vorspeisen')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   const openModal = (item: any) => {
     setSelectedItem(item)
@@ -24,20 +26,38 @@ function PizzaTimeContent() {
     setSelectedItem(null)
   }
 
+  // Fetch menu items from database
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('/api/menu-items?restaurant=PIZZA_TIME&active=true')
+        const data = await response.json()
+
+        if (data.success) {
+          setMenuItems(data.menuItems)
+        }
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMenuItems()
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
 
       // Determine which section is currently in view
       const sections = [
-        'beliebt',
         'vorspeisen',
         'pizza-ca.30-cm',
         'saucen'
       ]
 
       const categoryNames = [
-        'Beliebt',
         'Vorspeisen',
         'Pizza ca.30 cm',
         'Saucen'
@@ -115,15 +135,6 @@ function PizzaTimeContent() {
   }
 
   const scrollToSection = (sectionId: string) => {
-    // If clicking "Beliebt", scroll to the very top
-    if (sectionId === 'beliebt') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-      return
-    }
-
     const element = document.getElementById(sectionId)
     if (element) {
       // Calculate dynamic header height
@@ -147,576 +158,19 @@ function PizzaTimeContent() {
     return category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/ä/g, 'ä').replace(/ö/g, 'ö').replace(/ü/g, 'ü')
   }
 
-  const beliebteItems = [
-    {
-      name: 'Pizza Margherita',
-      price: '7,90 €',
-      description: 'mit Basilikum und Oregano',
-      image: '/PIZZA TIME/Pizza Margherita.webp',
-      category: 'Pizza ca.30 cm',
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Hiro',
-      price: '13,00 €',
-      description: 'mit Burger Crumble, Tomatenscheiben, karamellisierten Zwiebeln, Gewürzgurken, Cheddar, Salat und Burgersauce',
-      image: '/PIZZA TIME/Pizza Hiro.webp',
-      category: 'Pizza ca.30 cm',
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Mango Cheesecake',
-      price: '5,90 €',
-      description: 'hausgemachtes Mango-Cheesecake mit Butterkeksboden',
-      image: '/PIZZA TIME/Mango Cheesecake.webp',
-      category: 'Desserts'
-    },
-    {
-      name: 'Pizza Caprese',
-      price: '7,90 €',
-      description: 'mit Tomatenscheiben, Büffelmozzarella, Pesto und Oregano',
-      image: '/PIZZA TIME/Pizza Caprese.webp',
-      category: 'Pizza ca.30 cm',
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Chicken Hollandaise',
-      price: '8,90 €',
-      description: 'mit Sauce Hollandaise, Mozzarella, Hähnchenstreifen, Broccoli und Kirschtomaten, ohne Tomatensauce',
-      image: '/PIZZA TIME/Pizza Chicken Hollandaise.webp',
-      category: 'Pizza ca.30 cm',
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    }
-  ]
+  // Organize menu items by section from database
+  const vorspeisen = menuItems.filter(item => item.section === 'Vorspeisen')
+  const pizzaCa30Items = menuItems.filter(item => item.section === 'Pizza ca.30 cm')
+  const saucenItems = menuItems.filter(item => item.section === 'Saucen')
 
-  const vorspeisen = [
-    {
-      name: 'Chicken Nuggets (8 Stück)',
-      price: '6,90 €',
-      description: 'knusprig frittierte Hähnchen Nuggets',
-      image: '/PIZZA TIME/Chicken Nuggets (8 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Onion Rings (7 Stück)',
-      price: '5,90 €',
-      description: 'große panierte Zwiebelringe',
-      image: '/PIZZA TIME/Onion Rings (7 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Mozzarella Sticks (7 Stück)',
-      price: '5,90 €',
-      description: 'mit Kräuterpanade',
-      image: '/PIZZA TIME/Mozzarella Sticks (7 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Gurken Kimchi',
-      price: '5,90 €',
-      description: 'koreanisches Gurken-Kimchi mit geröstetem Sesam',
-      image: '/PIZZA TIME/Gurken Kimchi.webp',
-      tags: []
-    },
-    {
-      name: 'Coleslaw',
-      price: '6,90 €',
-      description: 'frischer Krautsalat mit Weißkohl, Karotten und cremigem Dressing',
-      image: '/PIZZA TIME/Coleslaw.webp',
-      tags: []
-    },
-    {
-      name: 'Mac and Cheese (klein)',
-      price: '4,90 €',
-      description: '',
-      image: '/PIZZA TIME/Mac and Cheese (klein).webp',
-      tags: []
-    },
-    {
-      name: 'Mac and Cheese (Groß)',
-      price: '8,90 €',
-      description: '',
-      image: '/PIZZA TIME/Mac and Cheese (Groß).webp',
-      tags: []
-    }
-  ]
-
-  const pizzaCa30Items = [
-    {
-      name: 'Pizza Margherita',
-      price: '5,93 €',
-      originalPrice: '7,90 €',
-      description: 'mit Basilikum und Oregano',
-      image: '/PIZZA TIME/Pizza Margherita.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Salami',
-      price: '6,68 €',
-      originalPrice: '8,90 €',
-      description: 'mit Salami',
-      image: '/PIZZA TIME/Pizza Salami.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Caprese',
-      price: '7,90 €',
-      description: 'mit Tomatenscheiben, Büffelmozzarella, Pesto und Oregano',
-      image: '/PIZZA TIME/Pizza Caprese.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Prosciutto',
-      price: '8,90 €',
-      description: 'mit Schinken',
-      image: '/PIZZA TIME/Pizza Prosciutto.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza BBQ-Chicken',
-      price: '8,01 €',
-      originalPrice: '8,90 €',
-      description: 'mit Barbecuesauce, Mozzarella, Hähnchenstreifen, Mais, Paprika und Zwiebeln, ohne Tomatensauce',
-      image: '/PIZZA TIME/Pizza BBQ-Chicken.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Hawaii',
-      price: '8,90 €',
-      description: 'mit Schinken und Ananas',
-      image: '/PIZZA TIME/Pizza Hawaii.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Chicken Teriyaki',
-      price: '9,90 €',
-      description: 'mit Hähnchenfleisch, Broccoli, Mais, Frühlingszwiebeln, Sesam und Teriyakisauce',
-      image: '',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Prosciutto e Funghi',
-      price: '8,90 €',
-      description: 'mit Schinken und Champignons',
-      image: '/PIZZA TIME/Pizza Prosciutto e Funghi.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Tonno',
-      price: '8,90 €',
-      description: 'mit Thunfisch und Zwiebeln',
-      image: '/PIZZA TIME/Pizza Tonno.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Funghi',
-      price: '7,90 €',
-      description: 'mit Champignons und Oregano',
-      image: '/PIZZA TIME/Pizza Funghi.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Primavera',
-      price: '8,90 €',
-      description: 'mit Kirschtomaten, Rucola, Parmesan und Pinienkernen',
-      image: '/PIZZA TIME/Pizza Primavera.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Salmone Spinaci',
-      price: '9,90 €',
-      description: 'mit Creme fraiche, Mozzarella, Lachs, Blattspinat, Knoblauch und Schnittlauch, ohne Tomatensauce',
-      image: '/PIZZA TIME/Pizza Salmone Spinaci.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Hiro',
-      price: '11,12 €',
-      originalPrice: '13,90 €',
-      description: 'mit Burger Crumble, Tomatenscheiben, karamellisierten Zwiebeln, Gewürzgurken, Cheddar, Salat und Burgersauce',
-      image: '/PIZZA TIME/Pizza Hiro.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Chicken Hollandaise',
-      price: '8,90 €',
-      description: 'mit Sauce Hollandaise, Mozzarella, Hähnchenstreifen, Broccoli und Kirschtomaten, ohne Tomatensauce',
-      image: '/PIZZA TIME/Pizza Chicken Hollandaise.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Diavolo (scharf)',
-      price: '8,90 €',
-      description: 'mit scharfer Salami, Peperoni und Zwiebeln',
-      image: '/PIZZA TIME/Pizza Diavolo (scharf).webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Vegetaria',
-      price: '8,90 €',
-      description: 'mit Kirschtomaten, Paprika, Broccoli, Mais, Oliven und Champignons',
-      image: '/PIZZA TIME/Pizza Vegetaria.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Capricciosa',
-      price: '8,90 €',
-      description: 'mit Artischocken, Schinken, Oliven und Champignons',
-      image: '/PIZZA TIME/Pizza Capricciosa.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Tartufo',
-      price: '9,90 €',
-      description: 'mit Creme fraiche, Trüffelcreme, Pancetta, Rucola und Parmesan, ohne Tomatensauce und Mozzarella',
-      image: '/PIZZA TIME/Pizza Tartufo.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Parma',
-      price: '9,90 €',
-      description: 'mit Parmaschinken, Rucola, Kirschtomaten und Parmesan',
-      image: '/PIZZA TIME/Pizza Parma.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Bollywood',
-      price: '8,90 €',
-      description: 'mit Mango-Currysauce, Mozzarella, Hähnchenstreifen, Ananas und Paprika, ohne Tomatensauce',
-      image: '/PIZZA TIME/Pizza Bollywood.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Hot Dog',
-      price: '8,90 €',
-      description: 'mit Würstchenscheiben, Gewürzgurken, Röstzwiebeln und Hot-Dogsauce',
-      image: '/PIZZA TIME/Pizza Hot Dog.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Quattro Formaggi',
-      price: '8,90 €',
-      description: 'mit 4 verschiedenen Käsesorten',
-      image: '/PIZZA TIME/Pizza Quattro Formaggi.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Spinaci',
-      price: '8,90 €',
-      description: 'mit Spinat, Knoblauch, Ei',
-      image: '',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    },
-    {
-      name: 'Pizza Quattro Stagioni',
-      price: '10,90 €',
-      description: 'mit Salami, Schinken, Paprika, Champignons und roten Zwiebeln',
-      image: '',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "mit Käserand", price: 4.00 }
-        ]
-      }
-    }
-  ]
-
-  const saucenItems = [
-    {
-      name: 'Ketchup',
-      price: '1,50 €',
-      description: '',
-      image: '/PIZZA TIME/Ketchup.webp',
-      tags: []
-    },
-    {
-      name: 'Mayonnaise',
-      price: '1,50 €',
-      description: '',
-      image: '/PIZZA TIME/Mayonnaise.webp',
-      tags: []
-    },
-    {
-      name: 'Guacamole',
-      price: '3,90 €',
-      description: '',
-      image: '/PIZZA TIME/Guacamole.webp',
-      tags: []
-    },
-    {
-      name: 'Cheesesauce',
-      price: '3,90 €',
-      description: '',
-      image: '/PIZZA TIME/Cheesesauce.webp',
-      tags: []
-    },
-    {
-      name: 'Süß-Sauer-Sauce',
-      price: '1,50 €',
-      description: '',
-      image: '/PIZZA TIME/Süß-Sauer-Sauce.webp',
-      tags: []
-    },
-    {
-      name: 'Barbecuesauce',
-      price: '1,50 €',
-      description: '',
-      image: '/PIZZA TIME/Barbecuesauce.webp',
-      tags: []
-    },
-    {
-      name: 'Srirachasauce',
-      price: '1,50 €',
-      description: '',
-      image: '/PIZZA TIME/Srirachasauce.webp',
-      tags: []
-    },
-    {
-      name: 'Trüffelmayonnaise',
-      price: '2,50 €',
-      description: '',
-      image: '/PIZZA TIME/Trüffelmayonnaise.webp',
-      tags: []
-    },
-    {
-      name: 'Teriyakisauce',
-      price: '2,00 €',
-      description: '',
-      image: '/PIZZA TIME/Teriyakisauce.webp',
-      tags: []
-    }
-  ]
-
- 
   const categories = [
-    'Beliebt',
     'Vorspeisen',
     'Pizza ca.30 cm',
     'Saucen'
   ]
 
-  // Get all items for search
-  const allItems = [
-    ...beliebteItems.map(item => ({ ...item, section: 'Beliebt' })),
-    ...vorspeisen.map(item => ({ ...item, section: 'Vorspeisen' })),
-    ...pizzaCa30Items.map(item => ({ ...item, section: 'Pizza ca.30 cm' })),
-    ...saucenItems.map(item => ({ ...item, section: 'Saucen' }))
-  ]
+  // Get all items for search (menuItems already have section field)
+  const allItems = menuItems
 
   // Filter items based on search query
   const searchResults = searchQuery.trim()
@@ -726,6 +180,18 @@ function PizzaTimeContent() {
     )
     : []
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#CC0000] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
@@ -734,8 +200,8 @@ function PizzaTimeContent() {
           {/* Restaurant Name and Rating - Only show when not scrolled */}
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
+              <div className="flex items-center gap-2 md:gap-6">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -747,8 +213,60 @@ function PizzaTimeContent() {
                   </div>
                 </a>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Pizza Time</h1>
+                  <h1 className="text-l md:text-3xl font-bold text-gray-900">Pizza Time</h1>
                 </div>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <a href="/TOSHI_SUSHI" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/sushi_nav.png"
+                      alt="Sushi"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/HIRO_BURGER" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/burger_nav.png"
+                      alt="Burger"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/PIZZA_TIME" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/pizza_nav.png"
+                      alt="Pizza"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/LOS_TACOS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/taco_nav.png"
+                      alt="Taco"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/BOWLICIOUS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/bowl_nav.png"
+                      alt="Bowl"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -791,7 +309,7 @@ function PizzaTimeContent() {
               className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide scroll-smooth px-10"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {categories.map((category) => (
+              {categories.map((category: string) => (
                 <button
                   key={category}
                   onClick={() => scrollToSection(getCategoryId(category))}
@@ -829,7 +347,7 @@ function PizzaTimeContent() {
 
             {searchResults.length > 0 ? (
               <div className="space-y-4">
-                {searchResults.map((item, index) => (
+                {searchResults.map((item: any, index: number) => (
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     onClick={() => openModal(item)}
@@ -877,77 +395,6 @@ function PizzaTimeContent() {
           </div>
         ) : (
           <>
-            {/* Beliebt Section */}
-            <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
-
-              {/* Scrollable Carousel */}
-              <div className="relative">
-                {/* Left Arrow */}
-                <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -ml-4"
-                >
-                  <span className="text-2xl text-gray-700">‹</span>
-                </button>
-
-                {/* Carousel Container */}
-                <div
-                  ref={scrollContainerRef}
-                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
-                  {beliebteItems.map((item) => (
-                    <div
-                      key={item.name}
-                      onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
-                    >
-                      <div className="p-4">
-                        <div className="flex gap-3">
-                          {/* Image */}
-                          <div className="relative w-24 h-24 flex-shrink-0 bg-orange-50 rounded-lg overflow-hidden">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 flex flex-col">
-                            <div className="text-xs text-red-600 font-semibold mb-0.5">{item.category}</div>
-                            <h3 className="font-bold text-gray-900 text-base leading-tight mb-1">{item.name}</h3>
-                            <button className="ml-auto mt-auto bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                              <span className="text-lg">+</span>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Price and Description */}
-                        <div className="mt-3">
-                          <div className="font-bold text-gray-900 text-base mb-1">{item.price}</div>
-                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">{item.description}</p>
-                          <button className="text-xs text-gray-700 hover:text-gray-900 mt-1 underline">
-                            Produktinfo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -mr-4"
-                >
-                  <span className="text-2xl text-gray-700">›</span>
-                </button>
-              </div>
-            </section>
-
             {/* Vorspeisen Section */}
             <section id="vorspeisen" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
@@ -957,7 +404,7 @@ function PizzaTimeContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {vorspeisen.map((item) => (
+                {vorspeisen.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -978,7 +425,7 @@ function PizzaTimeContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -1030,7 +477,7 @@ function PizzaTimeContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {pizzaCa30Items.map((item) => (
+                {pizzaCa30Items.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1055,7 +502,7 @@ function PizzaTimeContent() {
                           {/* Tags */}
                           {item.tags && item.tags.length > 0 && (
                             <div className="flex gap-1.5 flex-wrap">
-                              {item.tags.map((tag) => (
+                              {item.tags.map((tag: string) => (
                                 <span
                                   key={tag}
                                   className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800"
@@ -1090,7 +537,7 @@ function PizzaTimeContent() {
                           {/* Tags */}
                           {item.tags && item.tags.length > 0 && (
                             <div className="flex gap-1.5 flex-wrap">
-                              {item.tags.map((tag) => (
+                              {item.tags.map((tag: string) => (
                                 <span
                                   key={tag}
                                   className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800"
@@ -1132,7 +579,7 @@ function PizzaTimeContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {saucenItems.map((item) => (
+                {saucenItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1153,7 +600,7 @@ function PizzaTimeContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'

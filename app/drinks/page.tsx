@@ -13,6 +13,8 @@ function HiroBurgerContent() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   const openModal = (item: any) => {
     setSelectedItem(item)
@@ -23,6 +25,26 @@ function HiroBurgerContent() {
     setIsModalOpen(false)
     setSelectedItem(null)
   }
+
+  // Fetch menu items from database
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('/api/menu-items?restaurant=DRINKS&active=true')
+        const data = await response.json()
+
+        if (data.success) {
+          setMenuItems(data.menuItems)
+        }
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMenuItems()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -143,199 +165,9 @@ function HiroBurgerContent() {
     return category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')
   }
 
-
-  const alkoholischeGetraenkeItems = [
-    {
-      name: 'Corona Extra 0,33l',
-      price: '3,80 €',
-      description: '4,5% vol, 0,33l, 11,52 €/1l',
-      image: '/HIRO BURGER/Corona Extra 0,33lAltersbeschränkung.webp',
-      tags: []
-    },
-    {
-      name: 'Saigon Premium',
-      price: '3,80 €',
-      description: '8% vol, 0,33l, 11,52 €/1l',
-      image: '/HIRO BURGER/Saigon Premium.webp',
-      tags: []
-    },
-    {
-      name: 'Asahi',
-      price: '3,80 €',
-      description: '8% vol, 0,33l, 11,52 €/1l',
-      image: '/HIRO BURGER/Asahi.webp',
-      tags: []
-    },
-    {
-      name: 'Tsingtao',
-      price: '3,80 €',
-      description: '8% vol, 0,33l, 11,52 €/1l',
-      image: '/HIRO BURGER/Tsingtao.webp',
-      tags: []
-    },
-    {
-      name: 'Kirin Ichiban',
-      price: '3,80 €',
-      description: '8% vol, 0,33l, 11,52 €/1l',
-      image: '/HIRO BURGER/Kirin Ichiban.webp',
-      tags: []
-    }
-  ]
-
-  const alkoholfreieGetraenkeItems = [
-    {
-      name: 'Lycheenektar 0.25l',
-      price: '3,20 €',
-      description: '0,25l, 12,80 €/1l',
-      image: '/HIRO BURGER/Lycheenektar 0.25l.webp',
-      tags: []
-    },
-    {
-      name: 'Aloe Vera 0.5l',
-      price: '4,00 €',
-      description: '0,5l, 8,00 €/1l',
-      image: '/HIRO BURGER/Aloe Vera 0.5l.webp',
-      tags: []
-    },
-    {
-      name: 'Mango Lassi 0.4l',
-      price: '4,90 €',
-      description: 'Ein cremiges Joghurtgetränk',
-      additionalInfo: '0,4l, 12,25 €/1l',
-      image: '/HIRO BURGER/Mango Lassi 0.4l.webp',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'Coca-Cola steht für einzigartigen Geschmack, Erfrischung und Momente voller Lebensfreude. Die 0,33l Glas-Mehrwegflasche ist unsere Ikone für perfekten Trinkgenuss seit 1886.',
-      additionalInfo: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l, Enthält Koffein (10mg/100ml)',
-      image: '/HIRO BURGER/Coca-Cola 0,33l (MEHRWEG).webp',
-      tags: []
-    },
-    {
-      name: 'Coca-Cola Zero Sugar 0,33l (MEHRWEG)',
-      price: '3,35 €',
-      description: 'Keine Kalorien. Null Zucker. Für alle Coke Liebhaber, die beim Geschmack keinen Kompromiss eingehen wollen.',
-      additionalInfo: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l, Enthält Koffein (10mg/100ml)',
-      image: '/HIRO BURGER/Coca-Cola Zero Sugar 0,33l (MEHRWEG).webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Kola 0,33l',
-      price: '3,42 €',
-      description: 'Unser Original: Die bessere Alternative mit einzigartigem Cola-Geschmack und viel Koffein.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l, Enthält Koffein (25mg/100ml)',
-      image: '/HIRO BURGER/Fritz-Kola 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Limo Orange 0,33l',
-      price: '3,42 €',
-      description: 'Da scheint die Sonne aus dem Glas: Unsere Orangen-Limonade kommt dank mitmischender Zitrone und Mandarine auf intensive 17% Fruchtanteil.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l',
-      image: '/HIRO BURGER/Fritz-Limo Orange 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Limo Zitrone 0,33l',
-      price: '3,42 €',
-      description: 'Wenn dir Zitronen das Leben geben, dann ist es Fritz-Limo. Mit vielen Zitronen für einen hohen Fruchtanteil.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l',
-      image: '/HIRO BURGER/Fritz-Limo Zitrone 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Limo Honigmelone 0,33l',
-      price: '3,42 €',
-      description: 'Schmeckt unvergleichlich - denn wer macht aus Honigmelone schon Limonade? Die Antwort überrascht wohl nicht.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l',
-      image: '/HIRO BURGER/Fritz-Limo Honigmelone 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Limo Apfel-Kirsch-Holunder 0,33l',
-      price: '3,42 €',
-      description: 'Die gibt dir \'nen Obstkorb: 23% Frucht von Äpfeln, Kirschen und Holunderbeeren - sauer-süß-herb. Keine Wünsche offen.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l',
-      image: '/HIRO BURGER/Fritz-Limo Apfel-Kirsch-Holunder 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz-Spritz Bio-Apfelschorle 0,33l',
-      price: '3,42 €',
-      description: 'Die erste naturtrübe Apfelschorle auf dem Markt macht immer noch alles richtig: 66% Bio-Direktsaft für einen Geschmack, als wäre er geradewegs in die Flasche geerntet.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l',
-      image: '/HIRO BURGER/Fritz-Spritz Bio-Apfelschorle 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Fritz Mischmasch 0,33l',
-      price: '3,42 €',
-      description: 'Die Spezi des Nordens, mit Inhalten des Südens: Das perfekte Mischverhältnis aus Cola und viel Frucht.',
-      additionalInfo: 'zzgl. Pfand (0,08 €), 0,33l, 10,36 €/1l, Enthält Koffein (6mg/100ml)',
-      image: '/HIRO BURGER/Fritz Mischmasch 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Pfirsich 0,33l',
-      price: '3,35 €',
-      description: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l',
-      image: '/HIRO BURGER/Rauch Eistee Pfirsich 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Granatapfel 0,33l',
-      price: '3,35 €',
-      description: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l',
-      image: '/HIRO BURGER/Rauch Eistee Granatapfel 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Zitrone 0,33l',
-      price: '3,35 €',
-      description: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l',
-      image: '/HIRO BURGER/Rauch Eistee Zitrone 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Rauch Eistee Kirsche 0,33l',
-      price: '3,35 €',
-      description: 'zzgl. Pfand (0,15 €), 0,33l, 10,15 €/1l',
-      image: '/HIRO BURGER/Rauch Eistee Kirsche 0,33l.webp',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Wasser Still 0,25l',
-      price: '2,85 €',
-      description: 'zzgl. Pfand (0,15 €), 0,25l, 11,40 €/1l',
-      image: '/HIRO BURGER/Aqua Morelli Wasser Still 0,25l.webp',
-      tags: []
-    },
-    {
-      name: 'Aqua Morelli Mineralwasser Sprudel 0,25l',
-      price: '2,85 €',
-      description: 'zzgl. Pfand (0,15 €), 0,25l, 11,40 €/1l',
-      image: '/HIRO BURGER/Aqua Morelli Mineralwasser Sprudel 0,25l.webp',
-      tags: []
-    },
-    {
-      name: 'Becks Blue',
-      price: '3,50 €',
-      description: 'alkoholfrei',
-      additionalInfo: '0,33l, 10,61 €/1l',
-      image: '/HIRO BURGER/Becks Blue.webp',
-      tags: []
-    },
-    {
-      name: 'Franziskaner Weissbier',
-      price: '3,50 €',
-      description: 'alkoholfreie',
-      additionalInfo: '0,33l, 10,61 €/1l',
-      image: '/HIRO BURGER/Franziskaner Weissbier.webp',
-      tags: []
-    }
-  ]
+  // Organize menu items by section from database
+  const alkoholfreieGetraenkeItems = menuItems.filter(item => item.section === 'Alkoholfreie Getränke')
+  const alkoholischeGetraenkeItems = menuItems.filter(item => item.section === 'Alkoholische Getränke')
 
 
   const categories = [
@@ -344,10 +176,7 @@ function HiroBurgerContent() {
   ]
 
   // Get all items for search
-  const allItems = [
-    ...alkoholfreieGetraenkeItems.map(item => ({ ...item, section: 'Alkoholfreie Getränke' })),
-    ...alkoholischeGetraenkeItems.map(item => ({ ...item, section: 'Alkoholische Getränke' }))
-  ]
+  const allItems = menuItems
 
   // Filter items based on search query
   const searchResults = searchQuery.trim()
@@ -357,16 +186,28 @@ function HiroBurgerContent() {
     )
     : []
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#CC0000] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          {/* Restaurant Name and Rating - Only show when not scrolled */}
+           {/* Restaurant Name and Rating - Only show when not scrolled */}
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
+              <div className="flex items-center gap-2 md:gap-6">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -378,8 +219,60 @@ function HiroBurgerContent() {
                   </div>
                 </a>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Getränke</h1>
+                  <h1 className="text-l md:text-3xl font-bold text-gray-900">Getränke</h1>
                 </div>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <a href="/TOSHI_SUSHI" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/sushi_nav.png"
+                      alt="Sushi"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/HIRO_BURGER" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/burger_nav.png"
+                      alt="Burger"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/PIZZA_TIME" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/pizza_nav.png"
+                      alt="Pizza"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/LOS_TACOS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/taco_nav.png"
+                      alt="Taco"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/BOWLICIOUS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/bowl_nav.png"
+                      alt="Bowl"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -422,7 +315,7 @@ function HiroBurgerContent() {
               className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide scroll-smooth px-10"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {categories.map((category) => (
+              {categories.map((category: string) => (
                 <button
                   key={category}
                   onClick={() => scrollToSection(getCategoryId(category))}
@@ -460,7 +353,7 @@ function HiroBurgerContent() {
 
             {searchResults.length > 0 ? (
               <div className="space-y-4">
-                {searchResults.map((item, index) => (
+                {searchResults.map((item: any, index: number) => (
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
@@ -544,12 +437,12 @@ function HiroBurgerContent() {
             <section id="alkoholfreie-getränke" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Alkoholfreie Getränke</h2>
-                <span className="text-gray-600 font-semibold">21 Artikel</span>
+                <span className="text-gray-600 font-semibold">{alkoholfreieGetraenkeItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholfreieGetraenkeItems.map((item) => (
+                {alkoholfreieGetraenkeItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -595,12 +488,12 @@ function HiroBurgerContent() {
             <section id="alkoholische-getränke" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Alkoholische Getränke</h2>
-                <span className="text-gray-600 font-semibold">5 Artikel</span>
+                <span className="text-gray-600 font-semibold">{alkoholischeGetraenkeItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {alkoholischeGetraenkeItems.map((item) => (
+                {alkoholischeGetraenkeItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}

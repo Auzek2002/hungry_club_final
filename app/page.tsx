@@ -6,7 +6,6 @@ import ReservationModal from './components/ReservationModal';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [activeCard, setActiveCard] = useState<string | null>(null);
@@ -15,18 +14,12 @@ export default function Home() {
     // Check if it's mobile on mount
     setIsMobile(window.innerWidth < 1024);
 
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
 
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -46,12 +39,12 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50">
         <div className="relative">
           {/* Main navbar */}
-          <div className="bg-white h-16 shadow-lg border-b-2 border-gray-100">
+          <div className="bg-[#CC0000] h-16 shadow-lg border-b-2 border-[#990000]">
             <div className="max-w-7xl mx-auto px-4 lg:px-8 h-full">
               <div className="flex items-center h-full justify-between lg:justify-start">
                 {/* Logo on the left */}
-                <div className="flex items-center h-full py-0.5 w-32 lg:w-40">
-                  <div className="group bg-white rounded-xl shadow-lg border-4 border-white h-full aspect-square overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,0,0,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
+                <div className="flex items-center h-full py-0.5 w-32 lg:w-70">
+                  <div className="group bg-white rounded-xl shadow-lg border-4 border-[#990000] h-full aspect-square lg:aspect-[7/3] overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.8)] hover:border-white hover:scale-105 cursor-pointer p-1">
                     <div className="relative w-full h-full">
                       <Image
                         src="/logo_4k.png"
@@ -64,219 +57,188 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Navigation links centered */}
-                <div className="flex items-center justify-center gap-0.5 lg:gap-1 flex-1">
-                  {/* Desktop Links */}
-                  <a href="#toshi-sushi" onClick={() => handleNavClick('toshi-sushi')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
-                    <span className="flex items-center gap-2">
-                      <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
-                        <Image
-                          src="/sushi_nav.png"
-                          alt="Sushi"
-                          fill
-                          className="object-contain"
-                        />
-                      </span>
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF2900] group-hover:w-full transition-all duration-300"></span>
-                    {/* Tooltip */}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#CC0000] text-white px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg border-2 border-white z-50">
-                      TOSHI SUSHI & ASIA KÜCHE
-                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
-                    </span>
-                  </a>
-
-                  <a href="#hiro-burger" onClick={() => handleNavClick('hiro-burger')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
-                    <span className="flex items-center gap-2">
-                      <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
-                        <Image
-                          src="/burger_nav.png"
-                          alt="Burger"
-                          fill
-                          className="object-contain"
-                        />
-                      </span>
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF2900] group-hover:w-full transition-all duration-300"></span>
-                    {/* Tooltip */}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#CC0000] text-white px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg border-2 border-white z-50">
-                      HIRO BURGER
-                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
-                    </span>
-                  </a>
-
-                  <a href="#pizza-time" onClick={() => handleNavClick('pizza-time')} className="group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block">
-                    <span className="flex items-center gap-2">
-                      <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
-                        <Image
-                          src="/pizza_nav.png"
-                          alt="Pizza"
-                          fill
-                          className="object-contain"
-                        />
-                      </span>
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF2900] group-hover:w-full transition-all duration-300"></span>
-                    {/* Tooltip */}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#CC0000] text-white px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg border-2 border-white z-50">
-                      PIZZA TIME
-                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
-                    </span>
-                  </a>
-
-                  <a href="#los-tacos" onClick={() => handleNavClick('los-tacos')} className={`group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block ${activeCard === 'los-tacos' ? 'text-[#FF2900] bg-red-50' : ''}`}>
-                    <span className="flex items-center gap-2">
-                      <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
-                        <Image
-                          src="/taco_nav.png"
-                          alt="Taco"
-                          fill
-                          className="object-contain"
-                        />
-                      </span>
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF2900] group-hover:w-full transition-all duration-300"></span>
-                    {/* Tooltip */}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#CC0000] text-white px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg border-2 border-white z-50">
-                      LOS TACOS
-                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
-                    </span>
-                  </a>
-
-                  <a href="#bowlicious" onClick={() => handleNavClick('bowlicious')} className={`group relative px-6 py-2.5 text-gray-700 hover:text-[#FF2900] transition-all font-semibold whitespace-nowrap rounded-lg hover:bg-red-50 hidden lg:block ${activeCard === 'bowlicious' ? 'text-[#FF2900] bg-red-50' : ''}`}>
-                    <span className="flex items-center gap-2">
-                      <span className="relative w-12 h-12 group-hover:scale-110 transition-transform bg-white rounded-full p-1">
-                        <Image
-                          src="/bowl_nav.png"
-                          alt="Bowl"
-                          fill
-                          className="object-contain"
-                        />
-                      </span>
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF2900] group-hover:w-full transition-all duration-300"></span>
-                    {/* Tooltip */}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#CC0000] text-white px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg border-2 border-white z-50">
-                      BOWLICIOUS
-                      <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#CC0000] rotate-45 border-t-2 border-l-2 border-white"></span>
-                    </span>
-                  </a>
-
-                  {/* Mobile Links - Icon Only */}
-                  <a href="#toshi-sushi-mobile" onClick={() => handleNavClick('toshi-sushi')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
-                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
-                      <Image
-                        src="/sushi_nav.png"
-                        alt="Sushi"
-                        fill
-                        className="object-contain"
-                      />
-                    </span>
-                  </a>
-
-                  <a href="#hiro-burger-mobile" onClick={() => handleNavClick('hiro-burger')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
-                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
-                      <Image
-                        src="/burger_nav.png"
-                        alt="Burger"
-                        fill
-                        className="object-contain"
-                      />
-                    </span>
-                  </a>
-
-                  <a href="#pizza-time-mobile" onClick={() => handleNavClick('pizza-time')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
-                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
-                      <Image
-                        src="/pizza_nav.png"
-                        alt="Pizza"
-                        fill
-                        className="object-contain"
-                      />
-                    </span>
-                  </a>
-
-                  <a href="#los-tacos-mobile" onClick={() => handleNavClick('los-tacos')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
-                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
-                      <Image
-                        src="/taco_nav.png"
-                        alt="Taco"
-                        fill
-                        className="object-contain"
-                      />
-                    </span>
-                  </a>
-
-                  <a href="#bowlicious-mobile" onClick={() => handleNavClick('bowlicious')} className="group relative p-1 text-gray-700 hover:text-[#FF2900] transition-all rounded-lg hover:bg-red-50 lg:hidden">
-                    <span className="relative w-8 h-8 group-hover:scale-110 transition-transform bg-white rounded-full p-0.5 flex items-center justify-center">
-                      <Image
-                        src="/bowl_nav.png"
-                        alt="Bowl"
-                        fill
-                        className="object-contain"
-                      />
-                    </span>
-                  </a>
-                </div>
-
                 {/* Action Buttons */}
-                <div className="hidden lg:flex items-center justify-end gap-3 w-auto">
+                <div className="flex items-center justify-end gap-3 w-auto ml-auto">
                   <button
                     onClick={() => setIsReservationModalOpen(true)}
-                    className="px-6 py-2.5 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-white hover:text-[#CC0000] transition-all duration-300 shadow-md hover:shadow-lg border-2 border-white"
+                    className="px-6 py-2.5 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000]"
                   >
-                    Reservation
+                  Reservierung
                   </button>
-                  <a href="/cart" className="p-3 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#CC0000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-white flex items-center">
+                  <a href="/cart" className="p-3 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000] flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
                   </a>
-                </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="lg:hidden p-2 text-gray-700 hover:text-[#FF2900] transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {isMobileMenuOpen ? (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    ) : (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    )}
-                  </svg>
-                </button>
+                  {/* Hamburger Menu Button - Now visible on desktop too */}
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="p-2 text-white hover:text-white transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {isMobileMenuOpen ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                      )}
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Mobile Menu Dropdown */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t-2 border-gray-100 z-40">
+            <div className="lg:hidden absolute top-full left-0 right-0 bg-[#CC0000] shadow-2xl border-t-2 border-[#990000] z-40">
               <div className="max-w-7xl mx-auto px-4 py-4">
-                <div className="space-y-3">
-                  {/* Action Buttons */}
-                  <div className="flex flex-col gap-2 pb-2">
+                <div className="space-y-4">
+                  {/* Restaurant Navigation Icons */}
+                  <div className="flex items-center justify-center gap-3 pb-3 border-b-2 border-[#990000]">
                     <button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false)
-                        setIsReservationModalOpen(true)
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('toshi-sushi');
+                        document.getElementById('toshi-sushi-mobile')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }}
-                      className="w-full py-2.5 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#FF2900] transition-colors text-center shadow-md text-sm"
+                      className="group relative transition-all"
                     >
-                      Reservation
+                      <span className="relative w-14 h-14 block group-active:scale-95 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000]">
+                        <Image src="/sushi_nav.png" alt="Sushi" fill className="object-cover" />
+                      </span>
                     </button>
-                    <a
-                      href="/cart"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full py-2.5 bg-white text-[#CC0000] font-bold rounded-lg border-2 border-white hover:bg-[#CC0000] hover:text-white transition-colors text-center shadow-md flex items-center justify-center gap-2 text-sm"
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('hiro-burger');
+                        document.getElementById('hiro-burger-mobile')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                      </svg>
-                      View Cart
-                    </a>
+                      <span className="relative w-14 h-14 block group-active:scale-95 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000]">
+                        <Image src="/burger_nav.png" alt="Burger" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('pizza-time');
+                        document.getElementById('pizza-time-mobile')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-14 h-14 block group-active:scale-95 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000]">
+                        <Image src="/pizza_nav.png" alt="Pizza" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('los-tacos');
+                        document.getElementById('los-tacos-mobile')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-14 h-14 block group-active:scale-95 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000]">
+                        <Image src="/taco_nav.png" alt="Taco" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('bowlicious');
+                        document.getElementById('bowlicious-mobile')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-14 h-14 block group-active:scale-95 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000]">
+                        <Image src="/bowl_nav.png" alt="Bowl" fill className="object-cover" />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="hidden lg:block absolute top-full left-0 right-0 bg-[#CC0000] shadow-2xl border-t-2 border-[#990000] z-40">
+              <div className="max-w-7xl mx-auto px-8 py-6">
+                <div className="space-y-4">
+                  {/* Restaurant Navigation Icons */}
+                  <div className="flex items-center justify-center gap-4">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('toshi-sushi');
+                        document.getElementById('toshi-sushi')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-16 h-16 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000] group-hover:border-white">
+                        <Image src="/sushi_nav.png" alt="Sushi" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('hiro-burger');
+                        document.getElementById('hiro-burger')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-16 h-16 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000] group-hover:border-white">
+                        <Image src="/burger_nav.png" alt="Burger" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('pizza-time');
+                        document.getElementById('pizza-time')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-16 h-16 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000] group-hover:border-white">
+                        <Image src="/pizza_nav.png" alt="Pizza" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('los-tacos');
+                        document.getElementById('los-tacos')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-16 h-16 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000] group-hover:border-white">
+                        <Image src="/taco_nav.png" alt="Taco" fill className="object-cover" />
+                      </span>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileMenuOpen(false);
+                        handleNavClick('bowlicious');
+                        document.getElementById('bowlicious')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="group relative transition-all"
+                    >
+                      <span className="relative w-16 h-16 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden shadow-lg border-2 border-[#990000] group-hover:border-white">
+                        <Image src="/bowl_nav.png" alt="Bowl" fill className="object-cover" />
+                      </span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -290,12 +252,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0">
           {/* Mobile Image */}
-          <div
-            className="absolute inset-0 lg:hidden transition-transform duration-200"
-            style={{
-              transform: `scale(${1 + scrollY / 2000}) translateY(${scrollY * 0.3}px)`
-            }}
-          >
+          <div className="absolute inset-0 lg:hidden">
             <Image
               src="/hero_m_2.png"
               alt="Delicious Food Background"
@@ -554,7 +511,7 @@ export default function Home() {
             {/* Our Restaurants Column */}
             <div>
               <h4 className="font-bold text-lg mb-6 text-white relative inline-block">
-                Our Restaurants
+                Unsere Restaurants
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#CC0000]"></span>
               </h4>
               <ul className="space-y-3">
@@ -594,7 +551,7 @@ export default function Home() {
             {/* Contact Info Column */}
             <div>
               <h4 className="font-bold text-lg mb-6 text-white relative inline-block">
-                Contact Us
+                Kontaktieren Sie uns
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#CC0000]"></span>
               </h4>
               <ul className="space-y-4">
@@ -629,7 +586,7 @@ export default function Home() {
             {/* Opening Hours Column */}
             <div>
               <h4 className="font-bold text-lg mb-6 text-white relative inline-block">
-                Opening Hours
+                Öffnungszeiten
                 <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#CC0000]"></span>
               </h4>
               <ul className="space-y-3">
@@ -643,7 +600,7 @@ export default function Home() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                Order Now
+                Jetzt bestellen
               </a>
             </div>
           </div>
@@ -680,7 +637,7 @@ export default function Home() {
               {/* Our Restaurants Column - Compact */}
               <div>
                 <h4 className="font-bold text-sm mb-3 text-white relative inline-block">
-                  Our Restaurants
+                  Unsere Restaurants
                   <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-[#CC0000]"></span>
                 </h4>
                 <ul className="space-y-1.5">
@@ -718,7 +675,7 @@ export default function Home() {
               {/* Opening Hours Column - Compact */}
               <div>
                 <h4 className="font-bold text-sm mb-3 text-white relative inline-block">
-                  Opening Hours
+                  Öffnungszeiten
                   <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-[#CC0000]"></span>
                 </h4>
                 <ul className="space-y-1.5">
@@ -732,7 +689,7 @@ export default function Home() {
               {/* Contact Info Column - Compact */}
               <div>
                 <h4 className="font-bold text-sm mb-3 text-white relative inline-block">
-                  Contact Us
+                  Kontaktieren Sie uns
                   <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-[#CC0000]"></span>
                 </h4>
                 <ul className="space-y-2">
@@ -742,8 +699,7 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     <span className="text-gray-400 text-[10px] leading-snug">
-                      Musterstraße 123<br />
-                      12345 Berlin
+                      Dresdner Straße 220, Freital 01705
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
@@ -772,7 +728,7 @@ export default function Home() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                Order Now
+                Jetzt bestellen
               </a>
             </div>
           </div>
@@ -788,10 +744,10 @@ export default function Home() {
               {/* Legal Links */}
               <div className="flex items-center gap-6">
                 <a href="#" className="text-gray-500 hover:text-[#CC0000] text-sm transition-colors">
-                  Privacy Policy
+                  Datenschutzrichtlinie
                 </a>
                 <a href="#" className="text-gray-500 hover:text-[#CC0000] text-sm transition-colors">
-                  Terms of Service
+                  Nutzungsbedingungen
                 </a>
                 <a href="#" className="text-gray-500 hover:text-[#CC0000] text-sm transition-colors">
                   Impressum
@@ -800,16 +756,13 @@ export default function Home() {
 
               {/* Payment Methods */}
               <div className="flex items-center gap-3">
-                <span className="text-gray-500 text-sm">We accept:</span>
+                <span className="text-gray-500 text-sm">Wir akzeptieren:</span>
                 <div className="flex items-center gap-2">
                   <div className="bg-white/10 rounded px-2 py-1">
                     <span className="text-xs font-bold text-gray-400">VISA</span>
                   </div>
                   <div className="bg-white/10 rounded px-2 py-1">
                     <span className="text-xs font-bold text-gray-400">MC</span>
-                  </div>
-                  <div className="bg-white/10 rounded px-2 py-1">
-                    <span className="text-xs font-bold text-gray-400">PayPal</span>
                   </div>
                 </div>
               </div>

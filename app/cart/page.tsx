@@ -30,9 +30,9 @@ export default function CartPage() {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
               </svg>
-              <span className="font-bold text-lg">Back to Home</span>
+              <span className="font-bold text-lg">Zurück nach Hause</span>
             </Link>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Shopping Cart</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Warenkorb</h1>
             <div className="w-32"></div>
           </div>
         </div>
@@ -48,10 +48,10 @@ export default function CartPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Add some delicious items from our restaurants!</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Ihr Warenkorb ist leer</h2>
+            <p className="text-gray-600 mb-6">Ergänzen Sie Ihre Auswahl mit köstlichen Gerichten aus unseren Restaurants!</p>
             <Link href="/" className="inline-block px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg">
-              Browse Restaurants
+              Durchsuchen Sie Restaurants
             </Link>
           </div>
         ) : (
@@ -61,13 +61,13 @@ export default function CartPage() {
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-gray-900">
-                  Cart Items ({getTotalItems()})
+                  Warenkorbartikel ({getTotalItems()})
                 </h2>
                 <button
                   onClick={clearCart}
                   className="text-sm text-red-600 hover:text-red-800 font-semibold transition-colors"
                 >
-                  Clear Cart
+                Warenkorb leeren
                 </button>
               </div>
 
@@ -131,19 +131,19 @@ export default function CartPage() {
             {/* Order Summary */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Bestellübersicht</h2>
 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-gray-700">
-                    <span>Subtotal</span>
+                    <span>Zwischensumme</span>
                     <span className="font-semibold">{getTotalPrice()} €</span>
                   </div>
                   <div className="flex justify-between text-gray-700">
-                    <span>Delivery Fee</span>
+                    <span>Liefergebühr</span>
                     <span className="font-semibold">2,00 €</span>
                   </div>
                   <div className="border-t pt-3 flex justify-between text-lg font-bold text-gray-900">
-                    <span>Total</span>
+                    <span>Gesamt</span>
                     <span className="text-[#CC0000]">
                       {(parseFloat(getTotalPrice().replace(',', '.')) + 2).toFixed(2).replace('.', ',')} €
                     </span>
@@ -154,20 +154,16 @@ export default function CartPage() {
                   onClick={() => setIsCheckoutOpen(true)}
                   className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg mb-3"
                 >
-                  Proceed to Checkout
+                Zur Kasse gehen
                 </button>
 
                 <Link href="/" className="block w-full px-6 py-3 bg-white text-[#CC0000] font-bold rounded-lg border-2 border-[#CC0000] hover:bg-gray-50 transition-all duration-300 text-center">
-                  Continue Shopping
+                  Weiter einkaufen
                 </Link>
 
                 {/* Info */}
                 <div className="mt-6 pt-6 border-t">
                   <div className="flex items-start gap-2 text-sm text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-green-600 flex-shrink-0">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p>Free delivery on orders over 20 €</p>
                   </div>
                 </div>
               </div>

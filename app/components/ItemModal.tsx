@@ -24,10 +24,12 @@ interface ItemModalProps {
     price: string
     description?: string
     bulletPoints?: string[]
+    includes?: string[]  // For menu sets from database
     image?: string
     tags?: string[]
     additionalInfo?: string
     customizationOptions?: CustomizationOptions | CustomizationOptions[]
+    customizationGroups?: CustomizationOptions[]  // NEW: Support for multiple groups
   }
 }
 
@@ -38,7 +40,96 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
   // For multiple customization groups
   const [selectedOptions, setSelectedOptions] = useState<Map<number, number | null>>(new Map())
   const [selectedExtrasGroups, setSelectedExtrasGroups] = useState<Map<number, number[]>>(new Map())
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)  // Track selected size for Mix Your Own Bowl
   const { addToCart } = useCart()
+
+  // Helper function to get all customization groups (combines legacy and new format)
+  const getAllCustomizationGroups = (): CustomizationOptions[] => {
+    const groups: CustomizationOptions[] = []
+
+    // Add legacy customizationOptions (convert to array if single object)
+    if (item.customizationOptions) {
+      if (Array.isArray(item.customizationOptions)) {
+        groups.push(...item.customizationOptions)
+      } else {
+        groups.push(item.customizationOptions)
+      }
+    }
+
+    // Add new customizationGroups
+    if (item.customizationGroups && Array.isArray(item.customizationGroups)) {
+      groups.push(...item.customizationGroups)
+    }
+
+    // Filter out empty groups (groups with no options)
+    return groups.filter(group => group.options && group.options.length > 0)
+  }
+
+  const allCustomizationGroups = getAllCustomizationGroups()
+
+  // Check if this is a Mix Your Own Bowl item
+  const isMixYourOwnBowl = item.name.includes('Mix Your Own Bowl')
+
+  // Filter customization groups based on selected size (for Mix Your Own Bowl only)
+  const getVisibleCustomizationGroups = (): CustomizationOptions[] => {
+    if (!isMixYourOwnBowl) {
+      return allCustomizationGroups
+    }
+
+    // If no size selected yet, show only the first group (size selection)
+    if (!selectedSize) {
+      return allCustomizationGroups.slice(0, 1)
+    }
+
+    // If Medium is selected, hide "Dein 4. Mix In" and "Dein 5. Mix In"
+    if (selectedSize === 'Medium') {
+      return allCustomizationGroups.filter(group =>
+        group.title !== 'Dein 4. Mix In:' && group.title !== 'Dein 5. Mix In:'
+      )
+    }
+
+    // If Premium-Größe Basis is selected, show all groups
+    if (selectedSize === 'Premium-Größe Basis') {
+      return allCustomizationGroups
+    }
+
+    // Default: show only first group
+    return allCustomizationGroups.slice(0, 1)
+  }
+
+  const visibleCustomizationGroups = getVisibleCustomizationGroups()
+
+  // Check if all required fields are selected
+  const areAllRequiredFieldsSelected = (): boolean => {
+    // If no customization groups, button should be enabled
+    if (allCustomizationGroups.length === 0) {
+      return true
+    }
+
+    // Check only visible groups for Mix Your Own Bowl, or all groups for other items
+    const groupsToCheck = isMixYourOwnBowl ? visibleCustomizationGroups : allCustomizationGroups
+
+    for (let i = 0; i < allCustomizationGroups.length; i++) {
+      const group = allCustomizationGroups[i]
+
+      // Skip groups that aren't visible (for Mix Your Own Bowl)
+      if (isMixYourOwnBowl && !groupsToCheck.includes(group)) {
+        continue
+      }
+
+      // Check if required and single-selection (radio button)
+      if (group.required && !group.multiple) {
+        const selectedIndex = selectedOptions.get(i)
+        if (selectedIndex === null || selectedIndex === undefined) {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
+
+  const isAddButtonEnabled = areAllRequiredFieldsSelected()
 
   // Reset selected option when modal opens
   useEffect(() => {
@@ -47,9 +138,30 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
       setSelectedExtras([])
       setSelectedOptions(new Map())
       setSelectedExtrasGroups(new Map())
+      setSelectedSize(null)
       setQuantity(1)
     }
   }, [isOpen])
+
+  // Clear selections from hidden groups when size changes
+  useEffect(() => {
+    if (isMixYourOwnBowl && selectedSize) {
+      const newSelectedOptions = new Map(selectedOptions)
+      const newSelectedExtrasGroups = new Map(selectedExtrasGroups)
+
+      // Clear selections from groups that are no longer visible
+      allCustomizationGroups.forEach((group, index) => {
+        if (!visibleCustomizationGroups.includes(group)) {
+          newSelectedOptions.delete(index)
+          newSelectedExtrasGroups.delete(index)
+        }
+      })
+
+      setSelectedOptions(newSelectedOptions)
+      setSelectedExtrasGroups(newSelectedExtrasGroups)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSize])
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -84,9 +196,9 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
     if (priceMatch) {
       let basePrice = parseFloat(priceMatch[1].replace(',', '.'))
 
-      // Handle multiple customization groups
-      if (Array.isArray(item.customizationOptions)) {
-        item.customizationOptions.forEach((group, groupIndex) => {
+      // Use combined customization groups
+      if (allCustomizationGroups.length > 0) {
+        allCustomizationGroups.forEach((group, groupIndex) => {
           if (!group.multiple) {
             // Radio button selection
             const selectedIndex = selectedOptions.get(groupIndex)
@@ -101,18 +213,19 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
             })
           }
         })
-      } else if (item.customizationOptions) {
-        // Single customization group (backward compatibility)
+      }
+      // Legacy support for old single group format
+      else if (item.customizationOptions && !Array.isArray(item.customizationOptions)) {
         // Add selected option price if applicable (radio button)
         if (!item.customizationOptions.multiple && selectedOption !== null) {
-          const optionPrice = (item.customizationOptions as CustomizationOptions).options[selectedOption].price
+          const optionPrice = item.customizationOptions.options[selectedOption].price
           basePrice += optionPrice
         }
 
         // Add selected extras prices (checkboxes)
         if (item.customizationOptions.multiple && selectedExtras.length > 0) {
           selectedExtras.forEach(index => {
-            basePrice += (item.customizationOptions as CustomizationOptions).options[index].price
+            basePrice += item.customizationOptions!.options[index].price
           })
         }
       }
@@ -124,11 +237,19 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
   }
 
   const handleAddToCart = () => {
-    // Handle multiple customization groups
-    if (Array.isArray(item.customizationOptions)) {
-      // Check if all required fields are selected
-      for (let groupIndex = 0; groupIndex < item.customizationOptions.length; groupIndex++) {
-        const group = item.customizationOptions[groupIndex]
+    // Use the combined customization groups (handles both customizationOptions and customizationGroups)
+    if (allCustomizationGroups.length > 0) {
+      // Check if all VISIBLE required fields are selected
+      const groupsToValidate = isMixYourOwnBowl ? visibleCustomizationGroups : allCustomizationGroups
+
+      for (let groupIndex = 0; groupIndex < allCustomizationGroups.length; groupIndex++) {
+        const group = allCustomizationGroups[groupIndex]
+
+        // Skip validation for hidden groups in Mix Your Own Bowl
+        if (isMixYourOwnBowl && !groupsToValidate.includes(group)) {
+          continue
+        }
+
         if (group.required && !group.multiple) {
           const selectedIndex = selectedOptions.get(groupIndex)
           console.log(`Group ${groupIndex} (${group.title}): required=${group.required}, multiple=${group.multiple}, selectedIndex=`, selectedIndex)
@@ -144,7 +265,7 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
       let basePrice = priceMatch ? parseFloat(priceMatch[1].replace(',', '.')) : 0
       const customizationTexts: string[] = []
 
-      item.customizationOptions.forEach((group, groupIndex) => {
+      allCustomizationGroups.forEach((group, groupIndex) => {
         if (!group.multiple) {
           // Radio button selection
           const selectedIndex = selectedOptions.get(groupIndex)
@@ -176,54 +297,11 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
         image: item.image
       }, quantity)
     } else {
-      // Single customization group (backward compatibility)
-      // Check if customization is required and no option is selected (radio button)
-      if (item.customizationOptions?.required && !item.customizationOptions.multiple && selectedOption === null) {
-        alert('Bitte wählen Sie eine Option aus.')
-        return
-      }
-
-      // Prepare cart item with customization details
-      let finalPrice = item.price
-      let customizationText = ''
-
-      // Handle radio button selection
-      if (item.customizationOptions && !item.customizationOptions.multiple && selectedOption !== null) {
-        const option = (item.customizationOptions as CustomizationOptions).options[selectedOption]
-        customizationText = option.label
-
-        // Calculate the final price including option price
-        const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
-        if (priceMatch) {
-          const basePrice = parseFloat(priceMatch[1].replace(',', '.'))
-          const totalPrice = (basePrice + option.price).toFixed(2).replace('.', ',')
-          finalPrice = `${totalPrice} €`
-        }
-      }
-
-      // Handle checkbox selections (multiple extras)
-      if (item.customizationOptions && item.customizationOptions.multiple && selectedExtras.length > 0) {
-        const selectedExtrasLabels = selectedExtras.map(index =>
-          (item.customizationOptions as CustomizationOptions).options[index].label
-        )
-        customizationText = selectedExtrasLabels.join(', ')
-
-        // Calculate the final price including extras
-        const priceMatch = item.price.match(/(\d+[,.]?\d*)/)
-        if (priceMatch) {
-          let basePrice = parseFloat(priceMatch[1].replace(',', '.'))
-          selectedExtras.forEach(index => {
-            basePrice += (item.customizationOptions as CustomizationOptions).options[index].price
-          })
-          const totalPrice = basePrice.toFixed(2).replace('.', ',')
-          finalPrice = `${totalPrice} €`
-        }
-      }
-
+      // No customization options - just add to cart with base price
       addToCart({
         name: item.name,
-        price: finalPrice,
-        description: customizationText || item.description,
+        price: item.price,
+        description: item.description,
         image: item.image
       }, quantity)
     }
@@ -275,18 +353,27 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
           <div className="text-xl font-bold text-gray-900 mb-4">{item.price}</div>
 
           {/* Description or Bullet Points */}
-          {item.bulletPoints ? (
+          {(item.bulletPoints && item.bulletPoints.length > 0) || (item.includes && item.includes.length > 0) ? (
             <ul className="text-sm text-gray-600 mb-4 space-y-2">
-              {item.bulletPoints.map((point, index) => (
+              {(item.bulletPoints || item.includes || []).map((point: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-2">•</span>
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
-          ) : item.description && (
+          ) : item.description?.includes('•') ? (
+            <ul className="text-sm text-gray-600 mb-4 space-y-2">
+              {item.description.split('•').filter((p: string) => p.trim()).map((point: string, index: number) => (
+                <li key={index} className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>{point.trim()}</span>
+                </li>
+              ))}
+            </ul>
+          ) : item.description ? (
             <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-          )}
+          ) : null}
 
           {/* Additional Info */}
           {item.additionalInfo && (
@@ -324,12 +411,14 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
           </button>
 
           {/* Customization Options */}
-          {item.customizationOptions && (
+          {visibleCustomizationGroups.length > 0 && (
             <>
-              {Array.isArray(item.customizationOptions) ? (
-                // Multiple customization groups
-                item.customizationOptions.map((group, groupIndex) => (
-                  <div key={groupIndex} className="mb-6 border-t border-b border-gray-200 py-4">
+              {/* Render visible customization groups (combined legacy + new) */}
+              {visibleCustomizationGroups.map((group, groupIndex) => {
+                // Find the actual group index in allCustomizationGroups for state management
+                const actualGroupIndex = allCustomizationGroups.findIndex(g => g.title === group.title)
+                return (
+                  <div key={actualGroupIndex} className="mb-6 border-t border-b border-gray-200 py-4">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-lg font-bold text-gray-900">
                         {group.title}
@@ -354,14 +443,14 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
                                 // Checkbox for multiple selection
                                 <input
                                   type="checkbox"
-                                  checked={(selectedExtrasGroups.get(groupIndex) || []).includes(index)}
+                                  checked={(selectedExtrasGroups.get(actualGroupIndex) || []).includes(index)}
                                   onChange={() => {
-                                    const currentExtras = selectedExtrasGroups.get(groupIndex) || []
+                                    const currentExtras = selectedExtrasGroups.get(actualGroupIndex) || []
                                     if (currentExtras.includes(index)) {
                                       const newExtras = currentExtras.filter(i => i !== index)
-                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(groupIndex, newExtras)))
+                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(actualGroupIndex, newExtras)))
                                     } else {
-                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(groupIndex, [...currentExtras, index])))
+                                      setSelectedExtrasGroups(new Map(selectedExtrasGroups.set(actualGroupIndex, [...currentExtras, index])))
                                     }
                                   }}
                                   className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000] rounded"
@@ -370,9 +459,15 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
                                 // Radio button for single selection
                                 <input
                                   type="radio"
-                                  name={`customization-${groupIndex}`}
-                                  checked={selectedOptions.get(groupIndex) === index}
-                                  onChange={() => setSelectedOptions(new Map(selectedOptions.set(groupIndex, index)))}
+                                  name={`customization-${actualGroupIndex}`}
+                                  checked={selectedOptions.get(actualGroupIndex) === index}
+                                  onChange={() => {
+                                    setSelectedOptions(new Map(selectedOptions.set(actualGroupIndex, index)))
+                                    // Track size selection for Mix Your Own Bowl items (first group)
+                                    if (isMixYourOwnBowl && actualGroupIndex === 0) {
+                                      setSelectedSize(option.label)
+                                    }
+                                  }}
                                   className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000]"
                                 />
                               )}
@@ -391,70 +486,8 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
                       ))}
                     </div>
                   </div>
-                ))
-              ) : (
-                // Single customization group (backward compatibility)
-                <div className="mb-6 border-t border-b border-gray-200 py-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-lg font-bold text-gray-900">
-                      {item.customizationOptions.title}
-                    </h3>
-                    {item.customizationOptions.required ? (
-                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                        1 Pflichtfeld
-                      </span>
-                    ) : (
-                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                        Optional
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    {item.customizationOptions.options.map((option, index) => (
-                      <div key={index}>
-                        <label className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                          <div className="flex items-center gap-3">
-                            {(item.customizationOptions as CustomizationOptions).multiple ? (
-                              // Checkbox for multiple selection
-                              <input
-                                type="checkbox"
-                                checked={selectedExtras.includes(index)}
-                                onChange={() => {
-                                  if (selectedExtras.includes(index)) {
-                                    setSelectedExtras(selectedExtras.filter(i => i !== index))
-                                  } else {
-                                    setSelectedExtras([...selectedExtras, index])
-                                  }
-                                }}
-                                className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000] rounded"
-                              />
-                            ) : (
-                              // Radio button for single selection
-                              <input
-                                type="radio"
-                                name="customization"
-                                checked={selectedOption === index}
-                                onChange={() => setSelectedOption(index)}
-                                className="w-5 h-5 text-[#CC0000] focus:ring-[#CC0000]"
-                              />
-                            )}
-                            <span className="text-sm text-gray-900">{option.label}</span>
-                          </div>
-                          {option.price > 0 && (
-                            <span className="text-sm font-semibold text-gray-700">
-                              +{option.price.toFixed(2).replace('.', ',')} €
-                            </span>
-                          )}
-                        </label>
-                        <button className="text-xs text-gray-500 hover:text-gray-700 underline ml-11 mt-1">
-                          Produktinfo
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )
+              })}
             </>
           )}
 
@@ -482,7 +515,12 @@ export default function ItemModal({ isOpen, onClose, item }: ItemModalProps) {
             {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-[#CC0000] hover:bg-[#990000] text-white font-bold py-3 px-6 rounded-full transition-colors text-lg shadow-lg"
+              disabled={!isAddButtonEnabled}
+              className={`flex-1 font-bold py-3 px-6 rounded-full transition-colors text-lg shadow-lg ${
+                isAddButtonEnabled
+                  ? 'bg-[#CC0000] hover:bg-[#990000] text-white cursor-pointer'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
             >
               Hinzufügen {calculateTotalPrice()}
             </button>

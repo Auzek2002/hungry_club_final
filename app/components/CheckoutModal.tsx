@@ -267,8 +267,8 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           </div>
 
           {/* Success Message */}
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Order has been Placed!</h2>
-          <p className="text-lg text-gray-700 mb-4">Order Number: <span className="font-bold text-[#CC0000]">{successOrderNumber}</span></p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Ihre Bestellung wurde aufgegeben!</h2>
+          <p className="text-lg text-gray-700 mb-4">Bestellnummer: <span className="font-bold text-[#CC0000]">{successOrderNumber}</span></p>
 
           {/* Estimated Time */}
           <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
@@ -287,7 +287,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
 
           {/* Contact Info */}
           <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-800 mb-2">For any issues regarding your order, please contact:</p>
+            <p className="text-sm text-gray-800 mb-2">Bei Fragen zu Ihrer Bestellung wenden Sie sich bitte an uns:</p>
             <a href="tel:+493012345678" className="text-xl font-bold text-blue-600 hover:text-blue-800 transition-colors">
               +49 30 123 456 789
             </a>
@@ -298,7 +298,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
             onClick={handleSuccessModalClose}
             className="w-full px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg"
           >
-            Close
+            Schließen
           </button>
         </div>
       </div>
@@ -311,7 +311,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
         {/* Header */}
         <div className="sticky top-0 bg-white border-b-2 border-gray-100 p-6 rounded-t-2xl z-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">Checkout</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Kasse</h2>
             <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -363,7 +363,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           {/* Step 1: Delivery Type */}
           {currentStep === 1 && (
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Select Delivery Type</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Wählen Sie die Lieferart aus</h3>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setDeliveryType('delivery')}
@@ -374,7 +374,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   }`}
                 >
                   <div className="text-4xl mb-3">🚗</div>
-                  <div className="font-bold text-lg text-gray-900">Delivery</div>
+                  <div className="font-bold text-lg text-gray-900">Lieferung</div>
                   <div className="text-sm text-gray-600 mt-1">30-60 min</div>
                 </button>
 
@@ -387,7 +387,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   }`}
                 >
                   <div className="text-4xl mb-3">🛍️</div>
-                  <div className="font-bold text-lg text-gray-900">Pickup</div>
+                  <div className="font-bold text-lg text-gray-900">Abholen</div>
                   <div className="text-sm text-gray-600 mt-1">~30 min</div>
                 </button>
               </div>
@@ -414,7 +414,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   >
                     <div className="text-4xl mb-3">🚗</div>
                     <div className="font-bold text-lg text-gray-900">Standard</div>
-                    <div className="text-sm text-gray-600 mt-1">45-60 minutes</div>
+                    <div className="text-sm text-gray-600 mt-1">45-60 Minuten</div>
                   </button>
 
                   {/* Express Delivery */}
@@ -427,8 +427,8 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     }`}
                   >
                     <div className="text-4xl mb-3">⚡</div>
-                    <div className="font-bold text-lg text-gray-900">Express</div>
-                    <div className="text-sm text-gray-600 mt-1">30 minutes</div>
+                    <div className="font-bold text-lg text-gray-900">Äußern</div>
+                    <div className="text-sm text-gray-600 mt-1">30 Minuten</div>
                     <div className="text-xs text-[#CC0000] font-semibold mt-2">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} € fee</div>
                   </button>
                 </div>
@@ -440,8 +440,8 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     className="w-full p-6 rounded-xl border-2 border-[#CC0000] bg-red-50 transition-all duration-300"
                   >
                     <div className="text-4xl mb-3">🛍️</div>
-                    <div className="font-bold text-lg text-gray-900">Ready for Pickup</div>
-                    <div className="text-sm text-gray-600 mt-1">Approximately 30 minutes</div>
+                    <div className="font-bold text-lg text-gray-900">Bereit zur Abholung</div>
+                    <div className="text-sm text-gray-600 mt-1">Ungefähr 30 Minuten</div>
                   </button>
                 </div>
               )}
@@ -462,10 +462,10 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                     </svg>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Delivery Service</h4>
-                      <p className="text-gray-700 mb-2">We deliver to your location!</p>
+                      <h4 className="font-bold text-gray-900 mb-2">Zustelldienst</h4>
+                      <p className="text-gray-700 mb-2">Wir liefern an Ihren Standort!</p>
                       <p className="text-sm text-gray-600">
-                        You'll provide your complete delivery address in the next step.
+                        Im nächsten Schritt geben Sie Ihre vollständige Lieferadresse an.
                       </p>
                     </div>
                   </div>
@@ -478,11 +478,11 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Pickup Address</h4>
+                      <h4 className="font-bold text-gray-900 mb-2">Abholadresse</h4>
                       <p className="text-gray-700">Dresdner Straße 220</p>
                       <p className="text-gray-700">Freital 01705</p>
                       <p className="text-sm text-gray-600 mt-2">
-                        Your order will be ready for pickup in approximately 30 minutes
+                        Ihre Bestellung ist in etwa 30 Minuten abholbereit.
                       </p>
                     </div>
                   </div>
@@ -494,13 +494,13 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           {/* Step 4: Contact Details */}
           {currentStep === 4 && (
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Kontaktinformationen</h3>
 
               <div className="space-y-4">
                 {/* Full Name */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name *
+                    Vollständiger Name *
                   </label>
                   <input
                     type="text"
@@ -524,7 +524,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                 {/* Email */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address *
+                    E-Mail-Adresse *
                   </label>
                   <input
                     type="email"
@@ -548,7 +548,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                 {/* Phone */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Phone Number *
+                    Telefonnummer *
                   </label>
                   <input
                     type="tel"
@@ -574,7 +574,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   <>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Street Address *
+                        Straßenadresse *
                       </label>
                       <input
                         type="text"
@@ -597,7 +597,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
 
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        City *
+                        Stadt *
                       </label>
                       <input
                         type="text"
@@ -623,7 +623,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
 
               <div className="p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-blue-900">
-                  <strong>Note:</strong> We'll use this information to contact you about your order and delivery updates.
+                  <strong>Notiz:</strong> Wir verwenden diese Informationen, um Sie bezüglich Ihrer Bestellung und Lieferaktualisierungen zu kontaktieren.
                 </p>
               </div>
             </div>
@@ -632,7 +632,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           {/* Step 5: Remarks */}
           {currentStep === 5 && (
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Special Instructions</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Besondere Anweisungen</h3>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -646,22 +646,22 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#CC0000] focus:outline-none resize-none"
                 />
                 <p className="mt-2 text-sm text-gray-500">
-                  Add any special requests or instructions for your order
+                  Fügen Sie Ihrer Bestellung alle Sonderwünsche oder Anweisungen hinzu.
                 </p>
               </div>
 
               {/* Order Summary */}
               <div className="p-4 bg-gray-50 rounded-xl">
-                <h4 className="font-bold text-gray-900 mb-3">Order Summary</h4>
+                <h4 className="font-bold text-gray-900 mb-3">Bestellübersicht</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Type:</span>
+                    <span className="text-gray-600">Typ:</span>
                     <span className="font-semibold text-gray-900">
                       {deliveryType === 'delivery' ? '🚗 Delivery' : '🛍️ Pickup'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Speed:</span>
+                    <span className="text-gray-600">Geschwindigkeit:</span>
                     <span className="font-semibold text-gray-900">
                       {timeOption === 'standard'
                         ? '🚗 Standard (45-60 min)'
@@ -672,17 +672,17 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Contact:</span>
+                    <span className="text-gray-600">Kontakt:</span>
                     <span className="font-semibold text-gray-900">{fullName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Phone:</span>
+                    <span className="text-gray-600">Telefon:</span>
                     <span className="font-semibold text-gray-900">{phone}</span>
                   </div>
                   {deliveryType === 'delivery' && (
                     <>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Address:</span>
+                        <span className="text-gray-600">Adresse:</span>
                         <span className="font-semibold text-gray-900 text-right">
                           {streetAddress}, {city}
                         </span>
@@ -691,17 +691,17 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                   )}
                   <div className="border-t pt-2 mt-2">
                     <div className="flex justify-between mb-1">
-                      <span className="text-gray-600">Subtotal:</span>
+                      <span className="text-gray-600">Zwischensumme:</span>
                       <span className="font-semibold text-gray-900">{totalPrice} €</span>
                     </div>
                     {timeOption === 'express' && deliveryType === 'delivery' && (
                       <div className="flex justify-between mb-1">
-                        <span className="text-gray-600">Express Delivery Fee:</span>
+                        <span className="text-gray-600">Express-Liefergebühr:</span>
                         <span className="font-semibold text-gray-900">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} €</span>
                       </div>
                     )}
                     <div className="flex justify-between pt-2 border-t">
-                      <span className="text-gray-900 font-bold">Total:</span>
+                      <span className="text-gray-900 font-bold">Gesamt:</span>
                       <span className="font-bold text-[#CC0000] text-lg">{calculateTotalPrice()} €</span>
                     </div>
                   </div>
@@ -713,7 +713,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
           {/* Step 6: Payment Method */}
           {currentStep === 6 && (
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Zahlungsmethode</h3>
 
               <div className="space-y-4">
                 {/* Stripe Payment */}
@@ -729,9 +729,9 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     <div className="flex items-center gap-4">
                       <div className="text-4xl">💳</div>
                       <div>
-                        <div className="font-bold text-lg text-gray-900">Credit / Debit Card</div>
+                        <div className="font-bold text-lg text-gray-900">Kredit-/Debitkarte</div>
                         <div className="text-sm text-gray-600 mt-1">
-                          Pay securely with Stripe (Visa, Mastercard, Apple Pay, Google Pay)
+                          Sicher bezahlen mit Stripe
                         </div>
                       </div>
                     </div>
@@ -760,9 +760,9 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     <div className="flex items-center gap-4">
                       <div className="text-4xl">💶</div>
                       <div>
-                        <div className="font-bold text-lg text-gray-900">Cash on {deliveryType === 'delivery' ? 'Delivery' : 'Pickup'}</div>
+                        <div className="font-bold text-lg text-gray-900">Bargeld an {deliveryType === 'delivery' ? 'Delivery' : 'Pickup'}</div>
                         <div className="text-sm text-gray-600 mt-1">
-                          Pay with cash when you receive your order
+                          Bezahlen Sie bar bei Erhalt Ihrer Bestellung.
                         </div>
                       </div>
                     </div>
@@ -786,7 +786,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                   </svg>
                   <div>
-                    <p className="text-sm text-green-900 font-semibold">Secure Payment</p>
+                    <p className="text-sm text-green-900 font-semibold">Sichere Zahlung</p>
                     <p className="text-sm text-green-800">
                       {paymentMethod === 'stripe'
                         ? 'Your payment information is encrypted and secure with Stripe.'
@@ -800,17 +800,17 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
               <div className="p-4 bg-gray-50 rounded-xl">
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-600">Subtotal:</span>
+                    <span className="text-gray-600">Zwischensumme:</span>
                     <span className="font-semibold text-gray-900">{totalPrice} €</span>
                   </div>
                   {timeOption === 'express' && deliveryType === 'delivery' && (
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">Express Delivery Fee:</span>
+                      <span className="text-gray-600">Express-Liefergebühr:</span>
                       <span className="font-semibold text-gray-900">+{EXPRESS_DELIVERY_FEE.toFixed(2).replace('.', ',')} €</span>
                     </div>
                   )}
                   <div className="flex justify-between items-center pt-2 border-t">
-                    <span className="text-lg font-bold text-gray-900">Order Total:</span>
+                    <span className="text-lg font-bold text-gray-900">Bestellsumme:</span>
                     <span className="text-2xl font-bold text-[#CC0000]">{calculateTotalPrice()} €</span>
                   </div>
                 </div>
@@ -827,7 +827,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                 onClick={handleBack}
                 className="px-6 py-3 bg-white text-gray-700 font-bold rounded-lg border-2 border-gray-300 hover:bg-gray-50 transition-all duration-300"
               >
-                Back
+                Zurück
               </button>
             )}
             {currentStep < 6 ? (
@@ -835,7 +835,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                 onClick={handleNext}
                 className="flex-1 px-6 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                Next
+                Nächste
               </button>
             ) : (
               <button
@@ -846,7 +846,7 @@ export default function CheckoutModal({ isOpen, onClose, totalPrice, cartItems, 
                 {isProcessingPayment ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Processing...
+                    Verarbeitung...
                   </>
                 ) : (
                   paymentMethod === 'stripe' ? 'Proceed to Payment' : 'Confirm Order'

@@ -9,10 +9,12 @@ function BowliciousContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('Beliebt')
+  const [activeCategory, setActiveCategory] = useState('Vorspeisen')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   const openModal = (item: any) => {
     setSelectedItem(item)
@@ -24,13 +26,32 @@ function BowliciousContent() {
     setSelectedItem(null)
   }
 
+  // Fetch menu items from database
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('/api/menu-items?restaurant=BOWLICIOUS&active=true')
+        const data = await response.json()
+
+        if (data.success) {
+          setMenuItems(data.menuItems)
+        }
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMenuItems()
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
 
       // Determine which section is currently in view
       const sections = [
-        'beliebt',
         'vorspeisen',
         'mac-and-cheese-bowls',
         'salate',
@@ -41,7 +62,6 @@ function BowliciousContent() {
       ]
 
       const categoryNames = [
-        'Beliebt',
         'Vorspeisen',
         'Mac & Cheese Bowls',
         'Salate',
@@ -123,15 +143,6 @@ function BowliciousContent() {
   }
 
   const scrollToSection = (sectionId: string) => {
-    // If clicking "Beliebt", scroll to the very top
-    if (sectionId === 'beliebt') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-      return
-    }
-
     const element = document.getElementById(sectionId)
     if (element) {
       // Calculate dynamic header height
@@ -155,1318 +166,16 @@ function BowliciousContent() {
     return category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/'/g, '-')
   }
 
-  const beliebteItems = [
-    {
-      name: 'Favourite Mac & Cheese Bowl',
-      price: '11,90 €',
-      description: 'cremige, käsige Mac & Cheese Bowl mit Crispy Chicken, Coleslaw, hausgemachte Sauce und mit Röstzwiebeln verfeinert',
-      image: '/BOWLICIOUS/Favourite Mac & Cheese Bowl.webp',
-      category: 'Mac & Cheese Bowls'
-    },
-    {
-      name: 'Yakitori Chicken Bowl',
-      price: '12,90 €',
-      description: 'mit Yakitori Hähnchen, Gurken, Mais, Paprika, Avocado, Tomaten-Salsa, Röstzwiebeln, Erdnüssen, Lauchzwiebeln, Sesam',
-      image: '/BOWLICIOUS/Yakitori Chicken Bowl.webp',
-      category: "Frischetheke's Favourite Bowls"
-    },
-    {
-      name: 'Lachs Bowl',
-      price: '12,90 €',
-      description: 'mit Lachs, Gurken, Edamame, Avocado, Tomaten-Salsa, Mais, Tobiko, Lauchzwiebeln, Sesam, Sushi-Ingwer und wasabi-Nüsse',
-      image: '/BOWLICIOUS/Lachs Bowl.webp',
-      category: "Frischetheke's Favourite Bowls"
-    },
-    {
-      name: 'Gebackene Gyoza (4 Stück)',
-      price: '5,90 €',
-      description: 'japanische gebackene Teigtaschen gefüllt mit Hähnchentartar und Gemüse',
-      image: '/BOWLICIOUS/Gebackene Gyoza (4 Stück).webp',
-      category: 'Vorspeisen'
-    },
-    {
-      name: 'Vegetarische Mini-Frühlingsrollen (8 Stück)',
-      price: '5,90 €',
-      description: 'gefüllt mit Gemüse',
-      image: '/BOWLICIOUS/Vegetarische Mini-Frühlingsrollen (8 Stück).webp',
-      category: 'Vorspeisen'
-    }
-  ]
-
-  const vorspeisen = [
-    {
-      name: 'Vegetarische Mini-Frühlingsrollen (8 Stück)',
-      price: '5,90 €',
-      description: 'gefüllt mit Gemüse',
-      image: '/BOWLICIOUS/Vegetarische Mini-Frühlingsrollen (8 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'knusprige Frühlingsrollen (3 Stück)',
-      price: '6,90 €',
-      description: 'hausgemachte knusprige Frühlingsrollen gefüllt mit Hackfleisch, Glasnudeln, Morcheln, frischem Gemüse und Sweet-Chillisauce',
-      image: '/BOWLICIOUS/knusprige Frühlingsrollen (3 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Gebackene Wantan (4 Stück)',
-      price: '5,90 €',
-      description: 'hausgemachte knusprige Teigtaschen gefüllt mit Hackfleisch, Garnelentartar, frischen Kräutern und Sweet-Chilisauce',
-      image: '/BOWLICIOUS/Gebackene Wantan (4 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Gebackene Garnelen (4 Stück)',
-      price: '7,90 €',
-      description: 'knusprige Großgarnelen in Pankomehl, serviert mit Sweet-Chilisauce',
-      image: '/BOWLICIOUS/Gebackene Garnelen (4 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Gebackene Gyoza (4 Stück)',
-      price: '5,90 €',
-      description: 'japanische gebackene Teigtaschen gefüllt mit Hähnchentartar und Gemüse',
-      image: '/BOWLICIOUS/Gebackene Gyoza (4 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Vegetarische Gyoza (4 Stück)',
-      price: '5,90 €',
-      description: 'japanische gebackene Teigtaschen gefüllt mit Spinat und Gemüse',
-      image: '/BOWLICIOUS/Vegetarische Gyoza (4 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Sommerrollen mit Garnelen (2 Stück)',
-      price: '6,90 €',
-      description: 'mit Reisnudeln, frischem Salat, Nom, Gurken und Koriander, umwickelt von Reispapier, serviert mit hausgemachter Hoisin-Sauce',
-      image: '/BOWLICIOUS/Sommerrollen mit Garnelen (2 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Sommerrollen mit Tofu (2 Stück)',
-      price: '5,90 €',
-      description: 'mit Reisnudeln, frischem Salat, Nom, Gurken und Koriander, umwickelt von Reispapier, serviert mit hausgemachter Hoisin-Sauce',
-      image: '/BOWLICIOUS/Sommerrollen mit Tofu (2 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Sommerrollen mit Gemüse (2 Stück)',
-      price: '5,90 €',
-      description: 'mit Reisnudeln, frischem Salat, Nom, Gurken und Koriander, umwickelt von Reispapier, serviert mit hausgemachter Hoisin-Sauce',
-      image: '/BOWLICIOUS/Sommerrollen mit Gemüse (2 Stück).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Yakitori Hähnchenspieße (3 Stück)',
-      price: '5,90 €',
-      description: 'japanische Hähnchenspieße umhüllt von Yakitori-Sauce',
-      image: '/BOWLICIOUS/Yakitori Hähnchenspieße (3 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Edamame',
-      price: '5,90 €',
-      description: 'japanische blanchierte Sojabohnen mit Meersalz',
-      image: '/BOWLICIOUS/Edamame.webp',
-      tags: ['Vegan', 'Vegetarisch']
-    },
-    {
-      name: 'Wakame Salat',
-      price: '5,90 €',
-      description: 'japanischer Seetangsalat verfeinert mit geröstetem Sesam',
-      image: '/BOWLICIOUS/Wakame Salat.webp',
-      tags: ['Vegan', 'Vegetarisch']
-    },
-    {
-      name: 'Miso Suppe',
-      price: '4,90 €',
-      description: 'mit Tofu, Meeresalgen und fermentierte Sojabohnenpaste',
-      image: '/BOWLICIOUS/Miso Suppe.webp',
-      tags: ['Vegan', 'Vegetarisch']
-    },
-    {
-      name: 'Coleslaw',
-      price: '5,90 €',
-      description: 'Frischer Krautsalat aus feinem Weißkohl und Karotten, abgerundet mit einem cremigen Dressing',
-      image: '/BOWLICIOUS/Coleslaw.webp',
-      tags: []
-    },
-    {
-      name: 'Pommes Frites',
-      price: '4,90 €',
-      description: 'mit Meersalz verfeinert',
-      image: '/BOWLICIOUS/Pommes Frites.webp',
-      tags: ['Vegan', 'Vegetarisch']
-    },
-    {
-      name: 'Süßkartoffel-Pommes',
-      price: '6,90 €',
-      description: '',
-      image: '/BOWLICIOUS/Süßkartoffel-Pommes.webp',
-      tags: ['Vegan', 'Vegetarisch']
-    },
-    {
-      name: 'Ha Kao',
-      price: '5,90 €',
-      description: 'gedämpfte Teigtaschen gefüllt mit Garnelentartar',
-      image: '/BOWLICIOUS/Ha Kao.webp',
-      tags: []
-    },
-    {
-      name: 'Gurken-Kimchi',
-      price: '5,90 €',
-      description: 'koreanisches Gurken-Kimchi mit gerösteten Sesam',
-      image: '/BOWLICIOUS/Gurken-Kimchi.webp',
-      tags: ['Scharf', 'Vegan', 'Vegetarisch']
-    }
-  ]
-
-  const macAndCheeseBowlsItems = [
-    {
-      name: 'Mac & Cheese (Klein)',
-      price: '6,90 €',
-      description: '',
-      image: '/BOWLICIOUS/Mac & Cheese (Klein).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Mac & Cheese (Groß)',
-      price: '8,90 €',
-      description: '',
-      image: '/BOWLICIOUS/Mac & Cheese (Groß).webp',
-      tags: ['Vegetarisch']
-    },
-    {
-      name: 'Favourite Mac & Cheese Bowl',
-      price: '11,90 €',
-      description: 'cremige, käsige Mac & Cheese Bowl mit Crispy Chicken, Coleslaw, hausgemachte Sauce und mit Röstzwiebeln verfeinert',
-      image: '/BOWLICIOUS/Favourite Mac & Cheese Bowl.webp',
-      tags: []
-    }
-  ]
-
-  const salateItems = [
-    {
-      name: 'Gemischter Salat',
-      price: '7,90 €',
-      description: 'mit Salat-Mix, Gurken, Kirschtomaten, Zwiebeln, Mais, Rucola, Möhren und hausgemachtem Dressing',
-      image: '/BOWLICIOUS/Gemischter Salat.webp',
-      tags: ['Vegetarisch'],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "ohne Dressing", price: 0 }
-        ]
-      }
-    },
-    {
-      name: 'Griechischer Bauernsalat',
-      price: '8,90 €',
-      description: 'mit Gurken, Tomaten, roten Zwiebeln, Oliven, würzigem Feta, Oregano und hausgemachtem Dressing',
-      image: '/BOWLICIOUS/Griechischer Bauernsalat.webp',
-      tags: ['Vegetarisch'],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "ohne Dressing", price: 0 }
-        ]
-      }
-    },
-    {
-      name: 'Caesar Salad',
-      price: '9,90 €',
-      description: 'mit Römersalat, Croutons, Hähnchenbrustfilet, Parmesan, Olivenöl, Oregano und hausgemachtem Caesar-Dressing',
-      image: '/BOWLICIOUS/Caesar Salad.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Dein Sonderwunsch:",
-        required: false,
-        multiple: true,
-        options: [
-          { label: "ohne Dressing", price: 0 }
-        ]
-      }
-    }
-  ]
-
-  const frischethekeFavouriteBowlsItems = [
-    {
-      name: 'Lachs Bowl',
-      price: '12,90 €',
-      description: 'mit Lachs, Gurken, Edamame, Avocado, Tomaten-Salsa, Mais, Tobiko, Lauchzwiebeln, Sesam, Sushi-Ingwer und wasabi-Nüsse',
-      image: '/BOWLICIOUS/Lachs Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Tuna Bowl',
-      price: '13,90 €',
-      description: 'mit Thunfisch, Wakame Salat, Gurken, Edamame, Tomaten-Salsa, Avocado, Tobiko, Lauchzwiebeln, Sesam, Sushi-Ingwer',
-      image: '/BOWLICIOUS/Tuna Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Yakitori Chicken Bowl',
-      price: '12,90 €',
-      description: 'mit Yakitori Hähnchen, Gurken, Mais, Paprika, Avocado, Tomaten-Salsa, Röstzwiebeln, Erdnüssen, Lauchzwiebeln, Sesam',
-      image: '/BOWLICIOUS/Yakitori Chicken Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Veggie Tofu Bowl',
-      price: '12,90 €',
-      description: 'mit Tofu, Blattspinat, Broccoli, Mais, gebratenen Champignons, Gurken, Tomaten-Salsa, Guacamole, Sesam, Erdnüssen',
-      image: '/BOWLICIOUS/Veggie Tofu Bowl.webp',
-      tags: ['Vegetarisch'],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Baked Shrimp Bowl',
-      price: '14,90 €',
-      description: 'mit Ebi Tempura Garnelen, Gurken, Avocado, Edamame, Tomaten-Salsa, Rote Beete, Omelette, Lauchzwiebeln, Sesam, Erdnüssen, Koriander',
-      image: '/BOWLICIOUS/Baked Shrimp Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Falafel Bowl',
-      price: '12,90 €',
-      description: 'mit Falafel, Tomaten-Salsa, Gurken, Avocado, Paprika, Edamame, Rote Beete, Cashewnüsse, Sesam, Koriander',
-      image: '/BOWLICIOUS/Falafel Bowl.webp',
-      tags: ['Vegetarisch'],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Duck Bowl',
-      price: '16,90 €',
-      description: 'mit knuspriger Ente, Gurken, Mais, Avocado, gebratenen Champignons, Paprika, Broccoli, Tomaten-Salsa, Sesam, Cashewnüsse, Lauchzwiebeln, Roten Zwiebeln',
-      image: '/BOWLICIOUS/Duck Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        },
-        {
-          title: "Deine Extras - Toppings:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Mozzarella", price: 0.50 },
-            { label: "mit Erdnüssen", price: 0.40 },
-            { label: "mit Röstzwiebeln", price: 0.40 },
-            { label: "mit Sesam", price: 0.40 },
-            { label: "mit Kokos-Chips", price: 0.50 },
-            { label: "mit Radieschen", price: 0.40 },
-            { label: "mit Tobiko (Fischrogen)", price: 0.40 },
-            { label: "mit Sushi-Ingwer", price: 0.40 },
-            { label: "mit Peperoni", price: 0.40 },
-            { label: "mit Lauchzwiebeln", price: 0.40 },
-            { label: "mit Cashewnüssen", price: 0.50 },
-            { label: "mit Parmesan", price: 0.90 },
-            { label: "mit Koriander", price: 0.40 },
-            { label: "mit Wasabinüssen", price: 0.50 },
-            { label: "mit Seealgen-Streifen", price: 0.40 },
-            { label: "mit Mandeln", price: 0.40 }
-          ]
-        },
-        {
-          title: "Deine 1. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "ohne Sauce", price: 0 }
-          ]
-        },
-        {
-          title: "Deine 2. Sauce:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "ohne weitere Sauce", price: 0 },
-            { label: "Koreansauce", price: 0 },
-            { label: "Chili-Honey-Mayonnaise", price: 0 },
-            { label: "Sesamsauce", price: 0 },
-            { label: "Teriyakisauce", price: 0 },
-            { label: "Erdnusssauce", price: 0 },
-            { label: "Trüffel-Mayonnaise", price: 0 },
-            { label: "Hausgemachte Bowlsauce", price: 0 }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Chef Bowl',
-      price: '16,90 €',
-      description: 'mit Lachs, Ebi Tempura Garnelen, Tomaten-Salsa, Gurken, Guacamole, Mais, Kim Chi, Rote Beete, Salat-Mix, vietnamesischem Nom Salat, Mango, Sesam, Lauchzwiebeln, Cashewnüsse',
-      image: '/BOWLICIOUS/Chef Bowl.webp',
-      tags: [],
-      customizationOptions: [
-        {
-          title: "Deine Base:",
-          required: true,
-          multiple: false,
-          options: [
-            { label: "mit Couscous", price: 0 },
-            { label: "mit Jasminreis", price: 0 },
-            { label: "mit Salat-Mix", price: 0 },
-            { label: "mit Sushireis", price: 0 }
-          ]
-        },
-        {
-          title: "Deine Extras - Proteine:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Lachs", price: 2.90 },
-            { label: "mit Tofu", price: 1.90 },
-            { label: "mit Räucherlachs", price: 2.90 },
-            { label: "mit Thunfisch", price: 3.90 },
-            { label: "mit Crispy Chicken", price: 2.90 },
-            { label: "mit Ei, gekocht", price: 1.90 },
-            { label: "mit Teriyaki Hähnchen", price: 2.90 },
-            { label: "mit Black Tiger Shrimps", price: 2.90 },
-            { label: "mit Ebi Tempura Garnelen", price: 3.90 },
-            { label: "mit Falafel", price: 2.90 },
-            { label: "mit Ente, knusprig", price: 5.90 }
-          ]
-        },
-        {
-          title: "Deine Extras - Mix Ins:",
-          required: false,
-          multiple: true,
-          options: [
-            { label: "mit Edamame", price: 0.80 },
-            { label: "mit Zwiebeln, rot", price: 0.80 },
-            { label: "mit Tomaten-Salsa", price: 1.50 },
-            { label: "mit Tamago Omelette", price: 0.80 },
-            { label: "mit Paprika", price: 0.80 },
-            { label: "mit Nam Salat, vietnamesisch", price: 0.80 },
-            { label: "mit Mozzarella-Kugel", price: 0.80 },
-            { label: "mit Salat-Mix", price: 0.80 },
-            { label: "mit Broccoli", price: 0.80 },
-            { label: "mit Zucchini", price: 0.80 },
-            { label: "mit Surimi", price: 1.50 },
-            { label: "mit Kirschtomaten", price: 0.80 },
-            { label: "mit Rotkohl", price: 0.80 },
-            { label: "mit Rote Beete", price: 0.80 },
-            { label: "mit Mais", price: 0.80 },
-            { label: "mit Avocado", price: 1.50 },
-            { label: "mit Champignons, gebraten", price: 0.80 },
-            { label: "mit Spargel, mit", price: 0.80 },
-            { label: "mit Wakame Salat", price: 1.50 },
-            { label: "mit Sojasprossen", price: 0.80 },
-            { label: "mit Mango", price: 0.80 },
-            { label: "mit Gurken", price: 0.80 },
-            { label: "mit Guacamole", price: 1.50 }
-          ]
-        }
-      ]
-    }
-  ]
-
-  const mixYourOwnBowlItems = [
-    {
-      name: 'Mix Your Own Bowl - Sushireis',
-      price: '10,90 €',
-      description: '• 1 Protein nach Wahl • bis zu 5 Mix Ins nach Wahl • 3 Toppings nach Wahl • 2 Saucen nach Wahl',
-      bulletPoints: [
-        '1 Protein nach Wahl',
-        'bis zu 5 Mix Ins nach Wahl',
-        '3 Toppings nach Wahl',
-        '2 Saucen nach Wahl'
-      ],
-      image: '/BOWLICIOUS/Mix Your Own Bowl - Sushireis.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Mix Your Own Bowl - Sushireis:",
-        required: true,
-        multiple: false,
-        options: [
-          { label: "Medium", price: 0 },
-          { label: "Premium-Größe Basis", price: 3.00 }
-        ]
-      }
-    },
-    {
-      name: 'Mix Your Own Bowl - Jasmisreis',
-      price: '10,90 €',
-      description: '• 1 Protein nach Wahl • bis zu 5 Mix Ins nach Wahl • 3 Toppings nach Wahl • 2 Saucen nach Wahl',
-      bulletPoints: [
-        '1 Protein nach Wahl',
-        'bis zu 5 Mix Ins nach Wahl',
-        '3 Toppings nach Wahl',
-        '2 Saucen nach Wahl'
-      ],
-      image: '/BOWLICIOUS/Mix Your Own Bowl - Jasmisreis.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Mix Your Own Bowl - Jasmisreis:",
-        required: true,
-        multiple: false,
-        options: [
-          { label: "Medium", price: 0 },
-          { label: "Premium-Größe Basis", price: 3.00 }
-        ]
-      }
-    },
-    {
-      name: 'Mix Your Own Bowl - Couscous',
-      price: '10,90 €',
-      description: '• 1 Protein nach Wahl • bis zu 5 Mix Ins nach Wahl • 3 Toppings nach Wahl • 2 Saucen nach Wahl',
-      bulletPoints: [
-        '1 Protein nach Wahl',
-        'bis zu 5 Mix Ins nach Wahl',
-        '3 Toppings nach Wahl',
-        '2 Saucen nach Wahl'
-      ],
-      image: '/BOWLICIOUS/Mix Your Own Bowl - Couscous.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Mix Your Own Bowl - Couscous:",
-        required: true,
-        multiple: false,
-        options: [
-          { label: "Medium", price: 0 },
-          { label: "Premium-Größe Basis", price: 3.00 }
-        ]
-      }
-    },
-    {
-      name: 'Mix Your Own Bowl - Salat-Mix',
-      price: '10,90 €',
-      description: '• 1 Protein nach Wahl • bis zu 5 Mix Ins nach Wahl • 3 Toppings nach Wahl • 2 Saucen nach Wahl',
-      bulletPoints: [
-        '1 Protein nach Wahl',
-        'bis zu 5 Mix Ins nach Wahl',
-        '3 Toppings nach Wahl',
-        '2 Saucen nach Wahl'
-      ],
-      image: '/BOWLICIOUS/Mix Your Own Bowl - Salat-Mix.webp',
-      tags: [],
-      customizationOptions: {
-        title: "Mix Your Own Bowl - Salat-Mix:",
-        required: true,
-        multiple: false,
-        options: [
-          { label: "Medium", price: 0 },
-          { label: "Premium-Größe Basis", price: 3.00 }
-        ]
-      }
-    }
-  ]
-
-  const sashimiItems = [
-    {
-      name: 'Lachs Sashimi (5 Stück)',
-      price: '12,90 €',
-      description: 'mit Sushireis serviert',
-      image: '/BOWLICIOUS/Lachs Sashimi (5 Stück).webp',
-      tags: []
-    },
-    {
-      name: 'Tuna Sashimi (5 Stück)',
-      price: '14,90 €',
-      description: 'mit Sushireis serviert',
-      image: '/BOWLICIOUS/Tuna Sashimi (5 Stück).webp',
-      tags: []
-    }
-  ]
-
-  const saucenItems = [
-    {
-      name: 'Hauseigene Bowlsauce (empfohlen)',
-      price: '2,50 €',
-      description: 'würzige Sojasoße mit einem Mix von Unagisauce',
-      image: '/BOWLICIOUS/Hauseigene Bowlsauce (empfohlen).webp',
-      tags: []
-    },
-    {
-      name: 'Chili-Honey-Mayo (empfohlen)',
-      price: '2,50 €',
-      description: 'Chilimayonnaise verfeinert mit Honig',
-      image: '/BOWLICIOUS/Chili-Honey-Mayo (empfohlen).webp',
-      tags: []
-    },
-    {
-      name: 'Sesamsauce',
-      price: '2,50 €',
-      description: 'herzhaftes und nussiges Geschmacksprofil',
-      image: '/BOWLICIOUS/Sesamsauce.webp',
-      tags: []
-    },
-    {
-      name: 'Erdnusssauce',
-      price: '2,50 €',
-      description: 'geheimer Tipp für Bowl-Liebhaber',
-      image: '/BOWLICIOUS/Erdnusssauce.webp',
-      tags: []
-    },
-    {
-      name: 'Teriyakisauce',
-      price: '2,50 €',
-      description: 'süß-salzige Note',
-      image: '/BOWLICIOUS/Teriyakisauce.webp',
-      tags: []
-    },
-    {
-      name: 'Trüffelmayonnaise',
-      price: '2,50 €',
-      description: '',
-      image: '/BOWLICIOUS/Trüffelmayonnaise.webp',
-      tags: []
-    }
-  ]
+  // Organize menu items by section from database
+  const vorspeisen = menuItems.filter(item => item.section === 'Vorspeisen')
+  const macAndCheeseBowlsItems = menuItems.filter(item => item.section === 'Mac & Cheese Bowls')
+  const salateItems = menuItems.filter(item => item.section === 'Salate')
+  const mixYourOwnBowlItems = menuItems.filter(item => item.section === 'Mix Your Own Bowl')
+  const frischethekeFavouriteBowlsItems = menuItems.filter(item => item.section === "Frischetheke's Favourite Bowls")
+  const sashimiItems = menuItems.filter(item => item.section === 'Sashimi')
+  const saucenItems = menuItems.filter(item => item.section === 'Saucen')
 
   const categories = [
-    'Beliebt',
     'Vorspeisen',
     'Mac & Cheese Bowls',
     'Salate',
@@ -1477,16 +186,7 @@ function BowliciousContent() {
   ]
 
   // Get all items for search
-  const allItems = [
-    ...beliebteItems.map(item => ({ ...item, section: 'Beliebt' })),
-    ...vorspeisen.map(item => ({ ...item, section: 'Vorspeisen' })),
-    ...macAndCheeseBowlsItems.map(item => ({ ...item, section: 'Mac & Cheese Bowls' })),
-    ...salateItems.map(item => ({ ...item, section: 'Salate' })),
-    ...mixYourOwnBowlItems.map(item => ({ ...item, section: 'Mix Your Own Bowl' })),
-    ...frischethekeFavouriteBowlsItems.map(item => ({ ...item, section: "Frischetheke's Favourite Bowls" })),
-    ...sashimiItems.map(item => ({ ...item, section: 'Sashimi' })),
-    ...saucenItems.map(item => ({ ...item, section: 'Saucen' }))
-  ]
+  const allItems = menuItems
 
   // Filter items based on search query
   const searchResults = searchQuery.trim()
@@ -1496,6 +196,18 @@ function BowliciousContent() {
     )
     : []
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#CC0000] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
@@ -1504,8 +216,8 @@ function BowliciousContent() {
           {/* Restaurant Name and Rating - Only show when not scrolled */}
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
+              <div className="flex items-center gap-2 md:gap-6">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -1517,8 +229,60 @@ function BowliciousContent() {
                   </div>
                 </a>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">BOWLICIOUS</h1>
+                  <h1 className="text-l md:text-3xl font-bold text-gray-900">BOWLICIOUS</h1>
                 </div>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <a href="/TOSHI_SUSHI" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/sushi_nav.png"
+                      alt="Sushi"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/HIRO_BURGER" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/burger_nav.png"
+                      alt="Burger"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/PIZZA_TIME" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/pizza_nav.png"
+                      alt="Pizza"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/LOS_TACOS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/taco_nav.png"
+                      alt="Taco"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/BOWLICIOUS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/bowl_nav.png"
+                      alt="Bowl"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -1561,7 +325,7 @@ function BowliciousContent() {
               className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide scroll-smooth px-10"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {categories.map((category) => (
+              {categories.map((category: string) => (
                 <button
                   key={category}
                   onClick={() => scrollToSection(getCategoryId(category))}
@@ -1599,7 +363,7 @@ function BowliciousContent() {
 
             {searchResults.length > 0 ? (
               <div className="space-y-4">
-                {searchResults.map((item, index) => (
+                {searchResults.map((item: any, index: number) => (
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     onClick={() => openModal(item)}
@@ -1669,77 +433,6 @@ function BowliciousContent() {
           </div>
         ) : (
           <>
-            {/* Beliebt Section */}
-            <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
-
-              {/* Scrollable Carousel */}
-              <div className="relative">
-                {/* Left Arrow */}
-                <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -ml-4"
-                >
-                  <span className="text-2xl text-gray-700">‹</span>
-                </button>
-
-                {/* Carousel Container */}
-                <div
-                  ref={scrollContainerRef}
-                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
-                  {beliebteItems.map((item) => (
-                    <div
-                      key={item.name}
-                      onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
-                    >
-                      <div className="p-4">
-                        <div className="flex gap-3">
-                          {/* Image */}
-                          <div className="relative w-24 h-24 flex-shrink-0 bg-orange-50 rounded-lg overflow-hidden">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 flex flex-col">
-                            <div className="text-xs text-red-600 font-semibold mb-0.5">{item.category}</div>
-                            <h3 className="font-bold text-gray-900 text-base leading-tight mb-1">{item.name}</h3>
-                            <button className="ml-auto mt-auto bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                              <span className="text-lg">+</span>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Price and Description */}
-                        <div className="mt-3">
-                          <div className="font-bold text-gray-900 text-base mb-1">{item.price}</div>
-                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">{item.description}</p>
-                          <button className="text-xs text-gray-700 hover:text-gray-900 mt-1 underline">
-                            Produktinfo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -mr-4"
-                >
-                  <span className="text-2xl text-gray-700">›</span>
-                </button>
-              </div>
-            </section>
-
             {/* Vorspeisen Section */}
             <section id="vorspeisen" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
@@ -1749,7 +442,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {vorspeisen.map((item) => (
+                {vorspeisen.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1770,7 +463,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -1819,7 +512,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {macAndCheeseBowlsItems.map((item) => (
+                {macAndCheeseBowlsItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1840,7 +533,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -1889,7 +582,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {salateItems.map((item) => (
+                {salateItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1910,7 +603,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -1959,7 +652,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {mixYourOwnBowlItems.map((item) => (
+                {mixYourOwnBowlItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1973,12 +666,12 @@ function BowliciousContent() {
                           Produktinfo
                         </button>
                         <div className="font-bold text-gray-900 text-base mb-2">{item.price}</div>
-                        {item.bulletPoints ? (
+                        {item.bulletPoints || item.description?.includes('•') ? (
                           <ul className="text-xs text-gray-600 mb-2 space-y-1">
-                            {item.bulletPoints.map((point, index) => (
+                            {(item.bulletPoints || item.description.split('•').filter((p: string) => p.trim())).map((point: string, index: number) => (
                               <li key={index} className="flex items-start">
                                 <span className="mr-1.5">•</span>
-                                <span>{point}</span>
+                                <span>{point.trim()}</span>
                               </li>
                             ))}
                           </ul>
@@ -1989,7 +682,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -2038,7 +731,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {frischethekeFavouriteBowlsItems.map((item) => (
+                {frischethekeFavouriteBowlsItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -2059,7 +752,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -2108,7 +801,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {sashimiItems.map((item) => (
+                {sashimiItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -2129,7 +822,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'
@@ -2178,7 +871,7 @@ function BowliciousContent() {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {saucenItems.map((item) => (
+                {saucenItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -2199,7 +892,7 @@ function BowliciousContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${tag === 'Vegan' || tag === 'Vegetarisch'

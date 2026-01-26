@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import MenuItemsManager from '../components/MenuItemsManager'
 
 interface OrderItem {
   name: string
@@ -49,7 +50,13 @@ interface Reservation {
 }
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'orders' | 'reservations'>('orders')
+  // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState('')
+  const [authError, setAuthError] = useState('')
+  const [authLoading, setAuthLoading] = useState(false)
+
+  const [activeTab, setActiveTab] = useState<'orders' | 'reservations' | 'menu'>('orders')
   const [orders, setOrders] = useState<Order[]>([])
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [loading, setLoading] = useState(true)
@@ -59,6 +66,36 @@ export default function AdminDashboard() {
   // Confirmation modal state
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [itemToComplete, setItemToComplete] = useState<{ id: string, number: string, type: 'order' | 'reservation' } | null>(null)
+
+  // Handle password verification
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setAuthError('')
+    setAuthLoading(true)
+
+    try {
+      const response = await fetch('/api/verify-admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      })
+
+      if (response.ok) {
+        setIsAuthenticated(true)
+        setPassword('')
+      } else {
+        const data = await response.json()
+        setAuthError(data.error || 'Invalid password')
+      }
+    } catch (error) {
+      console.error('Error verifying password:', error)
+      setAuthError('Failed to verify password')
+    } finally {
+      setAuthLoading(false)
+    }
+  }
 
   // Play ORDER notification sound - 6 beeps (original)
   const playOrderNotificationSound = async () => {
@@ -197,8 +234,8 @@ export default function AdminDashboard() {
           playOrderNotificationSound()
 
           if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('🔔 New Order Received!', {
-              body: `Order ${activeOrders[0].orderNumber} has been placed`,
+            new Notification('🔔 Neue Bestellung erhalten!', {
+              body: `Befehl ${activeOrders[0].orderNumber} wurde platziert`,
               icon: '/favicon.ico',
             })
           }
@@ -244,8 +281,8 @@ export default function AdminDashboard() {
           playReservationNotificationSound()
 
           if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('📅 New Reservation Received!', {
-              body: `Reservation ${activeReservations[0].reservationNumber} has been made`,
+            new Notification('📅 Neue Reservierung erhalten!', {
+              body: `Reservierung ${activeReservations[0].reservationNumber} wurde gemacht`,
               icon: '/favicon.ico',
             })
           }
@@ -318,11 +355,11 @@ export default function AdminDashboard() {
         setShowConfirmModal(false)
         setItemToComplete(null)
       } else {
-        alert(`Failed to delete ${itemToComplete.type}`)
+        alert(`Löschen fehlgeschlagen ${itemToComplete.type}`)
       }
     } catch (error) {
       console.error(`Error deleting ${itemToComplete?.type}:`, error)
-      alert(`Error deleting ${itemToComplete?.type}`)
+      alert(`Fehler beim Löschen ${itemToComplete?.type}`)
     }
   }
 
@@ -344,11 +381,11 @@ export default function AdminDashboard() {
           order._id === orderId ? { ...order, status: newStatus } : order
         ))
       } else {
-        alert('Failed to update order status')
+        alert('Aktualisierung des Bestellstatus fehlgeschlagen')
       }
     } catch (error) {
       console.error('Error updating order status:', error)
-      alert('Error updating order status')
+      alert('Fehler beim Aktualisieren des Bestellstatus')
     }
   }
 
@@ -384,6 +421,61 @@ export default function AdminDashboard() {
     )
   }
 
+  // Show password prompt if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin-Zugriff</h1>
+            <p className="text-gray-600">Bitte geben Sie das Administratorpasswort ein, um fortzufahren.</p>
+          </div>
+
+          <form onSubmit={handlePasswordSubmit}>
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  setAuthError('')
+                }}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC0000] focus:border-transparent"
+                placeholder="Enter admin password"
+                required
+                autoFocus
+              />
+              {authError && (
+                <p className="mt-2 text-sm text-red-600">{authError}</p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={authLoading}
+              className="w-full px-4 py-3 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {authLoading ? 'Verifying...' : 'Access Dashboard'}
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <Link
+              href="/"
+              className="text-sm text-gray-600 hover:text-[#CC0000] transition-colors"
+            >
+              Zurück nach Hause
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -391,14 +483,14 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-sm text-gray-600 mt-1">Manage orders and reservations in real-time</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Admin-Dashboard</h1>
+              <p className="text-sm text-gray-600 mt-1">Bestellungen und Reservierungen in Echtzeit verwalten</p>
             </div>
             <Link
               href="/"
               className="px-4 py-2 bg-[#CC0000] text-white font-bold rounded-lg hover:bg-[#990000] transition-all duration-300"
             >
-              Back to Home
+              Zurück nach Hause
             </Link>
           </div>
         </div>
@@ -414,7 +506,7 @@ export default function AdminDashboard() {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Orders ({orders.length})
+              Bestellungen ({orders.length})
             </button>
             <button
               onClick={() => setActiveTab('reservations')}
@@ -424,7 +516,17 @@ export default function AdminDashboard() {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Reservations ({reservations.length})
+              Reservierungen ({reservations.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('menu')}
+              className={`px-6 py-3 font-bold transition-all duration-300 border-b-4 ${
+                activeTab === 'menu'
+                  ? 'border-[#CC0000] text-[#CC0000]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Menüpunkte
             </button>
           </div>
         </div>
@@ -440,7 +542,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Active Orders</p>
+                    <p className="text-sm text-gray-600">Aktive Bestellungen</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">{orders.length}</p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -454,7 +556,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Pending Payment</p>
+                    <p className="text-sm text-gray-600">Ausstehende Zahlung</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">
                       {orders.filter(o => o.paymentStatus === 'pending').length}
                     </p>
@@ -470,7 +572,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Delivery Orders</p>
+                    <p className="text-sm text-gray-600">Lieferaufträge</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">
                       {orders.filter(o => o.deliveryType === 'delivery').length}
                     </p>
@@ -491,8 +593,8 @@ export default function AdminDashboard() {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 mx-auto text-gray-400 mb-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                   </svg>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">No Active Orders</h3>
-                  <p className="text-gray-600">All orders have been completed. New orders will appear here automatically.</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Keine aktiven Bestellungen</h3>
+                  <p className="text-gray-600">Alle Bestellungen sind abgeschlossen. Neue Bestellungen werden hier automatisch angezeigt.</p>
                 </div>
               ) : (
                 orders.map((order) => (
@@ -509,7 +611,7 @@ export default function AdminDashboard() {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                         </svg>
-                        <span>EXPRESS DELIVERY - PRIORITY ORDER</span>
+                        <span>EXPRESSLIEFERUNG - PRIORITÄTSBESTELLUNG</span>
                       </div>
                     )}
 
@@ -521,7 +623,7 @@ export default function AdminDashboard() {
                             {order.status.toUpperCase()}
                           </span>
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getPaymentStatusColor(order.paymentStatus)}`}>
-                            {order.paymentStatus === 'paid' ? '💳 PAID' : '💰 CASH'}
+                            {order.paymentStatus === 'paid' ? '💳 BEZAHLT' : '💰 KASSE'}
                           </span>
                         </div>
                         <p className="text-sm text-gray-600">
@@ -546,38 +648,38 @@ export default function AdminDashboard() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 pb-4 border-b">
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Customer Information</h4>
+                        <h4 className="font-semibold text-gray-900 mb-2">Kundeninformationen</h4>
                         <div className="space-y-1 text-sm">
                           <p className="text-gray-700"><span className="font-medium">Name:</span> {order.fullName}</p>
-                          <p className="text-gray-700"><span className="font-medium">Email:</span> {order.email}</p>
-                          <p className="text-gray-700"><span className="font-medium">Phone:</span> {order.phone}</p>
+                          <p className="text-gray-700"><span className="font-medium">E-Mail:</span> {order.email}</p>
+                          <p className="text-gray-700"><span className="font-medium">Telefon:</span> {order.phone}</p>
                         </div>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-2">
-                          {order.deliveryType === 'delivery' ? '🚗 Delivery Details' : '🛍️ Pickup Details'}
+                          {order.deliveryType === 'delivery' ? '🚗 Lieferdetails' : '🛍️ Abholdetails'}
                         </h4>
                         <div className="space-y-1 text-sm">
                           {order.deliveryType === 'delivery' ? (
                             <>
-                              <p className="text-gray-700"><span className="font-medium">Address:</span> {order.streetAddress}</p>
-                              <p className="text-gray-700"><span className="font-medium">City:</span> {order.city} {order.postalCode}</p>
+                              <p className="text-gray-700"><span className="font-medium">Adresse:</span> {order.streetAddress}</p>
+                              <p className="text-gray-700"><span className="font-medium">Stadt:</span> {order.city} {order.postalCode}</p>
                             </>
                           ) : (
-                            <p className="text-gray-700">Customer will pick up the order</p>
+                            <p className="text-gray-700">Der Kunde holt die Bestellung ab</p>
                           )}
                           <p className="text-gray-700">
-                            <span className="font-medium">Delivery Speed:</span>{' '}
+                            <span className="font-medium">Liefergeschwindigkeit:</span>{' '}
                             {order.timeOption === 'standard'
                               ? '🚗 Standard (45-60 min)'
                               : order.timeOption === 'express'
-                              ? '⚡ Express (30 min)'
-                              : '🛍️ Ready for Pickup (30 min)'
+                              ? '⚡ Äußern (30 min)'
+                              : '🛍️ Bereit zur Abholung (30 min)'
                             }
                           </p>
                           {order.remarks && (
                             <p className="text-gray-700 mt-2">
-                              <span className="font-medium">Special Instructions:</span><br />
+                              <span className="font-medium">Besondere Anweisungen:</span><br />
                               <span className="italic">"{order.remarks}"</span>
                             </p>
                           )}
@@ -586,7 +688,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="mb-4">
-                      <h4 className="font-semibold text-gray-900 mb-2">Order Items</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">Artikel bestellen</h4>
                       <div className="space-y-2">
                         {order.items.map((item, index) => (
                           <div key={index} className="flex justify-between items-center bg-gray-50 rounded p-3">
@@ -611,18 +713,18 @@ export default function AdminDashboard() {
                         onChange={(e) => updateOrderStatus(order._id, e.target.value)}
                         className="px-4 py-2 border-2 border-gray-300 rounded-lg font-semibold text-sm hover:border-[#CC0000] transition-colors focus:outline-none focus:border-[#CC0000]"
                       >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="preparing">Preparing</option>
-                        <option value="ready">Ready</option>
-                        <option value="out-for-delivery">Out for Delivery</option>
+                        <option value="pending">Ausstehend</option>
+                        <option value="confirmed">Bestätigt</option>
+                        <option value="preparing">Vorbereiten</option>
+                        <option value="ready">Bereit</option>
+                        <option value="out-for-delivery">Zur Auslieferung bereit</option>
                       </select>
 
                       <button
                         onClick={() => showCompleteModal(order._id, order.orderNumber, 'order')}
                         className="px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md hover:shadow-lg"
                       >
-                        ✓ Mark as Completed
+                        ✓ Als abgeschlossen markieren
                       </button>
                     </div>
                   </div>
@@ -640,7 +742,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Active Reservations</p>
+                    <p className="text-sm text-gray-600">Aktive Reservierungen</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">{reservations.length}</p>
                   </div>
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
@@ -654,7 +756,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Today's Reservations</p>
+                    <p className="text-sm text-gray-600">Heutige Reservierungen</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">
                       {reservations.filter(r => r.date === new Date().toISOString().split('T')[0]).length}
                     </p>
@@ -670,7 +772,7 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Total Guests</p>
+                    <p className="text-sm text-gray-600">Gesamtzahl der Gäste</p>
                     <p className="text-3xl font-bold text-gray-900 mt-1">
                       {reservations.reduce((sum, r) => sum + r.guests, 0)}
                     </p>
@@ -691,8 +793,8 @@ export default function AdminDashboard() {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 mx-auto text-gray-400 mb-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                   </svg>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">No Active Reservations</h3>
-                  <p className="text-gray-600">All reservations have been completed. New reservations will appear here automatically.</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Keine aktiven Reservierungen</h3>
+                  <p className="text-gray-600">Alle Reservierungen sind abgeschlossen. Neue Reservierungen werden hier automatisch angezeigt.</p>
                 </div>
               ) : (
                 reservations.map((reservation) => (
@@ -727,18 +829,18 @@ export default function AdminDashboard() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 pb-4 border-b">
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Customer Information</h4>
+                        <h4 className="font-semibold text-gray-900 mb-2">Kundeninformationen</h4>
                         <div className="space-y-1 text-sm">
                           <p className="text-gray-700"><span className="font-medium">Name:</span> {reservation.name}</p>
-                          <p className="text-gray-700"><span className="font-medium">Email:</span> {reservation.email}</p>
-                          <p className="text-gray-700"><span className="font-medium">Phone:</span> {reservation.phone}</p>
+                          <p className="text-gray-700"><span className="font-medium">E-Mail:</span> {reservation.email}</p>
+                          <p className="text-gray-700"><span className="font-medium">Telefon:</span> {reservation.phone}</p>
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">📅 Reservation Details</h4>
+                        <h4 className="font-semibold text-gray-900 mb-2">📅 Reservierungsdetails</h4>
                         <div className="space-y-1 text-sm">
                           <p className="text-gray-700">
-                            <span className="font-medium">Date:</span>{' '}
+                            <span className="font-medium">Datum:</span>{' '}
                             {new Date(reservation.date).toLocaleDateString('de-DE', {
                               weekday: 'long',
                               year: 'numeric',
@@ -746,9 +848,9 @@ export default function AdminDashboard() {
                               day: 'numeric',
                             })}
                           </p>
-                          <p className="text-gray-700"><span className="font-medium">Time:</span> {reservation.time}</p>
+                          <p className="text-gray-700"><span className="font-medium">Zeit:</span> {reservation.time}</p>
                           <p className="text-gray-700">
-                            <span className="font-medium">Guests:</span> {reservation.guests} {reservation.guests === 1 ? 'person' : 'people'}
+                            <span className="font-medium">Gäste:</span> {reservation.guests} {reservation.guests === 1 ? 'Person' : 'Menschen'}
                           </p>
                         </div>
                       </div>
@@ -759,7 +861,7 @@ export default function AdminDashboard() {
                         onClick={() => showCompleteModal(reservation._id, reservation.reservationNumber, 'reservation')}
                         className="px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md hover:shadow-lg"
                       >
-                        ✓ Fulfill Reservation
+                        ✓ Reservierung erfüllen
                       </button>
                     </div>
                   </div>
@@ -767,6 +869,11 @@ export default function AdminDashboard() {
               )}
             </div>
           </>
+        )}
+
+        {/* Menu Items Tab */}
+        {activeTab === 'menu' && (
+          <MenuItemsManager />
         )}
       </main>
 
@@ -786,11 +893,11 @@ export default function AdminDashboard() {
               {itemToComplete.type === 'order' ? 'Complete Order?' : 'Fulfill Reservation?'}
             </h2>
             <p className="text-gray-700 mb-2 text-center">
-              Are you sure you want to {itemToComplete.type === 'order' ? 'mark' : 'fulfill'}{' '}
-              <span className="font-bold text-[#CC0000]">{itemToComplete.number}</span> as completed?
+              Bist du sicher, dass du das willst {itemToComplete.type === 'order' ? 'mark' : 'fulfill'}{' '}
+              <span className="font-bold text-[#CC0000]">{itemToComplete.number}</span> als abgeschlossen?
             </p>
             <p className="text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 text-center">
-              ⚠️ This will permanently delete the {itemToComplete.type} from the database.
+              ⚠️ Dadurch werden die Daten endgültig gelöscht {itemToComplete.type} aus der Datenbank.
             </p>
 
             <div className="flex gap-3">
@@ -801,13 +908,13 @@ export default function AdminDashboard() {
                 }}
                 className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition-all duration-300"
               >
-                Cancel
+                Stornieren
               </button>
               <button
                 onClick={completeItem}
                 className="flex-1 px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                ✓ {itemToComplete.type === 'order' ? 'Complete' : 'Fulfill'}
+                ✓ {itemToComplete.type === 'order' ? 'Vollständig' : 'Erfüllen'}
               </button>
             </div>
           </div>

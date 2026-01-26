@@ -87,14 +87,14 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
         {step === 'time' && (
           <div className="p-8">
             <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl text-[#CC0000] mb-6">
-              Make a Reservation
+              Machen Sie eine Reservierung
             </h2>
 
             <div className="space-y-4">
               {/* Date */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Date
+                  Datum
                 </label>
                 <input
                   type="date"
@@ -109,7 +109,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               {/* Time */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Time
+                  Zeit
                 </label>
                 <select
                   value={reservationData.time}
@@ -117,7 +117,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#CC0000] focus:outline-none transition-colors"
                   required
                 >
-                  <option value="">Select time</option>
+                  <option value="">Wählen Sie die Uhrzeit aus</option>
                   <option value="11:30">11:30</option>
                   <option value="12:00">12:00</option>
                   <option value="12:30">12:30</option>
@@ -144,7 +144,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               {/* Number of Guests */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Number of Guests
+                  Anzahl der Gäste
                 </label>
                 <select
                   value={reservationData.guests}
@@ -154,7 +154,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                     <option key={num} value={num}>
-                      {num} {num === 1 ? 'Guest' : 'Guests'}
+                      {num} {num === 1 ? 'Gast' : 'Gäste'}
                     </option>
                   ))}
                 </select>
@@ -171,7 +171,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
                 }}
                 className="w-full bg-[#CC0000] text-white font-bold py-3 rounded-lg hover:bg-[#990000] transition-colors shadow-md hover:shadow-lg"
               >
-                Next
+                Nächste
               </button>
             </div>
           </div>
@@ -187,21 +187,21 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Back
+              Zurück
             </button>
 
             <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl text-[#CC0000] mb-2">
-              Contact Details
+              Kontaktdaten
             </h2>
             <p className="text-sm text-gray-600 mb-6">
-              Reservation for {reservationData.guests} {reservationData.guests === '1' ? 'guest' : 'guests'} on {new Date(reservationData.date).toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at {reservationData.time}
+              Reservierung für {reservationData.guests} {reservationData.guests === '1' ? 'guest' : 'guests'} on {new Date(reservationData.date).toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at {reservationData.time}
             </p>
 
             <div className="space-y-4">
               {/* Name */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Full Name
+                  Vollständiger Name
                 </label>
                 <input
                   type="text"
@@ -216,7 +216,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               {/* Email */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email
+                  E-Mail
                 </label>
                 <input
                   type="email"
@@ -231,7 +231,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               {/* Phone */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Phone Number
+                  Telefonnummer
                 </label>
                 <input
                   type="tel"
@@ -249,13 +249,13 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
                   if (reservationData.name && reservationData.email && reservationData.phone) {
                     handleSubmit()
                   } else {
-                    alert('Please fill in all fields')
+                    alert('Bitte füllen Sie alle Felder aus.')
                   }
                 }}
                 disabled={isSubmitting}
                 className="w-full bg-[#CC0000] text-white font-bold py-3 rounded-lg hover:bg-[#990000] transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Confirming...' : 'Confirm Reservation'}
+                {isSubmitting ? 'Bestätigen...' : 'Bestätigen Sie die Reservierung'}
               </button>
             </div>
           </div>
@@ -274,32 +274,32 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
 
               {/* Success Message */}
               <h2 className="font-[family-name:var(--font-archivo-black)] text-2xl text-[#CC0000] mb-4">
-                Reservation Confirmed!
+                Reservierung bestätigt!
               </h2>
 
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <p className="text-gray-700 mb-4">
-                  Your reservation has been confirmed.
+                  Ihre Reservierung wurde bestätigt.
                 </p>
 
                 <div className="bg-white border-2 border-[#CC0000] rounded-lg p-4 mb-4">
-                  <p className="text-sm text-gray-600 mb-1">Reservation Number</p>
+                  <p className="text-sm text-gray-600 mb-1">Reservierungsnummer</p>
                   <p className="font-bold text-xl text-[#CC0000]">{reservationNumber}</p>
                 </div>
 
                 <div className="text-left space-y-2 text-sm text-gray-600">
                   <div className="flex justify-between">
-                    <span>Date:</span>
+                    <span>Datum:</span>
                     <span className="font-semibold text-gray-900">
                       {new Date(reservationData.date).toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Time:</span>
+                    <span>Zeit:</span>
                     <span className="font-semibold text-gray-900">{reservationData.time}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Guests:</span>
+                    <span>Gäste:</span>
                     <span className="font-semibold text-gray-900">
                       {reservationData.guests} {reservationData.guests === '1' ? 'Guest' : 'Guests'}
                     </span>
@@ -308,7 +308,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
               </div>
 
               <p className="text-gray-600 mb-6">
-                We will contact you shortly at <strong>{reservationData.email}</strong> to confirm your reservation.
+                Wir werden uns in Kürze bei Ihnen melden <strong>{reservationData.email}</strong> um Ihre Reservierung zu bestätigen.
               </p>
 
               {/* Close Button */}
@@ -316,7 +316,7 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
                 onClick={handleClose}
                 className="w-full bg-[#CC0000] text-white font-bold py-3 rounded-lg hover:bg-[#990000] transition-colors shadow-md hover:shadow-lg"
               >
-                Done
+                Erledigt
               </button>
             </div>
           </div>

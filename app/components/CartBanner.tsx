@@ -39,7 +39,7 @@ export default function CartBanner() {
         </div>
 
         {/* Text */}
-        <span className="text-lg tracking-wide">View Cart</span>
+        <span className="text-lg tracking-wide">Warenkorb ansehen</span>
 
         {/* Arrow icon */}
         <svg

@@ -9,10 +9,12 @@ function LosTacosContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('Beliebt')
+  const [activeCategory, setActiveCategory] = useState('Fingerfood')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedItem, setSelectedItem] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   const openModal = (item: any) => {
     setSelectedItem(item)
@@ -24,13 +26,32 @@ function LosTacosContent() {
     setSelectedItem(null)
   }
 
+  // Fetch menu items from database
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('/api/menu-items?restaurant=LOS_TACOS&active=true')
+        const data = await response.json()
+
+        if (data.success) {
+          setMenuItems(data.menuItems)
+        }
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMenuItems()
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
 
       // Determine which section is currently in view
       const sections = [
-        'beliebt',
         'fingerfood',
         'fresh-salads',
         'birria-tacos',
@@ -41,7 +62,6 @@ function LosTacosContent() {
       ]
 
       const categoryNames = [
-        'Beliebt',
         'Fingerfood',
         'Fresh Salads',
         'Birria Tacos',
@@ -123,15 +143,6 @@ function LosTacosContent() {
   }
 
   const scrollToSection = (sectionId: string) => {
-    // If clicking "Beliebt", scroll to the very top
-    if (sectionId === 'beliebt') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-      return
-    }
-
     const element = document.getElementById(sectionId)
     if (element) {
       // Calculate dynamic header height
@@ -155,7 +166,17 @@ function LosTacosContent() {
     return category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')
   }
 
-  const beliebteItems = [
+  // Organize menu items by section from database
+  const fingerfoodItems = menuItems.filter(item => item.section === 'Fingerfood')
+  const freshSaladsItems = menuItems.filter(item => item.section === 'Fresh Salads')
+  const birriaTacosItems = menuItems.filter(item => item.section === 'Birria Tacos')
+  const frenchTacosItems = menuItems.filter(item => item.section === 'French Tacos')
+  const tacoBurgerItems = menuItems.filter(item => item.section === 'Taco-Burger')
+  const burritosItems = menuItems.filter(item => item.section === 'Burritos')
+  const loadedNachosItems = menuItems.filter(item => item.section === 'Loaded Nachos')
+
+  // OLD HARD-CODED ARRAYS - TO BE REMOVED
+  const beliebteItemsOLD = [
     {
       name: 'The Chicken Taco',
       price: '8,90 €',
@@ -272,7 +293,7 @@ function LosTacosContent() {
     }
   ]
 
-  const fingerfoodItems = [
+  const fingerfoodItemsOLD = [
     {
       name: 'Pommes Frites',
       price: '4,90 €',
@@ -317,7 +338,7 @@ function LosTacosContent() {
     }
   ]
 
-  const freshSaladsItems = [
+  const freshSaladsItemsOLD = [
     {
       name: 'Mexikanischer Salat',
       price: '7,90 €',
@@ -334,7 +355,7 @@ function LosTacosContent() {
     }
   ]
 
-  const birriaTacosItems = [
+  const birriaTacosItemsOLD = [
     {
       name: 'Original Birria Tacos (2 Stück)',
       price: '11,90 €',
@@ -351,7 +372,7 @@ function LosTacosContent() {
     }
   ]
 
-  const frenchTacosItems = [
+  const frenchTacosItemsOLD = [
     {
       name: 'The Chicken Taco',
       price: '8,90 €',
@@ -482,7 +503,7 @@ function LosTacosContent() {
     }
   ]
 
-  const tacoBurgerItems = [
+  const tacoBurgerItemsOLD = [
     {
       name: 'O.G. Taco Burger',
       price: '6,90 €',
@@ -513,7 +534,7 @@ function LosTacosContent() {
     }
   ]
 
-  const burritosItems = [
+  const burritosItemsOLD = [
     {
       name: 'Burritos',
       price: '11,90 €',
@@ -577,7 +598,7 @@ function LosTacosContent() {
     }
   ]
 
-  const loadedNachosItems = [
+  const loadedNachosItemsOLD = [
     {
       name: 'Mexican Nachos',
       price: '6,90 €',
@@ -589,7 +610,6 @@ function LosTacosContent() {
 
 
   const categories = [
-    'Beliebt',
     'Fingerfood',
     'Fresh Salads',
     'Birria Tacos',
@@ -600,16 +620,7 @@ function LosTacosContent() {
   ]
 
   // Get all items for search
-  const allItems = [
-    ...beliebteItems.map(item => ({ ...item, section: 'Beliebt' })),
-    ...fingerfoodItems.map(item => ({ ...item, section: 'Fingerfood' })),
-    ...freshSaladsItems.map(item => ({ ...item, section: 'Fresh Salads' })),
-    ...birriaTacosItems.map(item => ({ ...item, section: 'Birria Tacos' })),
-    ...frenchTacosItems.map(item => ({ ...item, section: 'French Tacos' })),
-    ...tacoBurgerItems.map(item => ({ ...item, section: 'Taco-Burger' })),
-    ...burritosItems.map(item => ({ ...item, section: 'Burritos' })),
-    ...loadedNachosItems.map(item => ({ ...item, section: 'Loaded Nachos' }))
-  ]
+  const allItems = menuItems
 
   // Filter items based on search query
   const searchResults = searchQuery.trim()
@@ -619,6 +630,18 @@ function LosTacosContent() {
     )
     : []
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#CC0000] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
       {/* Header */}
@@ -627,8 +650,8 @@ function LosTacosContent() {
           {/* Restaurant Name and Rating - Only show when not scrolled */}
           <div className={`overflow-hidden transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-16 w-16 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
+              <div className="flex items-center gap-2 md:gap-6">
+                <a href="/" className="group bg-white rounded-xl shadow-lg border-4 border-white h-12 w-12 md:h-16 md:w-16 flex-shrink-0 overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)] hover:border-white hover:scale-105 cursor-pointer p-1">
                   <div className="relative w-full h-full">
                     <Image
                       src="/logo_4k.png"
@@ -640,8 +663,60 @@ function LosTacosContent() {
                   </div>
                 </a>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Los Tacos</h1>
+                  <h1 className="text-l md:text-3xl font-bold text-gray-900">Los Tacos</h1>
                 </div>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <a href="/TOSHI_SUSHI" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/sushi_nav.png"
+                      alt="Sushi"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/HIRO_BURGER" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/burger_nav.png"
+                      alt="Burger"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/PIZZA_TIME" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/pizza_nav.png"
+                      alt="Pizza"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/LOS_TACOS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/taco_nav.png"
+                      alt="Taco"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
+                <a href="/BOWLICIOUS" className="group relative transition-all rounded-lg">
+                  <span className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 block group-hover:scale-110 transition-transform bg-white rounded-full overflow-hidden">
+                    <Image
+                      src="/bowl_nav.png"
+                      alt="Bowl"
+                      fill
+                      className="object-cover"
+                    />
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -684,7 +759,7 @@ function LosTacosContent() {
               className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide scroll-smooth px-10"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {categories.map((category) => (
+              {categories.map((category: string) => (
                 <button
                   key={category}
                   onClick={() => scrollToSection(getCategoryId(category))}
@@ -722,7 +797,7 @@ function LosTacosContent() {
 
             {searchResults.length > 0 ? (
               <div className="space-y-4">
-                {searchResults.map((item, index) => (
+                {searchResults.map((item: any, index: number) => (
                   <div
                     key={`${item.section}-${item.name}-${index}`}
                     className="bg-white rounded-lg shadow-sm hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-white p-4"
@@ -769,87 +844,16 @@ function LosTacosContent() {
           </div>
         ) : (
           <>
-            {/* Beliebt Section */}
-            <section id="beliebt" className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 bg-white px-4 py-2 rounded-lg inline-block shadow-sm border-2 border-gray-200 hover:border-gray-300 hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">Beliebt</h2>
-
-              {/* Scrollable Carousel */}
-              <div className="relative">
-                {/* Left Arrow */}
-                <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -ml-4"
-                >
-                  <span className="text-2xl text-gray-700">‹</span>
-                </button>
-
-                {/* Carousel Container */}
-                <div
-                  ref={scrollContainerRef}
-                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
-                  {beliebteItems.map((item) => (
-                    <div
-                      key={item.name}
-                      onClick={() => openModal(item)}
-                      className="flex-shrink-0 w-72 bg-white rounded-xl shadow-md hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-gray-300"
-                    >
-                      <div className="p-4">
-                        <div className="flex gap-3">
-                          {/* Image */}
-                          <div className="relative w-24 h-24 flex-shrink-0 bg-orange-50 rounded-lg overflow-hidden">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 flex flex-col">
-                            <div className="text-xs text-red-600 font-semibold mb-0.5">{item.category}</div>
-                            <h3 className="font-bold text-gray-900 text-base leading-tight mb-1">{item.name}</h3>
-                            <button className="ml-auto mt-auto bg-white border-2 border-gray-300 rounded-full p-1.5 hover:bg-gray-50 transition-colors">
-                              <span className="text-lg">+</span>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Price and Description */}
-                        <div className="mt-3">
-                          <div className="font-bold text-gray-900 text-base mb-1">{item.price}</div>
-                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">{item.description}</p>
-                          <button className="text-xs text-gray-700 hover:text-gray-900 mt-1 underline">
-                            Produktinfo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-100 transition-colors -mr-4"
-                >
-                  <span className="text-2xl text-gray-700">›</span>
-                </button>
-              </div>
-            </section>
-
             {/* Fingerfood Section */}
             <section id="fingerfood" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Fingerfood</h2>
-                <span className="text-gray-600 font-semibold">6 Artikel</span>
+                <span className="text-gray-600 font-semibold">{fingerfoodItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {fingerfoodItems.map((item) => (
+                {fingerfoodItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -870,7 +874,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -915,12 +919,12 @@ function LosTacosContent() {
             <section id="fresh-salads" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Fresh Salads</h2>
-                <span className="text-gray-600 font-semibold">2 Artikel</span>
+                <span className="text-gray-600 font-semibold">{freshSaladsItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {freshSaladsItems.map((item) => (
+                {freshSaladsItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -941,7 +945,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -987,14 +991,14 @@ function LosTacosContent() {
               <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">Birria Tacos</h2>
-                  <span className="text-gray-600 font-semibold">2 Artikel</span>
+                  <span className="text-gray-600 font-semibold">{birriaTacosItems.length} Artikel</span>
                 </div>
                 <p className="text-sm text-gray-600">Zartes Rind, voller Geschmack Unsere legendären Birria-Tacos sind ein echter Streetfood-Hit: mit zart geschmortem Rindfleisch, langsam in einer würzigen Chili-Gewürzmarinade gegart, serviert in knusprig angebratenen Maistortillas. Dazu gibt's reichlich geschmolzenen Käse, frische Zwiebeln, Koriander und natürlich den originalen Birria-Dip zum Eintunken - heiß, deftig, unwiderstehlich!</p>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {birriaTacosItems.map((item) => (
+                {birriaTacosItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1014,7 +1018,7 @@ function LosTacosContent() {
                           {/* Tags */}
                           {item.tags.length > 0 && (
                             <div className="flex gap-1.5 flex-wrap">
-                              {item.tags.map((tag) => (
+                              {item.tags.map((tag: string) => (
                                 <span
                                   key={tag}
                                   className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -1053,7 +1057,7 @@ function LosTacosContent() {
                           {/* Tags */}
                           {item.tags.length > 0 && (
                             <div className="flex gap-1.5 flex-wrap">
-                              {item.tags.map((tag) => (
+                              {item.tags.map((tag: string) => (
                                 <span
                                   key={tag}
                                   className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -1100,14 +1104,14 @@ function LosTacosContent() {
               <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">French Tacos</h2>
-                  <span className="text-gray-600 font-semibold">4 Artikel</span>
+                  <span className="text-gray-600 font-semibold">{frenchTacosItems.length} Artikel</span>
                 </div>
                 <p className="text-sm text-gray-600">Alle French Tacos werden mit Pommes frites zubereitet.</p>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {frenchTacosItems.map((item) => (
+                {frenchTacosItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1126,7 +1130,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -1171,12 +1175,12 @@ function LosTacosContent() {
             <section id="taco-burger" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Taco-Burger</h2>
-                <span className="text-gray-600 font-semibold">4 Artikel</span>
+                <span className="text-gray-600 font-semibold">{tacoBurgerItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {tacoBurgerItems.map((item) => (
+                {tacoBurgerItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1195,7 +1199,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -1241,14 +1245,14 @@ function LosTacosContent() {
               <div className="mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-3xl font-bold text-gray-900">Burritos</h2>
-                  <span className="text-gray-600 font-semibold">1 Artikel</span>
+                  <span className="text-gray-600 font-semibold">{burritosItems.length} Artikel</span>
                 </div>
                 <p className="text-sm text-gray-600">Alle Burritos werden mit einem Protein nach Wahl zubereitet.</p>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {burritosItems.map((item) => (
+                {burritosItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1267,7 +1271,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -1312,12 +1316,12 @@ function LosTacosContent() {
             <section id="loaded-nachos" className="mb-12">
               <div className="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-lg shadow-sm border-2 border-transparent hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,1)] transition-all duration-300 cursor-pointer">
                 <h2 className="text-3xl font-bold text-gray-900">Loaded Nachos</h2>
-                <span className="text-gray-600 font-semibold">1 Artikel</span>
+                <span className="text-gray-600 font-semibold">{loadedNachosItems.length} Artikel</span>
               </div>
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {loadedNachosItems.map((item) => (
+                {loadedNachosItems.map((item: any) => (
                   <div
                     key={item.name}
                     onClick={() => openModal(item)}
@@ -1336,7 +1340,7 @@ function LosTacosContent() {
                         {/* Tags */}
                         {item.tags.length > 0 && (
                           <div className="flex gap-1.5 flex-wrap">
-                            {item.tags.map((tag) => (
+                            {item.tags.map((tag: string) => (
                               <span
                                 key={tag}
                                 className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
