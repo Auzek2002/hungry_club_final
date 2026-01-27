@@ -39,7 +39,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50">
         <div className="relative">
           {/* Main navbar */}
-          <div className="bg-[#CC0000] h-16 shadow-lg border-b-2 border-[#990000]">
+          <div className="bg-white lg:bg-[#CC0000] h-16 shadow-lg border-b-2 border-[#990000]">
             <div className="max-w-7xl mx-auto px-4 lg:px-8 h-full">
               <div className="flex items-center h-full justify-between lg:justify-start">
                 {/* Logo on the left */}
@@ -61,11 +61,11 @@ export default function Home() {
                 <div className="flex items-center justify-end gap-3 w-auto ml-auto">
                   <button
                     onClick={() => setIsReservationModalOpen(true)}
-                    className="px-6 py-2.5 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000]"
+                    className="px-6 py-2.5 bg-[#CC0000] text-white lg:bg-white lg:text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000]"
                   >
                   Reservierung
                   </button>
-                  <a href="/cart" className="p-3 bg-white text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000] flex items-center">
+                  <a href="/cart" className="p-3 bg-[#CC0000] text-white lg:bg-white lg:text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000] flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
@@ -74,7 +74,7 @@ export default function Home() {
                   {/* Hamburger Menu Button - Now visible on desktop too */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="p-2 text-white hover:text-white transition-colors"
+                    className="p-2 text-[#CC0000] lg:text-white hover:text-[#990000] lg:hover:text-white transition-colors"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       {isMobileMenuOpen ? (
