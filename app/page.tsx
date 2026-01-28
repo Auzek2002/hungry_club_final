@@ -39,7 +39,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50">
         <div className="relative">
           {/* Main navbar */}
-          <div className="bg-white lg:bg-[#CC0000] h-16 shadow-lg border-b-2 border-[#990000]">
+          <div className="h-16 shadow-lg border-b-2 border-[#990000] bg-[#E31837]">
             <div className="max-w-7xl mx-auto px-4 lg:px-8 h-full">
               <div className="flex items-center h-full justify-between lg:justify-start">
                 {/* Logo on the left */}
@@ -61,11 +61,11 @@ export default function Home() {
                 <div className="flex items-center justify-end gap-3 w-auto ml-auto">
                   <button
                     onClick={() => setIsReservationModalOpen(true)}
-                    className="px-6 py-2.5 bg-[#CC0000] text-white lg:bg-white lg:text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000]"
+                    className="px-6 py-2.5 bg-white text-[#E31837] font-bold rounded-lg hover:bg-[#E31837] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shadow-md border-2 border-white"
                   >
                   Reservierung
                   </button>
-                  <a href="/cart" className="p-3 bg-[#CC0000] text-white lg:bg-white lg:text-[#CC0000] font-bold rounded-lg hover:bg-[#990000] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg border-2 border-[#990000] flex items-center">
+                  <a href="/cart" className="p-3 bg-white text-[#E31837] font-bold rounded-lg hover:bg-[#E31837] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shadow-md border-2 border-white flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
@@ -74,7 +74,7 @@ export default function Home() {
                   {/* Hamburger Menu Button - Now visible on desktop too */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="p-2 text-[#CC0000] lg:text-white hover:text-[#990000] lg:hover:text-white transition-colors"
+                    className="p-2 bg-white text-[#E31837] rounded-lg hover:bg-[#E31837] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shadow-md border-2 border-white"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       {isMobileMenuOpen ? (
@@ -91,7 +91,7 @@ export default function Home() {
 
           {/* Mobile Menu Dropdown */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-[#CC0000] shadow-2xl border-t-2 border-[#990000] z-40">
+            <div className="lg:hidden absolute top-full left-0 right-0 bg-[#E31837] shadow-2xl border-t-2 border-[#990000] z-40">
               <div className="max-w-7xl mx-auto px-4 py-4">
                 <div className="space-y-4">
                   {/* Restaurant Navigation Icons */}
@@ -169,7 +169,7 @@ export default function Home() {
 
           {/* Desktop Menu Dropdown */}
           {isMobileMenuOpen && (
-            <div className="hidden lg:block absolute top-full left-0 right-0 bg-[#CC0000] shadow-2xl border-t-2 border-[#990000] z-40">
+            <div className="hidden lg:block absolute top-full left-0 right-0 bg-[#E31837] shadow-2xl border-t-2 border-[#990000] z-40">
               <div className="max-w-7xl mx-auto px-8 py-6">
                 <div className="space-y-4">
                   {/* Restaurant Navigation Icons */}
@@ -254,30 +254,91 @@ export default function Home() {
           {/* Mobile Image */}
           <div className="absolute inset-0 lg:hidden">
             <Image
-              src="/hero_m_2.png"
+              src="/H_mob.png"
               alt="Delicious Food Background"
               fill
               className="object-cover"
               priority
-              quality={100}
-              unoptimized
             />
           </div>
           {/* Desktop Image */}
           <Image
-            src="/hero_4.png"
+            src="/H_7.png"
             alt="Delicious Food Background"
             fill
             className="object-cover object-[50%_40%] hidden lg:block"
             priority
-            quality={100}
-            unoptimized
           />
+        </div>
+
+        {/* Hero Text Overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+          {/* Cinematic gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
+
+          <div className="relative text-center px-6 max-w-6xl mx-auto">
+            {/* Decorative top accent */}
+            <div className="flex items-center justify-center gap-4 mb-6 md:mb-8">
+              <div className="h-[1px] w-12 md:w-20 bg-gradient-to-r from-transparent to-white/60"></div>
+              <span className="text-white/80 text-xs md:text-sm tracking-[0.3em] uppercase font-light">Est. 2024</span>
+              <div className="h-[1px] w-12 md:w-20 bg-gradient-to-l from-transparent to-white/60"></div>
+            </div>
+
+            {/* Main Punchline */}
+            <h1
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-2 md:mb-3 tracking-tight leading-[0.9]"
+              style={{ fontFamily: 'var(--font-anton)', textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}
+            >
+              DEIN HUNGER.
+            </h1>
+            <h1
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-[#CC0000] mb-8 md:mb-10 tracking-tight leading-[0.9]"
+              style={{ fontFamily: 'var(--font-anton)', textShadow: '0 4px 30px rgba(0,0,0,0.4), 0 0 60px rgba(204,0,0,0.3)' }}
+            >
+              UNSER AUFTRAG.
+            </h1>
+
+            {/* Subtext with decorative lines */}
+            <div className="flex items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
+              <div className="h-[1px] w-8 md:w-16 bg-white/40"></div>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 tracking-[0.15em] uppercase font-light">
+                Willkommen im Club der Hungrigen
+              </p>
+              <div className="h-[1px] w-8 md:w-16 bg-white/40"></div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="/cart"
+                className="group relative px-8 py-3.5 bg-[#CC0000] text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(204,0,0,0.5)] hover:scale-105"
+              >
+                <span className="relative z-10 tracking-wide">Jetzt Bestellen</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#CC0000] to-[#990000] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </a>
+              <button
+                onClick={() => setIsReservationModalOpen(true)}
+                className="px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-bold rounded-full border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:scale-105 tracking-wide"
+              >
+                Tisch Reservieren
+              </button>
+            </div>
+
+            {/* Scroll indicator */}
+            <button
+              onClick={() => document.getElementById('restaurants')?.scrollIntoView({ behavior: 'smooth' })}
+              className="absolute left-1/2 -translate-x-1/2 bottom-[-80px] md:bottom-[-100px] flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+            >
+              <span className="text-white/70 text-xs tracking-widest uppercase">Entdecken</span>
+              <div className="w-[1px] h-8 bg-gradient-to-b from-white/70 to-transparent"></div>
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Restaurant Cards Section */}
-      <section className="relative py-20" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
+      <section id="restaurants" className="relative py-20 scroll-mt-16" style={{ backgroundImage: 'url(/bg.png)', backgroundRepeat: 'repeat', backgroundSize: '400px' }}>
         <div className="relative z-10 max-w-7xl mx-auto px-8">
           {/* Desktop Grid Layout (2-2-1) */}
           <div className="hidden lg:block">
