@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto, Archivo_Black, Bungee, Anton } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -53,6 +54,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${archivoBlack.variable} ${bungee.variable} ${anton.variable} antialiased`}
       >
         <Providers>{children}</Providers>
+        <Script
+          src="https://www.fbgcdn.com/embedder/js/ewm2.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

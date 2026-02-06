@@ -1,14 +1,22 @@
 'use client'
 
 import Image from "next/image";
-import { useState, useEffect } from 'react';
-import ReservationModal from './components/ReservationModal';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const glfMenuRef = useRef<HTMLSpanElement>(null);
+  const glfReservationRef = useRef<HTMLSpanElement>(null);
+
+  const openGloriaFoodMenu = () => {
+    glfMenuRef.current?.click();
+  };
+
+  const openGloriaFoodReservation = () => {
+    glfReservationRef.current?.click();
+  };
 
   useEffect(() => {
     // Check if it's mobile on mount
@@ -60,17 +68,11 @@ export default function Home() {
                 {/* Action Buttons */}
                 <div className="flex items-center justify-end gap-3 w-auto ml-auto">
                   <button
-                    onClick={() => setIsReservationModalOpen(true)}
+                    onClick={openGloriaFoodReservation}
                     className="px-6 py-2.5 bg-white text-[#E31837] font-bold rounded-lg hover:bg-[#E31837] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shadow-md border-2 border-white"
                   >
                   Reservierung
                   </button>
-                  <a href="/cart" className="p-3 bg-white text-[#E31837] font-bold rounded-lg hover:bg-[#E31837] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 shadow-md border-2 border-white flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                    </svg>
-                  </a>
-
                   {/* Hamburger Menu Button - Now visible on desktop too */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -308,17 +310,10 @@ export default function Home() {
               <div className="h-[1px] w-8 md:w-16 bg-white/40"></div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="/cart"
-                className="group relative px-8 py-3.5 bg-[#CC0000] text-white font-bold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(204,0,0,0.5)] hover:scale-105"
-              >
-                <span className="relative z-10 tracking-wide">Jetzt Bestellen</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#CC0000] to-[#990000] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </a>
+            {/* CTA Button */}
+            <div className="flex items-center justify-center">
               <button
-                onClick={() => setIsReservationModalOpen(true)}
+                onClick={openGloriaFoodReservation}
                 className="px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-bold rounded-full border border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:scale-105 tracking-wide"
               >
                 Tisch Reservieren
@@ -346,26 +341,26 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Toshi Sushi Card */}
               <div id="toshi-sushi" className="scroll-mt-20">
-                <a href="/TOSHI_SUSHI" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={openGloriaFoodMenu} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/toshi_card.png"
                     alt="Toshi Sushi & Asia Küche"
                     fill
                     className={`object-cover object-[50%_38%] transition-all duration-700 ${activeCard === 'toshi-sushi' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                </a>
+                </div>
               </div>
 
               {/* Hiro Burger Card */}
               <div id="hiro-burger" className="scroll-mt-20">
-                <a href="/HIRO_BURGER" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={openGloriaFoodMenu} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/hiro_card.png"
                     alt="Hiro Burger"
                     fill
                     className={`object-cover object-[50%_22%] transition-all duration-700 ${activeCard === 'hiro-burger' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                </a>
+                </div>
               </div>
             </div>
 
@@ -373,26 +368,26 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Pizza Time Card */}
               <div id="pizza-time" className="scroll-mt-20">
-                <a href="/PIZZA_TIME" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={openGloriaFoodMenu} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/pizza_card_1.png"
                     alt="Pizza Time"
                     fill
                     className={`object-cover object-[50%_28%] transition-all duration-700 ${activeCard === 'pizza-time' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                </a>
+                </div>
               </div>
 
               {/* Los Tacos Card */}
               <div id="los-tacos" className="scroll-mt-20">
-                <a href="/LOS_TACOS" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={openGloriaFoodMenu} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/los_card.png"
                     alt="Los Tacos"
                     fill
                     className={`object-cover object-[50%_30%] transition-all duration-700 ${activeCard === 'los-tacos' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                </a>
+                </div>
               </div>
             </div>
 
@@ -400,40 +395,40 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Bowlicious Card */}
               <div id="bowlicious" className="scroll-mt-20">
-                <a href="/BOWLICIOUS" className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={openGloriaFoodMenu} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/bowl_card_1.png"
                     alt="Bowlicious"
                     fill
                     className={`object-cover object-[50%_44%] transition-all duration-700 ${activeCard === 'bowlicious' ? 'scale-110' : 'group-hover:scale-110'}`}
                   />
-                </a>
+                </div>
               </div>
 
               {/* Drinks Card */}
               <div id="drinks" className="scroll-mt-20">
-                <a href="/drinks" className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <div onClick={openGloriaFoodMenu} className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
                   <Image
                     src="/drinks.png"
                     alt="Drinks"
                     fill
                     className="object-cover object-center group-hover:scale-110 transition-all duration-700"
                   />
-                </a>
+                </div>
               </div>
             </div>
 
             {/* Fourth Row - 1 Card Centered */}
             <div className="flex justify-center">
               <div id="desserts" className="scroll-mt-20 w-1/2">
-                <a href="/desserts" className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
+                <div onClick={openGloriaFoodMenu} className="block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white transition-all duration-700 hover:scale-[1.02] cursor-pointer">
                   <Image
                     src="/Desserts.png"
                     alt="Desserts"
                     fill
                     className="object-cover object-center group-hover:scale-110 transition-all duration-700"
                   />
-                </a>
+                </div>
               </div>
             </div>
           </div>
@@ -442,86 +437,86 @@ export default function Home() {
           <div className="lg:hidden space-y-4">
             {/* Toshi Sushi Card */}
             <div id="toshi-sushi-mobile" className="scroll-mt-20">
-              <a href="/TOSHI_SUSHI" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
+              <div onClick={openGloriaFoodMenu} className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'toshi-sushi' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
                   src="/toshi_card_mob.png"
                   alt="Toshi Sushi & Asia Küche"
                   fill
                   className={`object-cover transition-transform duration-300 ${activeCard === 'toshi-sushi' ? 'scale-110' : ''}`}
                 />
-              </a>
+              </div>
             </div>
 
             {/* Hiro Burger Card */}
             <div id="hiro-burger-mobile" className="scroll-mt-20">
-              <a href="/HIRO_BURGER" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
+              <div onClick={openGloriaFoodMenu} className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'hiro-burger' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
                   src="/hiro_card_m_2.png"
                   alt="Hiro Burger"
                   fill
                   className={`object-cover transition-transform duration-300 ${activeCard === 'hiro-burger' ? 'scale-110' : ''}`}
                 />
-              </a>
+              </div>
             </div>
 
             {/* Pizza Time Card */}
             <div id="pizza-time-mobile" className="scroll-mt-20">
-              <a href="/PIZZA_TIME" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
+              <div onClick={openGloriaFoodMenu} className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
                   src="/pizza_card_mob.png"
                   alt="Pizza Time"
                   fill
                   className={`object-cover transition-transform duration-300 ${activeCard === 'pizza-time' ? 'scale-110' : ''}`}
                 />
-              </a>
+              </div>
             </div>
 
             {/* Los Tacos Card */}
             <div id="los-tacos-mobile" className="scroll-mt-20">
-              <a href="/LOS_TACOS" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
+              <div onClick={openGloriaFoodMenu} className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'los-tacos' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
                   src="/los_card_mob.png"
                   alt="Los Tacos"
                   fill
                   className={`object-cover transition-transform duration-300 ${activeCard === 'los-tacos' ? 'scale-110' : ''}`}
                 />
-              </a>
+              </div>
             </div>
 
             {/* Bowlicious Card */}
             <div id="bowlicious-mobile" className="scroll-mt-20">
-              <a href="/BOWLICIOUS" className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
+              <div onClick={openGloriaFoodMenu} className={`block relative h-32 sm:h-36 rounded-xl overflow-hidden border-3 transition-all duration-300 cursor-pointer ${activeCard === 'bowlicious' ? 'shadow-[0_0_30px_rgba(255,255,255,0.6)] border-white scale-[1.02] group' : 'shadow-xl border-white active:scale-[0.98] group'}`}>
                 <Image
                   src="/bowl_card_mob.png"
                   alt="Bowlicious"
                   fill
                   className={`object-cover transition-transform duration-300 ${activeCard === 'bowlicious' ? 'scale-110' : ''}`}
                 />
-              </a>
+              </div>
             </div>
 
             {/* Drinks Card */}
             <div id="drinks-mobile" className="scroll-mt-20">
-              <a href="/drinks" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <div onClick={openGloriaFoodMenu} className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
                 <Image
                   src="/drinks.png"
                   alt="Drinks"
                   fill
                   className="object-cover object-[50%_35%]"
                 />
-              </a>
+              </div>
             </div>
 
             {/* Desserts Card */}
             <div id="desserts-mobile" className="scroll-mt-20">
-              <a href="/desserts" className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
+              <div onClick={openGloriaFoodMenu} className="block relative h-32 sm:h-36 rounded-xl overflow-hidden shadow-xl border-3 border-white group active:scale-[0.98] transition-all duration-300 cursor-pointer">
                 <Image
                   src="/Desserts.png"
                   alt="Desserts"
                   fill
                   className="object-cover object-[50%_35%]"
                 />
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -577,34 +572,34 @@ export default function Home() {
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/TOSHI_SUSHI" className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Toshi Sushi & Asia Kuche
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="/HIRO_BURGER" className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Hiro Burger
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="/PIZZA_TIME" className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Pizza Time
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="/LOS_TACOS" className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Los Tacos
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="/BOWLICIOUS" className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Bowlicious
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -656,13 +651,6 @@ export default function Home() {
                   <span className="text-white">11:30 - 21:00</span>
                 </li>
               </ul>
-              {/* Order Now Button */}
-              <a href="/cart" className="mt-6 inline-flex items-center gap-2 bg-[#CC0000] hover:bg-[#990000] text-white font-bold py-3 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(204,0,0,0.5)] hover:scale-105">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Jetzt bestellen
-              </a>
             </div>
           </div>
 
@@ -703,29 +691,29 @@ export default function Home() {
                 </h4>
                 <ul className="space-y-1.5">
                   <li>
-                    <a href="/TOSHI_SUSHI" className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Toshi Sushi
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="/HIRO_BURGER" className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Hiro Burger
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="/PIZZA_TIME" className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Pizza Time
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="/LOS_TACOS" className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Los Tacos
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="/BOWLICIOUS" className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={openGloriaFoodMenu} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Bowlicious
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -783,15 +771,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Order Now Button - Centered */}
-            <div className="flex justify-center pt-2">
-              <a href="/cart" className="inline-flex items-center gap-2 bg-[#CC0000] hover:bg-[#990000] text-white font-bold py-3 px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(204,0,0,0.5)] active:scale-95 text-sm">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Jetzt bestellen
-              </a>
-            </div>
           </div>
 
           {/* Divider */}
@@ -835,11 +814,22 @@ export default function Home() {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-[#CC0000]/20 blur-3xl"></div>
       </footer>
 
-      {/* Reservation Modal */}
-      <ReservationModal
-        isOpen={isReservationModalOpen}
-        onClose={() => setIsReservationModalOpen(false)}
-      />
+      {/* Hidden GloriaFood trigger elements - positioned off-screen so the embedder script can process them */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+        <span
+          ref={glfMenuRef}
+          className="glf-button"
+          data-glf-cuid="2dce760b-1737-455f-9336-6b3ba61e8c4a"
+          data-glf-ruid="e7559eb6-5b6d-4767-b01d-bc4495e8ca97"
+        >See MENU &amp; Order</span>
+        <span
+          ref={glfReservationRef}
+          className="glf-button reservation"
+          data-glf-cuid="2dce760b-1737-455f-9336-6b3ba61e8c4a"
+          data-glf-ruid="e7559eb6-5b6d-4767-b01d-bc4495e8ca97"
+          data-glf-reservation="true"
+        >Table Reservation</span>
+      </div>
     </div>
   );
 }
