@@ -137,7 +137,7 @@ export default function Home() {
               src="/H_mob_3.png"
               alt="Delicious Food Background"
               fill
-              className="object-cover"
+              className="object-cover brightness-[0.55]"
               priority
             />
           </div>
@@ -146,7 +146,7 @@ export default function Home() {
             src="/H_8.png"
             alt="Delicious Food Background"
             fill
-            className="object-cover object-[50%_5%] hidden lg:block"
+            className="object-cover object-[50%_5%] hidden lg:block brightness-[0.55]"
             priority
           />
         </div>
