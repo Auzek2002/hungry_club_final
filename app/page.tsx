@@ -134,7 +134,7 @@ export default function Home() {
           {/* Mobile Image */}
           <div className="absolute inset-0 lg:hidden">
             <Image
-              src="/H_mob.png"
+              src="/H_mob_3.png"
               alt="Delicious Food Background"
               fill
               className="object-cover"
@@ -143,10 +143,10 @@ export default function Home() {
           </div>
           {/* Desktop Image */}
           <Image
-            src="/H_7.png"
+            src="/H_8.png"
             alt="Delicious Food Background"
             fill
-            className="object-cover object-[50%_40%] hidden lg:block"
+            className="object-cover object-[50%_5%] hidden lg:block"
             priority
           />
         </div>
