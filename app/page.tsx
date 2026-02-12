@@ -283,7 +283,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               {/* Pizza Time Card */}
               <div id="pizza-time" className="scroll-mt-20">
-                <div onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/chatime-dresden')} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
+                <div onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/romeo-julia')} className={`block relative h-75 rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-700 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_60px_rgba(255,255,255,0.8)] border-white scale-[1.02] group' : 'border-white hover:shadow-[0_0_60px_rgba(255,255,255,0.8)] hover:border-white hover:scale-[1.02] group'}`}>
                   <Image
                     src="/pizza_card_1.png"
                     alt="Pizza Time"
@@ -397,7 +397,7 @@ export default function Home() {
               <div className="relative overflow-hidden rounded-2xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-white/50 via-white/30 to-white/50 rounded-2xl blur-md opacity-0 group-active:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative">
-                  <div onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/chatime-dresden')} className={`block relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-500 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_40px_rgba(255,255,255,0.8)] border-white scale-[1.02]' : 'border-white active:scale-[0.98]'}`}>
+                  <div onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/romeo-julia')} className={`block relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 transition-all duration-500 cursor-pointer ${activeCard === 'pizza-time' ? 'shadow-[0_0_40px_rgba(255,255,255,0.8)] border-white scale-[1.02]' : 'border-white active:scale-[0.98]'}`}>
                     <Image
                       src="/pizza_card_1.png"
                       alt="Pizza Time"
@@ -1054,7 +1054,7 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/chatime-dresden')} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
+                  <button onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/romeo-julia')} className="text-gray-400 hover:text-[#CC0000] transition-colors flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 bg-[#CC0000] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     Pizza Time
                   </button>
@@ -1171,7 +1171,7 @@ export default function Home() {
                     </button>
                   </li>
                   <li>
-                    <button onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/chatime-dresden')} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
+                    <button onClick={() => handleCardClick('https://www.lieferando.de/speisekarte/romeo-julia')} className="text-gray-400 hover:text-[#CC0000] transition-colors text-xs block">
                       Pizza Time
                     </button>
                   </li>
